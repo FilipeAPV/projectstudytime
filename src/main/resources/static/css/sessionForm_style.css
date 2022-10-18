@@ -1,0 +1,9 @@
+.background-dark {
+  background-color: #2d2d34;
+}
+
+.background-img {
+  background-image: url("/img/test_background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

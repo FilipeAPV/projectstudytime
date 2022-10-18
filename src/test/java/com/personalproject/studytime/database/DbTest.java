@@ -22,10 +22,10 @@ import java.util.Optional;
 @Rollback(value = false)
 @TestPropertySource(properties = { "spring.jpa.hibernate.ddl-auto=none" })
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) // Added because @Order was not being respected
-class TestsDatabaseTest {
+class DbTest {
 
     @Autowired
-    private RepositoryDatabaseTest repositoryDatabaseTest;
+    private RepositoryDbTest repositoryDbTest;
 
     @DisplayName("Create test table")
     @Sql(scripts = "/sql_scripts/create-table.sql")
@@ -38,11 +38,11 @@ class TestsDatabaseTest {
     @Test
     @Order(2)
     void databaseBasicOperationsTest() {
-        ModelDatabaseTest record1 = new ModelDatabaseTest("Some Text 1");
+        EntityDbTest record1 = new EntityDbTest("Some Text 1");
 
-        repositoryDatabaseTest.save(record1);
+        repositoryDbTest.save(record1);
 
-        Optional<ModelDatabaseTest> record1SavedOpt = repositoryDatabaseTest.findById(1);
+        Optional<EntityDbTest> record1SavedOpt = repositoryDbTest.findById(1);
 
         if (record1SavedOpt.isPresent()) {
             Assertions.assertNotNull(record1SavedOpt.get());
@@ -57,16 +57,16 @@ class TestsDatabaseTest {
     void updateRecordInDbTest() {
         String textRetrievedFromUpdatedRecord = null;
         String textToUpdateRecord = "Some Text Updated";
-        Optional<ModelDatabaseTest> testDatabaseRecordOptional1 = repositoryDatabaseTest.findById(1);
+        Optional<EntityDbTest> testDatabaseRecordOptional1 = repositoryDbTest.findById(1);
 
         if (testDatabaseRecordOptional1.isPresent()) {
             testDatabaseRecordOptional1.get().setText(textToUpdateRecord);
-            repositoryDatabaseTest.save(testDatabaseRecordOptional1.get());
+            repositoryDbTest.save(testDatabaseRecordOptional1.get());
         } else {
             Assertions.fail("Unable to find User with indicated ID");
         }
 
-        Optional<ModelDatabaseTest> testDatabaseRecordOptional2 = repositoryDatabaseTest.findById(1);
+        Optional<EntityDbTest> testDatabaseRecordOptional2 = repositoryDbTest.findById(1);
         if (testDatabaseRecordOptional2.isPresent()) {
             textRetrievedFromUpdatedRecord = testDatabaseRecordOptional2.get().getText();
         } else {
@@ -75,16 +75,15 @@ class TestsDatabaseTest {
 
         Assertions.assertEquals("Some Text Updated", textRetrievedFromUpdatedRecord);
     }
-// Uncomment after layout test
-/*    @DisplayName("Delete Record in DB")
+    @DisplayName("Delete Record in DB")
     @Test
     @Order(4)
     void deleteRecord() {
         int id = 1;
         int numberOfRecordsInDbAfterDeleting = 0;
-        repositoryDatabaseTest.deleteById(id);
+        repositoryDbTest.deleteById(id);
 
-        Assertions.assertEquals(numberOfRecordsInDbAfterDeleting, repositoryDatabaseTest.count());
+        Assertions.assertEquals(numberOfRecordsInDbAfterDeleting, repositoryDbTest.count());
     }
 
     @DisplayName("Delete test table")
@@ -92,7 +91,5 @@ class TestsDatabaseTest {
     @Test
     @Order(5)
     void deleteTable() {
-    }*/
-
-
+    }
 }

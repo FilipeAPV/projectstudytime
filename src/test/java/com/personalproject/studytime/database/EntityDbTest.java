@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "test_table")
-public class ModelDatabaseTest {
+public class EntityDbTest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,11 +12,11 @@ public class ModelDatabaseTest {
 
     private String text;
 
-    public ModelDatabaseTest(String text) {
+    public EntityDbTest(String text) {
         this.text = text;
     }
 
-    public ModelDatabaseTest() {
+    public EntityDbTest() {
     }
 
     public Integer getId() {
