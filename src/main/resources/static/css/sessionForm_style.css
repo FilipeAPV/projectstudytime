@@ -15,3 +15,16 @@
 .btn-with {
   width: 125px;
 }
+
+/*INPUT TEXT RELATED TO TIME*/
+
+.input-as-label {
+  outline: none; /*Removes the border that appears when the user clicks inside the textbox*/
+  caret-color: transparent; /*Removes the cursor that appears when the user clicks inside the textbox*/
+  border: none;
+  cursor: default;
+  background-color: transparent;
+  width: 70px;
+
+  color: #2d2d34;
+}

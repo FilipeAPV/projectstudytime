@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,84 +30,89 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-4
-                d-flex justify-content-center flex-column align-items-center">
-                <div class="container
-                d-flex justify-content-center flex-column align-items-center
-                " 
-                >
-                    <div class= "container
+        <form th:object="${sessionObj}" th:action="@{/saveSessionForm}" method="post" onsubmit="setDateToHiddenValue();">
+            <input type="hidden" th:field="*{date}" id="sessionDate">
+            <div class="row">
+                <div class="col-md-4
+                    d-flex justify-content-center flex-column align-items-center">
+                    <div class="container
                     d-flex justify-content-center flex-column align-items-center
-                     background-warning" 
+                    "
                     >
-                        <div class="my-2">
-                            <button id="btnSetSessionStartTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStartTimeOfStudySession()">START</button>
-                            <span id="labelStartTime">00:00:00</span>
-                        </div>    
-                        <div class="my-2">
-                            <button id="btnSetSessionPauseTime" class="btn btn-dark btn-sm btn-with btn-dis" type="button" onclick="setPauseTimeOfStudySession()" disabled>PAUSE</button>
-                            <span id="labelPauseTime">00:00:00</span>
-                        </div> 
-                        <div class="my-2">
-                            <button id="btnSetSessionResumeTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setResumeTimeOfStudySession()" disabled>RESUME</button>
-                            <span id="labelResumeTime">00:00:00</span>
-                        </div> 
-                        <div class="my-2">
-                            <button id="btnSetSessionStopTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStopTimeOfStudySession()" disabled>STOP</button>
-                            <span id="labelStopTime">00:00:00</span>
-                        </div> 
-                    </div>
-                    <!-- 
-                        Hidden on xs and sm. 
-                        Visible from MD on. 
-                        Doc: https://getbootstrap.com/docs/5.0/utilities/display/
-                    -->
-                    <div class="container d-none d-sm-none d-md-block
-                    my-5"> 
-                            
-                    </div>
+                        <div class= "container
+                        d-flex justify-content-center flex-column align-items-center
+                         background-warning"
+                        >
+                            <div class="my-2">
+                                <button id="btnSetSessionStartTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStartTimeOfStudySession()">START</button>
+                                <input class="input-as-label" type="text" id="labelStartTime" th:field="*{startTime}" placeholder="00:00:00" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <button id="btnSetSessionPauseTime" class="btn btn-dark btn-sm btn-with btn-dis" type="button" onclick="setPauseTimeOfStudySession()" disabled>PAUSE</button>
+                                <input class="input-as-label" type="text" id="labelPauseTime" th:field="*{pauseTime}" placeholder="00:00:00" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <button id="btnSetSessionResumeTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setResumeTimeOfStudySession()" disabled>RESUME</button>
+                                <input class="input-as-label" type="text" id="labelResumeTime" th:field="*{resumeTime}" placeholder="00:00:00" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <button id="btnSetSessionStopTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStopTimeOfStudySession()" disabled>STOP</button>
+                                <input class="input-as-label" type="text" id="labelStopTime" th:field="*{stopTime}" placeholder="00:00:00" readonly/>
+                            </div>
+                        </div>
+                        <!--
+                            Hidden on xs and sm.
+                            Visible from MD on.
+                            Doc: https://getbootstrap.com/docs/5.0/utilities/display/
+                        -->
+                        <div class="container d-none d-sm-none d-md-block
+                        my-5">
 
-                    <div class= "container
-                    d-flex justify-content-center flex-column align-items-center 
-                    background-warning" 
-                    ><!-- rounded shadow  style="border:solid blue" -->
-                        <div class="my-2">
-                            <button class="btn btn-warning btn-sm" type="submit">Button</button>
-                            
-                        </div>    
-                        <div class="my-2">
-                            <button class="btn btn-warning btn-sm" type="submit">Button</button>
-                            
-                        </div> 
-                        <div class="my-2">
-                            <button class="btn btn-warning btn-sm" type="submit">Button</button>
-                            
-                        </div> 
-                        <div class="my-2">
-                            <button class="btn btn-warning btn-sm" type="submit">Button</button>
-                            
-                        </div> 
+                        </div>
+
+                        <div class= "container
+                        d-flex justify-content-center flex-column align-items-center
+                        background-warning"
+                        ><!-- rounded shadow  style="border:solid blue" -->
+                            <div class="my-2">
+                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
+
+                            </div>
+                            <div class="my-2">
+                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
+
+                            </div>
+                            <div class="my-2">
+                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
+
+                            </div>
+                            <div class="my-2">
+                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>   
-            <div class="col-md-8">
-                <div class="container
-                d-flex justify-content-center flex-column align-items-center
-                background-warning
-                pb-4"><!-- rounded shadow style="border:solid fuchsia" -->
-                    <div>
-                        <label for="w3review">Content:</label>
-                        <textarea class="form-control" id="w3review" name="w3review" rows="12" cols="100"></textarea>
-                    </div>
-                    <div>
-                        <label for="w3review">Feelings:</label>
-                        <textarea class="form-control" id="w3review" name="w3review" rows="12" cols="100"></textarea>
+                <div class="col-md-8">
+                    <div class="container
+                    d-flex justify-content-center flex-column align-items-center
+                    background-warning
+                    pb-4">
+                        <div>
+                            <label for="sessionContent">Content:</label>
+                            <textarea class="form-control" id="sessionContent" rows="12" cols="100" th:field="*{content}"></textarea>
+                        </div>
+                        <div>
+                            <label for="sessionFeelings">Feelings:</label>
+                            <textarea class="form-control" id="sessionFeelings" rows="12" cols="100" th:field="*{feelings}"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
+
+
+
         <div class="row">
             <div class="col-md">
                 <div class="container my-3 py-2
@@ -122,5 +127,9 @@
             </div>
         </div>
     </div>
+<script>
+    allowTabInsideTextArea("sessionContent");
+    allowTabInsideTextArea("sessionFeelings");
+</script>
 </body>
 </html>

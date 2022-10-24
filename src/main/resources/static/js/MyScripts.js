@@ -77,7 +77,7 @@ function displayTime() {
 function setStartTimeOfStudySession() {
     isSessionOngoing = true;
 
-    document.getElementById("labelStartTime").textContent = currentTime();
+    document.getElementById("labelStartTime").value = currentTime();
 
     document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
@@ -90,7 +90,7 @@ function setStartTimeOfStudySession() {
 function setPauseTimeOfStudySession() {
     isSessionOngoing = false;
 
-    document.getElementById("labelPauseTime").textContent = currentTime();
+    document.getElementById("labelPauseTime").value = currentTime();
 
     document.getElementById("btnSetSessionResumeTime").removeAttribute("disabled");
 
@@ -101,7 +101,7 @@ function setPauseTimeOfStudySession() {
 function setResumeTimeOfStudySession() {
     isSessionOngoing = true;
 
-    document.getElementById("labelResumeTime").textContent = currentTime();
+    document.getElementById("labelResumeTime").value = currentTime();
 
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
@@ -111,7 +111,7 @@ function setResumeTimeOfStudySession() {
 function setStopTimeOfStudySession() {
     isSessionOngoing = false;
 
-    document.getElementById("labelStopTime").textContent = currentTime();
+    document.getElementById("labelStopTime").value = currentTime();
 
     document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
 }
@@ -146,3 +146,40 @@ function calcStudySessionTimer() {
 
     document.getElementById("textCurrentStudySessionTimer").textContent = timeElapsed;
 }
+
+/**
+ * Session Form
+ */
+
+// Set content of the hidden field
+function setDateToHiddenValue() {
+    const date = new Date();
+
+    let month = date.getMonth() + 1;
+    if (month < 10) {month = '0' + month;}
+
+    let day = date.getDate();
+    if (day < 10) {day = '0' + day;}
+
+    const formattedDate = date.getFullYear() + '-' + month + '-' + day;
+    document.getElementById("sessionDate").setAttribute("value", formattedDate);
+}
+
+/*Allow Tab inside textAreas*/
+function allowTabInsideTextArea(elementId) {
+    const textAreaField = document.getElementById(elementId);
+
+    textAreaField.addEventListener('keydown', (key) => {
+        if (key.code === "Tab") {
+            key.preventDefault();
+            textAreaField.setRangeText(
+                '      ', // 6 empty spaces
+                textAreaField.selectionStart,
+                textAreaField.selectionStart,
+                'end'
+            )
+        }
+    });
+}
+
+// TODO: Line Validation
