@@ -10,9 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <!-- My Style -->
     <link href="/css/sessionForm_style.css" rel="stylesheet">
+    <!-- My Scripts -->
+    <script src="/js/MyScripts.js"></script>
     <title>Study Time</title>
 </head>
-<body class="bg-light">
+<body class="bg-light" onload="displayTime(); displayDayMonthYear()">
     <div class="container-md  rounded shadow
     my-3 background-img">
 
@@ -22,8 +24,8 @@
                 d-flex justify-content-center flex-column align-items-center
                 my-3 py-1">
                  
-                        <h3 class="text-light">14 of September of 2022</h3>
-                        <h5 class="text-light">00:00:00</h5>
+                        <h3 class="text-light" id="top_dateMonthYearDisplay"></h3>
+                        <h5 class="text-light" id="top_timeDisplay">00:00:00</h5>
  
                 </div>
             </div>
@@ -41,20 +43,20 @@
                      background-warning" 
                     ><!-- rounded shadow style="border:solid green" -->
                         <div class="my-2">
-                            <button class="btn btn-dark btn-sm" type="submit">Button</button>
-                            <span>00:00:00</span>
+                            <button id="btnSetSessionStartTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStartTimeOfStudySession()">START</button>
+                            <span id="labelStartTime">00:00:00</span>
                         </div>    
                         <div class="my-2">
-                            <button class="btn btn-dark btn-sm" type="submit">Button</button>
-                            <span>00:00:00</span>
+                            <button id="btnSetSessionPauseTime" class="btn btn-dark btn-sm btn-with btn-dis" type="button" onclick="setPauseTimeOfStudySession()" disabled>PAUSE</button>
+                            <span id="labelPauseTime">00:00:00</span>
                         </div> 
                         <div class="my-2">
-                            <button class="btn btn-dark btn-sm" type="submit">Button</button>
-                            <span>00:00:00</span>
+                            <button id="btnSetSessionResumeTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setResumeTimeOfStudySession()" disabled>RESUME</button>
+                            <span id="labelResumeTime">00:00:00</span>
                         </div> 
                         <div class="my-2">
-                            <button class="btn btn-dark btn-sm" type="submit">Button</button>
-                            <span>00:00:00</span>
+                            <button id="btnSetSessionStopTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStopTimeOfStudySession()" disabled>STOP</button>
+                            <span id="labelStopTime">00:00:00</span>
                         </div> 
                     </div>
                     <!-- 
