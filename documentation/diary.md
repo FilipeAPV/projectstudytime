@@ -44,4 +44,13 @@
 ## As a Scrum Master
 
 - **Sprint Status**
-      
+      - ![Burndown Chart](https://bitbucket.org/FAPVieira/projectstudytime/raw/fa0ed3a0a8d38e61b48d5bec0da768c37ce0e06e/documentation/resources/burndown_chart_241022.png)
+
+      - **Situation:**
+          - We are clearly behind schedule for the reasons stated earlier. 
+      - **Measures:**
+          - As we need to deliver some piece of functionality by the end of the sprint we will **prioritize** tickets that are related to front-end so we are able to make a show and tell and receive some feedback.  
+      - **Constraints:**
+          - As mentioned, the risk *technical complexity* was materialized and now we are facing **time constraints**. 
+              - Either we'll need to work more time - increasing the cost, or deliver less functionality - lowering the quality.       
+
