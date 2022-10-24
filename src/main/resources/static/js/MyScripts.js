@@ -1,4 +1,10 @@
 /**
+ * Global Variables
+ */
+
+let isSessionOngoing = false;
+
+/**
  * Display Date as: Mon Oct 24 2022
  */
 
@@ -15,13 +21,7 @@ function displayDayMonthYear() {
  */
 
 // "0" are added in order for the backend to correctly parse Date from String
-function currentTime() {
-    const currentDate = new Date();
-
-    let hourOfTheDay = currentDate.getHours();
-    let minuteOfTheDay = currentDate.getMinutes();
-    let secondOfTheDay = currentDate.getSeconds();
-
+function formatTime(hourOfTheDay, minuteOfTheDay, secondOfTheDay) {
     if (hourOfTheDay >= 0 && hourOfTheDay <= 9) {
         hourOfTheDay = "0" + hourOfTheDay;
     }
@@ -39,6 +39,19 @@ function currentTime() {
     return currentTime;
 }
 
+// Get current time
+function currentTime() {
+    const currentDate = new Date();
+
+    let hourOfTheDay = currentDate.getHours();
+    let minuteOfTheDay = currentDate.getMinutes();
+    let secondOfTheDay = currentDate.getSeconds();
+
+    const currentTime = formatTime(hourOfTheDay, minuteOfTheDay, secondOfTheDay);
+
+    return currentTime;
+}
+
 // Executes the function displayTime() every second
 function continuousExecution(){
     var refresh=1000; // Refresh rate in milli seconds
@@ -48,6 +61,12 @@ function continuousExecution(){
 // Updates the front-end element
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
+
+    if (isSessionOngoing) {
+        calcStudySessionTimer();
+        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
+    }
+
     continuousExecution();
 }
 
@@ -56,14 +75,21 @@ function displayTime() {
  */
 
 function setStartTimeOfStudySession() {
+    isSessionOngoing = true;
+
     document.getElementById("labelStartTime").textContent = currentTime();
 
     document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
     document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+
+    showStudySessionTimer();
 }
+
 function setPauseTimeOfStudySession() {
+    isSessionOngoing = false;
+
     document.getElementById("labelPauseTime").textContent = currentTime();
 
     document.getElementById("btnSetSessionResumeTime").removeAttribute("disabled");
@@ -71,17 +97,52 @@ function setPauseTimeOfStudySession() {
     document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
     document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
 }
+
 function setResumeTimeOfStudySession() {
+    isSessionOngoing = true;
+
     document.getElementById("labelResumeTime").textContent = currentTime();
 
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
     document.getElementById("btnSetSessionResumeTime").setAttribute("disabled","");
-
-
 }
+
 function setStopTimeOfStudySession() {
+    isSessionOngoing = false;
+
     document.getElementById("labelStopTime").textContent = currentTime();
 
     document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+}
+
+/**
+ * Study Session Timer
+ * Time elapsed since the start of the study session
+ */
+
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+function calcStudySessionTimer() {
+    if (!isSessionOngoing) {
+        return;
+    }
+
+    seconds++;
+
+    if (seconds === 60) {
+        minutes++;
+        seconds = 0;
+    }
+
+    if (minutes === 60) {
+        hours++;
+        minutes = 0;
+    }
+
+    let timeElapsed = formatTime(hours, minutes, seconds);
+
+    document.getElementById("textCurrentStudySessionTimer").textContent = timeElapsed;
 }

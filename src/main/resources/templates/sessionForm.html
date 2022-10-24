@@ -37,11 +37,11 @@
                 <div class="container
                 d-flex justify-content-center flex-column align-items-center
                 " 
-                ><!-- style="border:solid salmon" -->
+                >
                     <div class= "container
                     d-flex justify-content-center flex-column align-items-center
                      background-warning" 
-                    ><!-- rounded shadow style="border:solid green" -->
+                    >
                         <div class="my-2">
                             <button id="btnSetSessionStartTime" class="btn btn-dark btn-sm btn-with" type="button" onclick="setStartTimeOfStudySession()">START</button>
                             <span id="labelStartTime">00:00:00</span>
@@ -111,9 +111,13 @@
         <div class="row">
             <div class="col-md">
                 <div class="container my-3 py-2
-                container background-dark rounded shadow-sm "
-                ><!-- style="border:solid rebeccapurple" -->
+                container background-dark rounded shadow-sm
+                d-flex justify-content-between"
+                >
                     <button class="btn btn-light btn-sm" type="submit">Button</button>
+                    <div hidden id="divCurrentStudySessionTimer" class="">
+                        <p class="text-light my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="text-light"></span></p>
+                    </div>
                 </div>
             </div>
         </div>
