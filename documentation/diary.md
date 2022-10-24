@@ -26,6 +26,22 @@
 
 - Created the Entity Class that will be used by JPA to create the Table
       - Populated this table with dummy data using an excellent [website](https://filldb.info/)
+- Moved the previously worked on layout to the project
+      - **Blocker**: An application re-start was necessary to update the static content *(css, img, js)* on the page displaid.
+          - Managed to find a way to solve the issue, but it took me a considerable amount of time to do so.
 
 ## Analysis
+
+- So far I've been blocked by general issues that nothing have to do with the problem I'm trying to solve.
+      - Also, I've been taking note of the solutions for these problems for future reference.
+
 ## Hours of Work
+
+- 4 H
+
+# Day 3. (24/10/2022)
+
+## As a Scrum Master
+
+- **Sprint Status**
+      
