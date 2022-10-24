@@ -54,3 +54,13 @@
           - As mentioned, the risk *technical complexity* was materialized and now we are facing **time constraints**. 
               - Either we'll need to work more time - increasing the cost, or deliver less functionality - lowering the quality.       
 
+## Technical
+
+- Worked on the START, PAUSE, RESUME and STOP button's
+- Study session timer
+- Re-created the Entity class because I didn't save or push it to the server
+- Worked on the session form submission
+
+## Analysis
+
+- Without major blockers the coding session went very well
