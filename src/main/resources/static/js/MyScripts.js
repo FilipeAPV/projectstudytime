@@ -83,8 +83,7 @@ function setStartTimeOfStudySession() {
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
     document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-
-    showStudySessionTimer();
+    
 }
 
 function setPauseTimeOfStudySession() {
