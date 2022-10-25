@@ -65,11 +65,32 @@
 
 - Without major blockers the coding session went very well
 
+## Hours of Work
+
+- 5 H
+
 # Day 4. (25/10/2022)
 
+## Technical
+
 - Implement indentation strategy previously developed
-- Add field validation
+- Add field validation (client side)
 - Add modal messages
-- add markdown preview
-4h15m
-2h30
+- Add markdown preview
+
+## Analysis
+
+- Solved some interesting problems and didn't have major blockers
+
+## Hours of Work
+
+- 7 H
+
+# END OF THE FIRST SPRINT
+
+## Technical
+- ![UI_1](https://bitbucket.org/FAPVieira/projectstudytime/raw/c49bf45833d23d83bd7b078cb301df2a53c0cb2c/documentation/resources/point1_a.png)
+- ![UI_2](https://bitbucket.org/FAPVieira/projectstudytime/raw/c49bf45833d23d83bd7b078cb301df2a53c0cb2c/documentation/resources/point1_b.png)
+
+## Spring Snapshot
+- ![KanbanBoard](https://bitbucket.org/FAPVieira/projectstudytime/raw/0bfa56eaff4029d7a00aba1316ffe916ed024af7/documentation/resources/agile_25102022.png)

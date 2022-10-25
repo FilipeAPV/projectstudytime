@@ -1,29 +1,17 @@
-# README #
+# README
 
-This README would normally document whatever steps are necessary to get your application up and running.
+- Access the application on-line [here](https://f-projectstudytime.tpy1e7yxhct.eu-gb.codeengine.appdomain.cloud/).
 
-### What is this repository for? ###
+# LINKS
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+- [Problem that I'm trying to solve and PoC](https://bitbucket.org/FAPVieira/studytime/src/master/Research/CaseStudy.md)
+- [Project Diary](https://bitbucket.org/FAPVieira/projectstudytime/src/master/documentation/diary.md)
 
-### How do I get set up? ###
+# How do I get set up?
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+1. Download and Install Docker
+2. Clone or Fork Repository
+3. From the project directory ```...\projectstudytime>``` run the following commands:
+      1. ```docker build -t studytime .```
+      2. ```docker run -p 8085:5000 -t studytime```
+4. From your browser access ```http://localhost:8085/``` 
