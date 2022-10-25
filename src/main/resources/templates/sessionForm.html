@@ -75,7 +75,7 @@
                         background-warning"
                         ><!-- rounded shadow  style="border:solid blue" -->
                             <div class="my-2">
-                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
+                                <button id = "testbtn" class="btn btn-warning btn-sm" type="button">Button</button>
 
                             </div>
                             <div class="my-2">
@@ -130,6 +130,10 @@
 <script>
     allowTabInsideTextArea("sessionContent");
     allowTabInsideTextArea("sessionFeelings");
+    document.getElementById("testbtn").addEventListener("click", function () {
+        validateAndIdentTextArea("sessionContent");
+        //validateAndIdentTextArea("sessionFeelings");
+    });
 </script>
 </body>
 </html>

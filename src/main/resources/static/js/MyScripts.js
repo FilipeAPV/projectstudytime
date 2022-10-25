@@ -83,7 +83,7 @@ function setStartTimeOfStudySession() {
     document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
     document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-    
+
 }
 
 function setPauseTimeOfStudySession() {
@@ -150,7 +150,7 @@ function calcStudySessionTimer() {
  * Session Form
  */
 
-// Set content of the hidden field
+// Set value (date) of the hidden field
 function setDateToHiddenValue() {
     const date = new Date();
 
@@ -163,6 +163,10 @@ function setDateToHiddenValue() {
     const formattedDate = date.getFullYear() + '-' + month + '-' + day;
     document.getElementById("sessionDate").setAttribute("value", formattedDate);
 }
+
+/**
+ * TextArea
+ */
 
 /*Allow Tab inside textAreas*/
 function allowTabInsideTextArea(elementId) {
@@ -181,4 +185,138 @@ function allowTabInsideTextArea(elementId) {
     });
 }
 
-// TODO: Line Validation
+// Return an Array of all the lines inside the text area
+function getLines(textArea) {
+    return textArea.value.split("\n");
+}
+
+// Counts number of empty spaced between 0 and the index of the character '-'
+function countNumberOfEmptySpaces(line) {
+    const index = line.indexOf('-');
+    return line.substring(0, index).length;
+}
+
+// Algorithm to add or remove number of empty spaces
+// Created based on the observation of the number of spaced needed to have a correct indentation
+function numberOfEmptySpacesToAddOrRemove(numberOfEmptySpacesPresentPerLine) {
+    const numberOfEmptySpacesByDefault = 6;
+    let numberOfEmptySpaces = 0;
+    for (let i = numberOfEmptySpacesByDefault, k = 4; i <= numberOfEmptySpacesPresentPerLine; i += numberOfEmptySpacesByDefault, k-=2) {
+        numberOfEmptySpaces = k;
+    }
+    return numberOfEmptySpaces;
+}
+
+// Return an Array of valid lines or log messages if they are not valid
+function validateLines(arrayWithLines) {
+    let validLines = [];
+    for (let i = 0; i < arrayWithLines.length; i++) {
+        let isValid = true;
+        let currentLine = arrayWithLines[i];
+
+        // If Line does not have '-', Then Line is invalid
+        if (currentLine.indexOf('-') === -1) {
+            console.log("Line " + i + " has an invalid format. All lines must start with '-' but no such character was found");
+            isValid = false;
+            break;
+        }
+
+        const index = currentLine.indexOf('-');
+        let newString = currentLine.substring(0, index);
+
+        // If between the Line's index 0 and the '-' there is something else than ' ' (empty space)
+        // Then Line is invalid
+        for (let k = 0; k < newString.length; k++) {
+            if (newString.charAt(k) !== " ") {
+                console.log("Line " + i + " has an invalid format. All lines must start with '-' but other characters were found");
+                isValid = false;
+                break;
+            }
+        }
+
+        // If number of empty spaces is not a multiple of 6, Then Line is invalid
+        const isNotMultipleOfSix = countNumberOfEmptySpaces(currentLine) % 6 !== 0;
+        if (isNotMultipleOfSix) {
+            console.log("Line " + i + " is not multiple of 6. Please use tab to indent the lines");
+            isValid = false;
+        }
+
+        // If there is no ' ' (empty space) after the '-', Then we add one.
+        // Otherwise, Markdown does not recognize the line.
+        if (currentLine.charAt(index+1) !== ' ') {
+            const linePartOne = currentLine.substring(0, index+1);
+            const linePartTwo = currentLine.substring(index+1);
+            currentLine = linePartOne + ' ' + linePartTwo;
+            console.log("Line " + i + ": No space detected after '-', so a space has been added");
+        }
+
+
+        if (isValid) {
+            validLines.push(currentLine);
+        }
+
+    }
+    return validLines;
+}
+
+// Indent each line by adding empty spaces
+function indentAllTabs(arrayWithValidLines) {
+    const startingSpace = "      ";
+    const oneEmptySpace = " ";
+    let line;
+    let numberOfEmptySpaces;
+    let emptySpacesToAdd = 0;
+    let indentedArray = [];
+
+    for (let i = 0; i < arrayWithValidLines.length; i++) {
+        line = arrayWithValidLines[i];
+        numberOfEmptySpaces = countNumberOfEmptySpaces(line);
+        // If line has no empty space, add the default of 6 empty spaces
+        if (numberOfEmptySpaces === 0) {
+            line = startingSpace + line;
+            indentedArray.push(line);
+            continue;
+        }
+
+        emptySpacesToAdd = numberOfEmptySpacesToAddOrRemove(numberOfEmptySpaces);
+
+        console.log("Line: " + (i));
+        console.log("Number of empty spaces: " + numberOfEmptySpaces);
+        console.log("Number of spaces to add: " + emptySpacesToAdd);
+
+        if (emptySpacesToAdd >= 0) {
+            // k = 1 because we want 1 based counting.
+            // Ex: If emptySpacesToAdd = 6, we want only 6 iterations and not 7 (would happen if k = 0)
+            for (let k = 1; k <= emptySpacesToAdd; k++) {
+                line = oneEmptySpace + line;
+            }
+        } else {
+            // Remove the number of empty spaces by creating a shorter String
+            line = line.substring(Math.abs(emptySpacesToAdd) + 1);
+        }
+
+        indentedArray.push(line);
+        emptySpacesToAdd = 0;
+    }
+    return indentedArray;
+}
+
+function convertArrayToString(indentedArray) {
+    let output = "";
+    for (let i = 0; i < indentedArray.length; i++) {
+        output += indentedArray[i] + "\n";
+    }
+    return output;
+}
+
+function validateAndIdentTextArea(textAreaId) {
+    const currentTextArea = document.getElementById(textAreaId);
+
+    let lines = getLines(currentTextArea);
+    let validLines = validateLines(lines);
+    const indentedLines = indentAllTabs(validLines);
+    const indentedLinesToString = convertArrayToString(indentedLines);
+
+    //currentTextArea.value = indentedLinesToString;
+}
+
