@@ -64,3 +64,12 @@
 ## Analysis
 
 - Without major blockers the coding session went very well
+
+# Day 4. (25/10/2022)
+
+- Implement indentation strategy previously developed
+- Add field validation
+- Add modal messages
+- add markdown preview
+4h15m
+2h30
