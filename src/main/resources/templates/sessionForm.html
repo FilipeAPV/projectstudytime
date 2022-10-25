@@ -75,12 +75,7 @@
                         background-warning"
                         ><!-- rounded shadow  style="border:solid blue" -->
                             <div class="my-2">
-                                <button id = "testbtn" class="btn btn-warning btn-sm" type="button">Button</button>
-
-                            </div>
-                            <div class="my-2">
-                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
-
+                                <button id = "testbtn2" class="btn btn-warning btn-sm" type="button">Preview & Save</button>
                             </div>
                             <div class="my-2">
                                 <button class="btn btn-warning btn-sm" type="submit">Button</button>
@@ -99,20 +94,17 @@
                     background-warning
                     pb-4">
                         <div>
-                            <label for="sessionContent">Content:</label>
+                            <label id="sessionContentLabel" for="sessionContent">Content</label>
                             <textarea class="form-control" id="sessionContent" rows="12" cols="100" th:field="*{content}"></textarea>
                         </div>
                         <div>
-                            <label for="sessionFeelings">Feelings:</label>
+                            <label id="sessionFeelingsLabel" for="sessionFeelings">Feelings</label>
                             <textarea class="form-control" id="sessionFeelings" rows="12" cols="100" th:field="*{feelings}"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-
-
-
         <div class="row">
             <div class="col-md">
                 <div class="container my-3 py-2
@@ -127,13 +119,57 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Indentation -->
+    <div class="modal fade" id="indentationModal" tabindex="-1" aria-labelledby="indentationModalLabelTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="indentationModalLabelTitle"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="indentationModalLabelText"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Preview -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="previewModalLabel">Preview</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="markdownPreview"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
 <script>
     allowTabInsideTextArea("sessionContent");
     allowTabInsideTextArea("sessionFeelings");
-    document.getElementById("testbtn").addEventListener("click", function () {
-        validateAndIdentTextArea("sessionContent");
-        //validateAndIdentTextArea("sessionFeelings");
+
+    document.getElementById("testbtn2").addEventListener("click", function (){
+        const markdownDiv = document.getElementById("markdownPreview");
+        markdownDiv.innerHTML = "";
+        document.getElementById("textarea-hidden").value = "";
+
+        let isValidated = validateAndIdentTextArea("sessionContent", true);
+        if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
+        if (isValidated) {showModalPreview();}
     });
+
 </script>
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
 </body>
 </html>

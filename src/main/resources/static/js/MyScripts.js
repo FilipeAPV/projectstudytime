@@ -207,18 +207,63 @@ function numberOfEmptySpacesToAddOrRemove(numberOfEmptySpacesPresentPerLine) {
     return numberOfEmptySpaces;
 }
 
-// Return an Array of valid lines or log messages if they are not valid
-function validateLines(arrayWithLines) {
+// Show Modal for Indentation Alerts
+function showModalIndentation(title, message) {
+
+    const indentationModal = new bootstrap.Modal(document.getElementById("indentationModal"), {});
+    document.getElementById("indentationModalLabelTitle").innerHTML=title;
+    document.getElementById("indentationModalLabelText").innerHTML=message;
+    indentationModal.show();
+
+}
+
+// Show Modal for Preview
+function showModalPreview() {
+    const previewModal = new bootstrap.Modal(document.getElementById("previewModal"), {});
+
+    const textareahidden = document.getElementById("textarea-hidden").value;
+
+    const valueToAdd = "<md-block>" + textareahidden + "</md-block>";
+
+    const markdownDiv = document.getElementById("markdownPreview");
+
+    markdownDiv.insertAdjacentHTML("beforeend", valueToAdd);
+    previewModal.show();
+}
+
+// Check if there are lines to validate
+function isTheTextAreaEmpty(arrayWithLines) {
+    return arrayWithLines.length === 1 && arrayWithLines[0] === "";
+}
+
+// Get text inside the label from field id
+function getLabelFromFieldId(fieldId) {
+    const labelId = fieldId + "Label";
+    return document.getElementById(labelId).innerHTML;
+}
+
+// Return an Array of valid lines or sends a Modal message and stops execution.
+function validateLines(arrayWithLines, textAreaId) {
+
+    const nameToDisplay = getLabelFromFieldId(textAreaId);
+    const modalTitle = "Validation Error: " + "<b>" + nameToDisplay + "</b>";
+
     let validLines = [];
+
+    if (isTheTextAreaEmpty(arrayWithLines)) {
+        showModalIndentation(modalTitle, "Please fill the content field");
+        return false;
+    }
+
     for (let i = 0; i < arrayWithLines.length; i++) {
-        let isValid = true;
+        let lineNumberForUser = i + 1;
         let currentLine = arrayWithLines[i];
 
         // If Line does not have '-', Then Line is invalid
         if (currentLine.indexOf('-') === -1) {
-            console.log("Line " + i + " has an invalid format. All lines must start with '-' but no such character was found");
-            isValid = false;
-            break;
+            console.log("Line " + lineNumberForUser + " has an invalid format. All lines must start with '-' but no such character was found");
+            showModalIndentation(modalTitle, "Line " + lineNumberForUser + " has an invalid format. All lines must start with '-' but no such character was found");
+            return false;
         }
 
         const index = currentLine.indexOf('-');
@@ -228,17 +273,18 @@ function validateLines(arrayWithLines) {
         // Then Line is invalid
         for (let k = 0; k < newString.length; k++) {
             if (newString.charAt(k) !== " ") {
-                console.log("Line " + i + " has an invalid format. All lines must start with '-' but other characters were found");
-                isValid = false;
-                break;
+                console.log("Line " + lineNumberForUser + " has an invalid format. All lines must start with '-' but other characters were found");
+                showModalIndentation(modalTitle, "Line " + lineNumberForUser + " has an invalid format. All lines must start with '-' but other characters were found");
+                return false;
             }
         }
 
         // If number of empty spaces is not a multiple of 6, Then Line is invalid
         const isNotMultipleOfSix = countNumberOfEmptySpaces(currentLine) % 6 !== 0;
         if (isNotMultipleOfSix) {
-            console.log("Line " + i + " is not multiple of 6. Please use tab to indent the lines");
-            isValid = false;
+            console.log("Line " + lineNumberForUser + " is not multiple of 6. Please use tab to indent the lines");
+            showModalIndentation(modalTitle, "Line " + lineNumberForUser + " is not multiple of 6. Please use tab to indent the lines");
+            return false;
         }
 
         // If there is no ' ' (empty space) after the '-', Then we add one.
@@ -250,12 +296,9 @@ function validateLines(arrayWithLines) {
             console.log("Line " + i + ": No space detected after '-', so a space has been added");
         }
 
-
-        if (isValid) {
-            validLines.push(currentLine);
-        }
-
+        validLines.push(currentLine);
     }
+
     return validLines;
 }
 
@@ -269,6 +312,7 @@ function indentAllTabs(arrayWithValidLines) {
     let indentedArray = [];
 
     for (let i = 0; i < arrayWithValidLines.length; i++) {
+        let lineNumberForUser = i + 1;
         line = arrayWithValidLines[i];
         numberOfEmptySpaces = countNumberOfEmptySpaces(line);
         // If line has no empty space, add the default of 6 empty spaces
@@ -280,7 +324,7 @@ function indentAllTabs(arrayWithValidLines) {
 
         emptySpacesToAdd = numberOfEmptySpacesToAddOrRemove(numberOfEmptySpaces);
 
-        console.log("Line: " + (i));
+        console.log("Line: " + lineNumberForUser);
         console.log("Number of empty spaces: " + numberOfEmptySpaces);
         console.log("Number of spaces to add: " + emptySpacesToAdd);
 
@@ -309,14 +353,26 @@ function convertArrayToString(indentedArray) {
     return output;
 }
 
-function validateAndIdentTextArea(textAreaId) {
+function validateAndIdentTextArea(textAreaId, isMandatory) {
     const currentTextArea = document.getElementById(textAreaId);
+    const hiddenTextArea = document.getElementById("textarea-hidden");
 
     let lines = getLines(currentTextArea);
-    let validLines = validateLines(lines);
-    const indentedLines = indentAllTabs(validLines);
-    const indentedLinesToString = convertArrayToString(indentedLines);
 
-    //currentTextArea.value = indentedLinesToString;
+    if (isTheTextAreaEmpty(lines) && !isMandatory) {
+       return true;
+    }
+
+    let validLines = validateLines(lines, textAreaId);
+    if (validLines !== false) {
+        const indentedLines = indentAllTabs(validLines);
+        const indentedLinesToString = convertArrayToString(indentedLines);
+
+        hiddenTextArea.value += "      # " + getLabelFromFieldId(textAreaId);
+        hiddenTextArea.value += "\n";
+        hiddenTextArea.value += indentedLinesToString;
+        return true;
+    }
+
+    return false;
 }
-
