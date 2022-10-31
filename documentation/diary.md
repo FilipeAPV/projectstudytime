@@ -94,3 +94,20 @@
 
 ## Spring Snapshot
 - ![KanbanBoard](https://bitbucket.org/FAPVieira/projectstudytime/raw/0bfa56eaff4029d7a00aba1316ffe916ed024af7/documentation/resources/agile_25102022.png)
+
+## Contract
+- In contractual terms we've failed the delivery of the **save** module corresponding to the first milestone.
+
+## As a Product Owner 
+
+- Client comments:
+      - Requested a UI change: modals need to be vertically lowered 
+      - Detected a bug: pictures are expanding of the parent div.
+
+- General orientation for the next sprint:
+      - Address the database part that we should have delivered and prioritize other database related tickets (listing daily logs, etc)
+
+- Sprint Planning:
+      - ![SprintPlanning](https://bytebucket.org/FAPVieira/projectstudytime/raw/589018e2a09de4987e6e5ae90ab9ef02064c0420/documentation/resources/start_second_sprint_311022.png?token=8c69e2d660584d7ba04bdbc8135117ab1286ec6c)
+
+# Day 5. (31/10/2022)
