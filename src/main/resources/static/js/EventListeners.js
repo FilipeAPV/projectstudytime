@@ -19,8 +19,8 @@ window.onload = function () {
     const sessionForm = document.getElementById("sessionForm");
     const sessionContent = document.getElementById("sessionContent");
     const sessionFeelings = document.getElementById("sessionFeelings");
-    const testBtn2 = document.getElementById("testbtn2");
-
+    const previewAndSaveBtn = document.getElementById("previewAndSaveBtn");
+    const goToSessionListBtn = document.getElementById("goToSessionListBtn");
 
     displayTime();
     displayDayMonthYear();
@@ -34,7 +34,7 @@ window.onload = function () {
     });
 
     //Textarea validation
-    testBtn2.addEventListener("click", function (){
+    previewAndSaveBtn.addEventListener("click", function (){
         const markdownDiv = document.getElementById("markdownPreview");
         markdownDiv.innerHTML = "";
         document.getElementById("textarea-hidden").value = "";
@@ -42,6 +42,11 @@ window.onload = function () {
         let isValidated = validateAndIdentTextArea("sessionContent", true);
         if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
         if (isValidated) {showModalPreview();}
+    });
+
+    //Open Session List page
+    goToSessionListBtn.addEventListener("click", function (){
+        window.location="/sessionList";
     });
 }
 

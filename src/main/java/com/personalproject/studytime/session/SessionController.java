@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class SessionController {
 
@@ -26,6 +28,14 @@ public class SessionController {
     public String saveSession(@ModelAttribute(name = "sessionObj") SessionModel sessionModel) {
         sessionService.saveSession(sessionModel);
         return "redirect:/";
+    }
+
+    @GetMapping("/sessionList")
+    public String showSessionList(Model model) {
+        List<SessionModel> sessionList = sessionService.getSessionList();
+        model.addAttribute("sessionList", sessionList);
+        System.out.println(sessionList.size());
+        return "sessionList";
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class SessionService {
@@ -26,10 +27,10 @@ public class SessionService {
         /**
          * REMOVE
          */
-        sessionModel.setStartTime(LocalTime.of(0,0));
+/*        sessionModel.setStartTime(LocalTime.of(0,0));
         sessionModel.setPauseTime(LocalTime.of(0,0));
         sessionModel.setResumeTime(LocalTime.of(0,0));
-        sessionModel.setStopTime(LocalTime.of(0,0));
+        sessionModel.setStopTime(LocalTime.of(0,0));*/
         /**
          *
          */
@@ -43,5 +44,9 @@ public class SessionService {
             isSaved = true;
         }
         return isSaved;
+    }
+
+    public List<SessionModel> getSessionList() {
+        return sessionRepository.findAll();
     }
 }
