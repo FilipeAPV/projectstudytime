@@ -14,7 +14,8 @@
     <script src="/js/MyScripts.js"></script>
     <title>Study Time</title>
 </head>
-<body class="bg-light" onload="displayTime(); displayDayMonthYear()">
+<!--<body class="bg-light" onload="displayTime(); displayDayMonthYear()">-->
+<body class="bg-light">
     <div class="container-md  rounded shadow
     my-3 background-img">
 
@@ -155,21 +156,6 @@
         </div>
     </div>
     <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
-<script>
-    allowTabInsideTextArea("sessionContent");
-    allowTabInsideTextArea("sessionFeelings");
-
-    document.getElementById("testbtn2").addEventListener("click", function (){
-        const markdownDiv = document.getElementById("markdownPreview");
-        markdownDiv.innerHTML = "";
-        document.getElementById("textarea-hidden").value = "";
-
-        let isValidated = validateAndIdentTextArea("sessionContent", true);
-        if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
-        if (isValidated) {showModalPreview();}
-    });
-
-</script>
 <script src="/js/EventListeners.js"></script>
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 </body>
