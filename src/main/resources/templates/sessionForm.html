@@ -1,38 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <!-- My Style -->
-    <link href="/css/sessionForm_style.css" rel="stylesheet">
-    <!-- My Scripts -->
-    <script src="/js/MyScripts.js"></script>
-    <title>Study Time</title>
-</head>
-<!--<body class="bg-light" onload="displayTime(); displayDayMonthYear()">-->
+<head th:replace="/fragments/head :: head('Study Time :: Session')"></head>
 <body class="bg-light">
     <div class="container-md  rounded shadow
     my-3 background-img">
 
-        <div class="row">
-            <div class="col-md">
-                <div class="container background-dark rounded shadow-sm
-                d-flex justify-content-center flex-column align-items-center
-                my-3 py-1">
-                 
-                        <h3 class="text-light" id="top_dateMonthYearDisplay"></h3>
-                        <h5 class="text-light" id="top_timeDisplay">00:00:00</h5>
- 
-                </div>
-            </div>
-        </div>
+        <div th:replace="/fragments/container_rows :: row_header"></div>
+
         <form id="sessionForm" th:object="${sessionObj}" th:action="@{/saveSessionForm}" method="post">
             <input type="hidden" th:field="*{date}" id="sessionDate">
+
             <div class="row">
                 <div class="col-md-4
                     d-flex justify-content-center flex-column align-items-center">
@@ -105,20 +82,9 @@
                     </div>
                 </div>
             </div>
+
         </form>
-        <div class="row">
-            <div class="col-md">
-                <div class="container my-3 py-2
-                container background-dark rounded shadow-sm
-                d-flex justify-content-between"
-                >
-                    <button class="btn btn-light btn-sm" type="submit">Button</button>
-                    <div hidden id="divCurrentStudySessionTimer" class="">
-                        <p class="text-light my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="text-light"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div th:replace="/fragments/container_rows :: row_footer"></div>
     </div>
 
     <!-- Modal Indentation Warning -->

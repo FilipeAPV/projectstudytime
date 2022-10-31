@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="row_header" class="row">
+    <div class="col-md">
+        <div class="container background-dark rounded shadow-sm
+                d-flex justify-content-center flex-column align-items-center
+                my-3 py-1">
+
+            <h3 class="text-light" id="top_dateMonthYearDisplay"></h3>
+            <h5 class="text-light" id="top_timeDisplay">00:00:00</h5>
+        </div>
+    </div>
+</div>
+<div th:fragment="row_footer" class="row">
+    <div class="col-md">
+        <div class="container my-3 py-2
+                container background-dark rounded shadow-sm
+                d-flex justify-content-between"
+        >
+            <button class="btn btn-light btn-sm" type="submit">Button</button>
+            <div hidden id="divCurrentStudySessionTimer" class="">
+                <p class="text-light my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="text-light"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
