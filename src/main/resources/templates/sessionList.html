@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="/fragments/head :: head('Study Time :: Session List')"></head>
+<head th:replace="/fragments/head :: head('Study Time :: Session List')">
+</head>
 <body class="bg-light">
     <div class="container-md  rounded shadow
         my-3 background-img">
@@ -9,9 +10,9 @@
             <div class="col-md">
                 <div class="container">
                     <table class="table table-striped table-hover table-sm">
-                        <thead class="thead-dark">
+                        <thead class="thead-dark session-table">
                         <tr>
-                            <th scope="col">Date</th>
+                            <th scope="col" th:replace="/fragments/table_headers :: column_link('date', 'Date')"></th>
                             <th scope="col">Number</th>
                             <th scope="col">Content</th>
                             <th scope="col">Feelings</th>
@@ -29,9 +30,63 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="container text-center">
+                    <span>Page [[${pageNum}]] of [[${totalPages}]]</span>
+                </div>
+                <div class="container mt-2">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><a
+                                    th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                    class="page-link"
+                                    th:href="@{'/sessionList/1'}">First</a></li>
+                            <li class="page-item">
+                                <a
+                                        th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                        class="page-link"
+                                        th:href="@{'/sessionList/' + ${currentPage - 1}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <!--TODO: refactor-->
+                            <li     th:if="${currentPage >= 3 && currentPage <= totalPages - 2}"
+                                    th:classappend="${currentPage == i ? 'active' : ''}"
+                                    class="page-item"
+                                    th:each="i : ${#numbers.sequence(currentPage - 2, currentPage + 2)}">
+                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            </li>
+                            <li     th:if="${currentPage < 3}"
+                                    th:classappend="${currentPage == i ? 'active' : ''}"
+                                    class="page-item"
+                                    th:each="i : ${#numbers.sequence(1, 5)}">
+                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            </li>
+                            <li     th:if="${currentPage > totalPages - 2}"
+                                    th:classappend="${currentPage == i ? 'active' : ''}"
+                                    class="page-item"
+                                    th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}">
+                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a
+                                        th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+                                        class="page-link" th:href="@{'/sessionList/' + ${currentPage + 1}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a
+                                    th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+                                    class="page-link" th:href="@{'/sessionList/' + ${totalPages}}">Last</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
+
         <div th:replace="/fragments/container_rows :: row_footer"></div>
     </div>
+    <script src="/js/EventListeners.js"></script>
 </body>
 </html>

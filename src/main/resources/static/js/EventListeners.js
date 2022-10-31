@@ -21,6 +21,7 @@ window.onload = function () {
     const sessionFeelings = document.getElementById("sessionFeelings");
     const previewAndSaveBtn = document.getElementById("previewAndSaveBtn");
     const goToSessionListBtn = document.getElementById("goToSessionListBtn");
+    const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
 
     displayTime();
     displayDayMonthYear();
@@ -42,6 +43,15 @@ window.onload = function () {
         let isValidated = validateAndIdentTextArea("sessionContent", true);
         if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
         if (isValidated) {showModalPreview();}
+    });
+
+    //Close Indentation Modal and set textarea.value to original values
+    previewModalCloseBtn.addEventListener("click", function (){
+       if (originalTextAreaValues !== null) {
+           originalTextAreaValues.forEach((value, key) => {
+                document.getElementById(key).value = value;
+           });
+       }
     });
 
     //Open Session List page

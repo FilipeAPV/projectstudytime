@@ -339,9 +339,15 @@ function convertArrayToString(indentedArray) {
     return output;
 }
 
+// Temporarily Store non-formatted textarea's values so we can close modal and still have non-formatted values
+const originalTextAreaValues = new Map();
+
 function validateAndIdentTextArea(textAreaId, isMandatory) {
     const currentTextArea = document.getElementById(textAreaId);
     const hiddenTextArea = document.getElementById("textarea-hidden");
+
+    // Save original (non-formatted) values from textareas
+    originalTextAreaValues.set(textAreaId, currentTextArea.value);
 
     let lines = getLines(currentTextArea);
 
@@ -350,9 +356,13 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
     }
 
     let validLines = validateLines(lines, textAreaId);
+
     if (validLines !== false) {
         const indentedLines = indentAllTabs(validLines);
         const indentedLinesToString = convertArrayToString(indentedLines);
+
+        //Value to be saved in the DB
+        currentTextArea.value = indentedLinesToString;
 
         hiddenTextArea.value += "      # " + getLabelFromFieldId(textAreaId);
         hiddenTextArea.value += "\n";

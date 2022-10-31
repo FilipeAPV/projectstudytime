@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <th th:fragment="column_link(columnName, columnLabel)">
+        <a th:if="${sortField == columnName}"
+           th:href="@{'/sessionList/' + ${currentPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${reverseSortDir}}">
+            [[${columnLabel}]]
+        </a>
+        <a th:if="${sortField != columnName}"
+           th:href="@{'/sessionList/' + ${currentPage} + '?sortField=' + ${columnName} + '&sortDir=dsc'}">
+            [[${columnLabel}]]
+        </a>
+        <span th:if="${sortField == columnName}"
+              th:classappend="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+    </th>
+</body>
+</html>

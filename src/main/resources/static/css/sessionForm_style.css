@@ -28,3 +28,12 @@
 
   color: #2d2d34;
 }
+
+/* TABLE FROM SESSION LIST */
+
+.session-table th{
+  min-width: 100px;
+  text-align: center;
+  font-size: 18px;
+  color: #2d2d34;
+}

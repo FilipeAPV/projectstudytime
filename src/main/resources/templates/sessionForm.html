@@ -98,7 +98,7 @@
                     <p id="indentationModalLabelText"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="indentationModalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -114,13 +114,15 @@
                 </div>
                 <div class="modal-body" id="markdownPreview"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="previewModalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-    <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
+
+    <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" ></textarea>
+
 <script src="/js/EventListeners.js"></script>
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 </body>

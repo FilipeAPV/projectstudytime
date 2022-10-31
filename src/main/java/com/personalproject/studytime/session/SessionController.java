@@ -1,11 +1,9 @@
 package com.personalproject.studytime.session;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,10 +29,28 @@ public class SessionController {
     }
 
     @GetMapping("/sessionList")
-    public String showSessionList(Model model) {
-        List<SessionModel> sessionList = sessionService.getSessionList();
+    public String redirectToPageableSessionList() {
+        return "redirect:/sessionList/1?sortField=date&sortDir=dsc";
+    }
+
+    @GetMapping("/sessionList/{pageNum}")
+    public String showSessionList(Model model,
+                                  @PathVariable(name = "pageNum") int pageNum,
+                                  @RequestParam(name = "sortField") String sortField,
+                                  @RequestParam(name = "sortDir") String sortDir) {
+
+        String reverseSortDir = (sortDir.equals("asc")) ? "dsc" : "asc";
+
+        Page<SessionModel> page = sessionService.getSessionList(pageNum, sortField, sortDir);
+        List<SessionModel> sessionList = page.getContent();
+
         model.addAttribute("sessionList", sessionList);
-        System.out.println(sessionList.size());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", reverseSortDir);
+
         return "sessionList";
     }
 

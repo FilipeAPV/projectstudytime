@@ -1,8 +1,13 @@
 package com.personalproject.studytime.session;
 
+import com.personalproject.studytime.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -46,7 +51,11 @@ public class SessionService {
         return isSaved;
     }
 
-    public List<SessionModel> getSessionList() {
-        return sessionRepository.findAll();
+    public Page<SessionModel> getSessionList(int pageNum, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+        sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, Constants.USERS_PER_PAGE, sort);
+        return sessionRepository.findAll(pageable);
     }
 }
