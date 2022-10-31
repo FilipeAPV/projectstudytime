@@ -95,6 +95,10 @@
 ## Spring Snapshot
 - ![KanbanBoard](https://bitbucket.org/FAPVieira/projectstudytime/raw/0bfa56eaff4029d7a00aba1316ffe916ed024af7/documentation/resources/agile_25102022.png)
 
+## Total Hours of Work
+
+- 22 H
+
 ## Contract
 - In contractual terms we've failed the delivery of the **save** module corresponding to the first milestone.
 
@@ -111,3 +115,19 @@
       - ![SprintPlanning](https://bytebucket.org/FAPVieira/projectstudytime/raw/589018e2a09de4987e6e5ae90ab9ef02064c0420/documentation/resources/start_second_sprint_311022.png?token=8c69e2d660584d7ba04bdbc8135117ab1286ec6c)
 
 # Day 5. (31/10/2022)
+
+## Technical
+
+- Persist sessions in the DB
+- JS and HTML code refactoring
+- Pagination and Sorting
+
+      - ![SessionListLayout](https://bytebucket.org/FAPVieira/projectstudytime/raw/2d1dc965daa72f3c48f93a15717a151d790977dc/documentation/resources/list_session_31102022.png?token=0368431a453781aff12be05a161c732f540f80a2)
+
+## Analysis
+
+- Without major blockers, the session went well.
+
+## Hours of Work
+
+- 6H
