@@ -133,3 +133,28 @@
 - 6H
 
 # Day 6. (01/11/2022)
+
+## Technical
+
+- Most of the day was dedicated to allow the user to list saved sessions without loosing the current session's **data** (time, content and/or feelings already written)
+      - When the user changes page, the current **data** is saved in an HttpSession object
+          - An hidden field containing the current session stated (Ex: started, paused, etc) is also saved.
+      - When the user get's back to the main page:
+          - The form is loaded with the Object from the HttpSession
+          - The buttons configuration (disabled, etc) is loaded based on the hidden field
+
+- Connected the app with the Database that has *real data* and that helped detecting some bugs
+
+## Analysis
+
+- I had several blockers during the day but managed to accomplish the above described task.
+      - To achieve that I worked 3 hours more than what I should have done which will likely bring some kind of constrain in the future (quality or cost)
+
+- Also, I'm detecting new bugs that need to be addressed and that will cause time constraints later on.
+
+## Hours of Work
+
+- 7H
+
+
+----------- Analyse before start working. New tickets need to be evaluated in terms of story points
