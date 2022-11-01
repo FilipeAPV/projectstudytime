@@ -2,8 +2,11 @@
  * Global Variables
  */
 
-let isSessionOngoing = false;
+let currentSessionState = "NOTSTARTED";
+let isOnGoing = false;
 
+console.log("MyScript.js - Set currentSessionState to: " + currentSessionState);
+console.log("Is on ? " + isOnGoing);
 
 /**
  * Display Date as: Mon Oct 24 2022
@@ -62,8 +65,8 @@ function continuousExecution(){
 // Updates the front-end element
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
-
-    if (isSessionOngoing) {
+    isOnGoing = (currentSessionState === "STARTED" || currentSessionState === "RESUMED");
+    if (isOnGoing) {
         calcStudySessionTimer();
         document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
     }
@@ -75,46 +78,77 @@ function displayTime() {
  * START, PAUSE, RESUME, STOP functionality
  */
 
+// Define BTN disabled and enabled state
+function setBtnState(currentSessionState) {
+    switch (currentSessionState) {
+        case "STARTED" : {
+            document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
+            document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
+
+            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+        }
+        break;
+        case "PAUSED" : {
+            document.getElementById("btnSetSessionResumeTime").removeAttribute("disabled");
+
+            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+        }
+        break;
+        case "RESUMED" : {
+            document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
+
+            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionResumeTime").setAttribute("disabled","");
+        }
+        break;
+        case "STOPPED" : {
+            document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+        }
+        break;
+    }
+}
+
 function setStartTimeOfStudySession() {
-    isSessionOngoing = true;
+    currentSessionState = "STARTED";
 
     document.getElementById("labelStartTime").value = currentTime();
 
-    document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
-    document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
-
-    document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-
+    setBtnState(currentSessionState);
 }
 
 function setPauseTimeOfStudySession() {
-    isSessionOngoing = false;
+    currentSessionState = "PAUSED";
 
     document.getElementById("labelPauseTime").value = currentTime();
 
-    document.getElementById("btnSetSessionResumeTime").removeAttribute("disabled");
-
-    document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
-    document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+    setBtnState(currentSessionState);
 }
 
 function setResumeTimeOfStudySession() {
-    isSessionOngoing = true;
+    currentSessionState = "RESUMED";
 
     document.getElementById("labelResumeTime").value = currentTime();
 
-    document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
-
-    document.getElementById("btnSetSessionResumeTime").setAttribute("disabled","");
+    setBtnState(currentSessionState);
 }
 
 function setStopTimeOfStudySession() {
-    isSessionOngoing = false;
+    currentSessionState = "STOPPED";
 
     document.getElementById("labelStopTime").value = currentTime();
 
-    document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+    setBtnState(currentSessionState);
 }
+
+async function returnNewSession() {
+    const response = await fetch("/deleteCurrentSessionAttribute");
+    console.log(response);
+    window.location="/";
+}
+
 
 /**
  * Study Session Timer
@@ -126,7 +160,7 @@ let minutes = 0;
 let hours = 0;
 
 function calcStudySessionTimer() {
-    if (!isSessionOngoing) {
+    if (!isOnGoing) {
         return;
     }
 

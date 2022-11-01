@@ -22,6 +22,8 @@ window.onload = function () {
     const previewAndSaveBtn = document.getElementById("previewAndSaveBtn");
     const goToSessionListBtn = document.getElementById("goToSessionListBtn");
     const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
+    const currentSessionStateHidden = document.getElementById("currentSessionStateHidden");
+    const createNewSessionBtn = document.getElementById("createNewSessionBtn");
 
     displayTime();
     displayDayMonthYear();
@@ -55,8 +57,16 @@ window.onload = function () {
     });
 
     //Open Session List page
+    //Submit form with parameters
     goToSessionListBtn.addEventListener("click", function (){
-        window.location="/sessionList";
+        currentSessionStateHidden.setAttribute("value", currentSessionState);
+        sessionForm.action = "/sessionList";
+        sessionForm.submit();
+    });
+
+    //Invalidate Session and Redirects "/"
+    createNewSessionBtn.addEventListener("click", function (){
+        returnNewSession();
     });
 }
 

@@ -10,6 +10,8 @@
         <form id="sessionForm" th:object="${sessionObj}" th:action="@{/saveSessionForm}" method="post">
             <input type="hidden" th:field="*{date}" id="sessionDate">
 
+            <input type="hidden" name="currentSessionStateHidden" id="currentSessionStateHidden">
+
             <div class="row">
                 <div class="col-md-4
                     d-flex justify-content-center flex-column align-items-center">
@@ -53,14 +55,16 @@
                         background-warning"
                         ><!-- rounded shadow  style="border:solid blue" -->
                             <div class="my-2">
-                                <button id ="previewAndSaveBtn" class="btn btn-warning btn-sm" type="button">Preview & Save</button>
+                                <button id ="previewAndSaveBtn" class="btn btn-warning btn-sm btn-with" type="button">Preview & Save</button>
                             </div>
                             <div class="my-2">
-                                <button id ="goToSessionListBtn" class="btn btn-warning btn-sm" type="button">List Sessions</button>
+                                <button id ="goToSessionListBtn" class="btn btn-warning btn-sm btn-with" type="button">List Sessions</button>
                             </div>
                             <div class="my-2">
-                                <button class="btn btn-warning btn-sm" type="submit">Button</button>
-
+                                <button id ="createNewSessionBtn" class="btn btn-warning btn-sm btn-with" type="button">New Session</button>
+                            </div>
+                            <div class="my-2">
+                                <button class="btn btn-warning btn-sm btn-with" type="submit">Button</button>
                             </div>
                         </div>
                     </div>
@@ -121,9 +125,29 @@
         </div>
     </div>
 
-    <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" ></textarea>
+    <!--Hidden Fields and Data Storage-->
+    <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
+
+    <currentSession
+            id="currentSessionState"
+            th:data-state ="${session.sessionState != null ? session.sessionState : null}">
+    </currentSession>
 
 <script src="/js/EventListeners.js"></script>
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+
+<script type="text/javascript">
+
+      const currentSessionStateFromSession = document.getElementById("currentSessionState");
+      const currentState = currentSessionStateFromSession.dataset.state;
+
+      if (currentState !== undefined && currentState !== null) {
+          currentSessionState = currentState;
+          console.log("sessionForm.html - Set currentSessionState to: " + currentSessionState);
+      }
+
+      setBtnState(currentSessionState);
+
+</script>
 </body>
 </html>

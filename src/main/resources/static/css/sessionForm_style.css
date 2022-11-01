@@ -1,4 +1,4 @@
-/* COLOR */
+/* CONTAINER COLOR */
 
 .background-dark {
   background-color: #2d2d34;
@@ -32,8 +32,33 @@
 /* TABLE FROM SESSION LIST */
 
 .session-table th{
-  min-width: 100px;
+  /*min-width: auto;*/
   text-align: center;
   font-size: 18px;
   color: #2d2d34;
+}
+
+  /*TODO: set width of data and number smaller*/
+
+.session-table td{
+  min-width: fit-content;
+  color: #2d2d34;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /*max-width: 300px;*/
+}
+
+.session-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* PAGINATION */
+
+.pagination-text-size {
+  font-size: 16px;
+  color: #2d2d34;
+  font-weight: bold;
 }
