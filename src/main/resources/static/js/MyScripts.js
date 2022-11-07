@@ -6,7 +6,6 @@ let currentSessionState = "NOTSTARTED";
 let isOnGoing = false;
 
 console.log("MyScript.js - Set currentSessionState to: " + currentSessionState);
-console.log("Is on ? " + isOnGoing);
 
 /**
  * Display Date as: Mon Oct 24 2022

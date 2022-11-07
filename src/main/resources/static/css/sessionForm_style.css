@@ -38,7 +38,7 @@
   color: #2d2d34;
 }
 
-  /*TODO: set width of data and number smaller*/
+  /*TODO: set width of the columns for Date and Number smaller*/
 
 .session-table td{
   min-width: fit-content;
@@ -48,6 +48,16 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   /*max-width: 300px;*/
+}
+
+.session-table-duration {
+  width: 10%;
+  text-align: center;
+}
+
+.session-table-date {
+  width: 10%;
+  text-align: center;
 }
 
 .session-table {
@@ -61,4 +71,9 @@
   font-size: 16px;
   color: #2d2d34;
   font-weight: bold;
+}
+
+/* SEARCH BAR*/
+.search-bar {
+  max-width: 30%;
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <th th:fragment="column_link(columnName, columnLabel)">
+    <th th:fragment="column_link(columnName, columnLabel)" class="session-table-date">
         <a th:if="${sortField == columnName}"
            th:href="@{'/sessionList/' + ${currentPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${reverseSortDir}}">
             [[${columnLabel}]]

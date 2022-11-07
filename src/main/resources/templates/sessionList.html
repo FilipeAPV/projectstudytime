@@ -7,6 +7,19 @@
         my-3 background-img" >
 
         <div th:replace="/fragments/container_rows :: row_header"></div>
+        <form th:action="@{/sessionList/1}" method="get">
+            <div class="input-group mb-3 search-bar">
+                    <input type="hidden" name="sortField" th:value="${sortField}">
+                    <input type="hidden" name="sortDir" th:value="${sortDir}">
+
+                    <input type="text" name="keyword" class="form-control"
+                           th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}"
+                           aria-label="Search word" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                <button class="btn btn-outline-secondary" type="button" id="clearKeyword">Clear</button>
+            </div>
+        </form>
+
         <div class="row">
             <div class="col-md">
                 <div class="container">
@@ -14,89 +27,165 @@
                         <thead class="thead-dark session-table">
                         <tr>
                             <th scope="col" th:replace="/fragments/table_headers :: column_link('date', 'Date')"></th>
-                            <th scope="col">Number</th>
                             <th scope="col">Content</th>
                             <th scope="col">Feelings</th>
-                            <th scope="col">Duration</th>
+                            <th scope="col" class="session-table-duration">Duration</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="studySession : ${sessionList}" class="session-table">
-                            <td th:text="${studySession.date}"></td>
-                            <td th:text="${studySession.sessionNumber}"></td>
-                            <td th:text="${studySession.content}"></td>
-                            <td th:text="${studySession.feelings}"></td>
-                            <td>duration</td>
+                            <td class="session-table-date" th:text="${studySession.date}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
+                            <td id="table_row_content" th:text="${studySession.content}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
+                            <td th:text="${studySession.feelings}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
+                            <td class="session-table-duration" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|">duration</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="container text-center">
-                    <p class="pagination-text-size">Page [[${pageNum}]] of [[${totalPages}]]</p>
-                </div>
-                <div class="container mt-2">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a
-                                    th:classappend="${currentPage == 1 ? 'disabled' : ''}"
-                                    class="page-link"
-                                    th:href="@{'/sessionList/1'}">First</a></li>
-                            <li class="page-item">
-                                <a
+
+                <!--Hidden Fields and Data Storage-->
+                <textarea class="form-control" id="textarea-hidden-sessionList" rows="12" cols="100" hidden></textarea>
+
+                    <div class="container text-center my-5" th:if="${totalPages == 0}">
+                        <p class="pagination-text-size">No results found for: [[${keyword}]]</p>
+                    </div>
+                    <div class="container text-center" th:if="${totalPages > 0}">
+                        <p class="pagination-text-size">Page [[${pageNum}]] of [[${totalPages}]]</p>
+                    </div>
+                    <div class="container mt-2" th:if="${totalPages > 1}">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item"><a
                                         th:classappend="${currentPage == 1 ? 'disabled' : ''}"
                                         class="page-link"
-                                        th:href="@{'/sessionList/' + ${currentPage - 1}}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
+                                        th:href="@{'/sessionList/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                        + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}">First</a></li>
+                                <li class="page-item">
+                                    <a
+                                            th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                            class="page-link"
+                                            th:href="@{'/sessionList/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                            + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
 
-                            <!--TODO: refactor-->
-                            <li     th:if="${currentPage >= 3 && currentPage <= totalPages - 2}"
-                                    th:classappend="${currentPage == i ? 'active' : ''}"
-                                    class="page-item"
-                                    th:each="i : ${#numbers.sequence(currentPage - 2, currentPage + 2)}">
-                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                            </li>
-                            <li     th:if="${currentPage < 3}"
-                                    th:classappend="${currentPage == i ? 'active' : ''}"
-                                    class="page-item"
-                                    th:each="i : ${#numbers.sequence(1, 5)}">
-                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                            </li>
-                            <li     th:if="${currentPage > totalPages - 2}"
-                                    th:classappend="${currentPage == i ? 'active' : ''}"
-                                    class="page-item"
-                                    th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}">
-                                <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                            </li>
+                                <!--TODO: refactor-->
+                                <li     th:if="${currentPage > 5 && currentPage <= totalPages - 2}"
+                                        th:classappend="${currentPage == i ? 'active' : ''}"
+                                        class="page-item"
+                                        th:each="i : ${#numbers.sequence(currentPage - 2, currentPage + 2)}">
+                                    <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                    + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}">[[${i}]]</a>
+                                </li>
 
-                            <li class="page-item">
-                                <a
+                                <li     th:if="${currentPage <= 5}"
+                                        th:classappend="${currentPage == i ? 'active' : ''}"
+                                        class="page-item"
+                                        th:each="i : ${#numbers.sequence(1, (totalPages < 5 ? totalPages : 5))}">
+                                    <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                    + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}">[[${i}]]</a>
+                                </li>
+
+                                <li     th:if="${(currentPage > totalPages - 2) && currentPage > 5}"
+                                        th:classappend="${currentPage == i ? 'active' : ''}"
+                                        class="page-item"
+                                        th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}">
+                                    <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a
+                                            th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+                                            class="page-link" th:href="@{'/sessionList/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                            + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a
                                         th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
-                                        class="page-link" th:href="@{'/sessionList/' + ${currentPage + 1}}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a
-                                    th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
-                                    class="page-link" th:href="@{'/sessionList/' + ${totalPages}}">Last</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                                        class="page-link" th:href="@{'/sessionList/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                                         + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }}">Last</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
             </div>
-        </div>
+                </div>
 
         <div th:replace="/fragments/container_rows :: row_footer"></div>
     </div>
+
+    <!-- Modal Preview -->
+    <div th:replace="/fragments/modal_preview :: modal_preview"></div>
+
     <script src="/js/EventListeners.js"></script>
 
 
     <!--TO DO refactor this code into a JS file-->
     <script th:inline="javascript">
+        // Calling random id to have modal with data the first time is called
+        /*returnMarkdownFromOneSession(1);*/
+
         // Get back to SessionForm.html from SessionList.html
         document.getElementById("returnToSessionFormBtn").addEventListener("click", function (){
             window.location.href="/";
         });
+
+        // Clear search form by making a new call to /sessionList
+        document.getElementById("clearKeyword").addEventListener("click", function (){
+           window.location.href="/sessionList/1?sortField=date&sortDir=dsc";
+        });
+
+        let rowValue = document.getElementById("table_row_content").innerText;
+        const keyword = [[${keyword}]];
+        if (rowValue != null && keyword != null) {
+            window.addEventListener("load", iterateOverAllTd);
+        }
+
+        // Iterate over all <td>
+        function iterateOverAllTd(){
+            const cells = document.querySelectorAll('td');
+            cells.forEach(function(cell) {
+                cell.innerHTML = highLightKeyWord(cell.innerText, keyword);
+            })
+        }
+
+        // Highlight text in the <td> if equal to the keyword
+        function highLightKeyWord(rowValue, keyword){
+            let replacement = "<span style=\"background-color:yellow;\">"
+                + keyword
+                + "</span>";
+
+            return rowValue.replaceAll(keyword, replacement);
+        }
+
+        // Preview in Modal
+        function returnMarkdownFromOneSession(id) {
+            let hiddenTextAreaSessionList = document.getElementById("textarea-hidden-sessionList");
+
+            fetch("/getSessionMarkdown/" + id)
+                .then(response => response.text())
+                .then(data => {
+                    hiddenTextAreaSessionList.value = data;
+
+                    const markdownDivSessionList = document.getElementById("markdownPreview");
+                    markdownDivSessionList.innerHTML = "";
+
+                    const previewModal = new bootstrap.Modal(document.getElementById("previewModal"), {});
+
+                    const valueToAdd = "<md-block>" + hiddenTextAreaSessionList.value + "</md-block>";
+
+                    const markdownDiv = document.getElementById("markdownPreview");
+
+                    markdownDiv.insertAdjacentHTML("beforeend", valueToAdd);
+                    previewModal.show();
+
+                });
+
+
+        }
+
     </script>
 
 </body>

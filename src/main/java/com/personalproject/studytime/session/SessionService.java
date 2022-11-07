@@ -1,6 +1,7 @@
 package com.personalproject.studytime.session;
 
 import com.personalproject.studytime.util.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,16 @@ public class SessionService {
         return isSaved;
     }
 
-    public Page<SessionModel> getSessionList(int pageNum, String sortField, String sortDir) {
+    public Page<SessionModel> getSessionList(int pageNum, String sortField, String sortDir, String keyword) {
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
 
         Pageable pageable = PageRequest.of(pageNum - 1, Constants.USERS_PER_PAGE, sort);
+
+        if (!StringUtils.isAllBlank(keyword)) {
+            return sessionRepository.findByWord(keyword, pageable);
+        }
+
         return sessionRepository.findAll(pageable);
     }
 }

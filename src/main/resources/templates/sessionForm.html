@@ -109,21 +109,7 @@
     </div>
 
     <!-- Modal Preview -->
-    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="previewModalLabel">Preview</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="markdownPreview"></div>
-                <div class="modal-footer">
-                    <button id="previewModalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="/fragments/modal_preview :: modal_preview"></div>
 
     <!--Hidden Fields and Data Storage-->
     <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
@@ -134,7 +120,6 @@
     </currentSession>
 
 <script src="/js/EventListeners.js"></script>
-<script type="module" src="https://md-block.verou.me/md-block.js"></script>
 
 <script type="text/javascript">
 

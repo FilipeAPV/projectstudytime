@@ -1,6 +1,7 @@
 package com.personalproject.studytime.session;
 
 import com.personalproject.studytime.util.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class SessionController {
                                   HttpSession httpSession) {
 
         if (httpSession.getAttribute(Constants.OBJECT_SAVED_IN_SESSION) != null) {
+
             SessionModel sessionModel = (SessionModel) httpSession.getAttribute(Constants.OBJECT_SAVED_IN_SESSION);
             model.addAttribute("sessionObj", sessionModel);
             logger.info("sessionModel from the Session: " + sessionModel);
+
         } else {
+
             model.addAttribute("sessionObj", new SessionModel());
             httpSession.setAttribute("isSessionOngoing", null);
             httpSession.setAttribute("sessionState", null);
@@ -66,11 +70,12 @@ public class SessionController {
     public String showSessionList(Model model,
                                   @PathVariable(name = "pageNum") int pageNum,
                                   @RequestParam(name = "sortField") String sortField,
-                                  @RequestParam(name = "sortDir") String sortDir) {
+                                  @RequestParam(name = "sortDir") String sortDir,
+                                  @RequestParam(name = "keyword", required = false) String keyword) {
 
         String reverseSortDir = (sortDir.equals("asc")) ? "dsc" : "asc";
 
-        Page<SessionModel> page = sessionService.getSessionList(pageNum, sortField, sortDir);
+        Page<SessionModel> page = sessionService.getSessionList(pageNum, sortField, sortDir, keyword);
         List<SessionModel> sessionList = page.getContent();
 
         model.addAttribute("sessionList", sessionList);
@@ -79,6 +84,11 @@ public class SessionController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
+
+        if (StringUtils.isNotBlank(keyword)) {
+            model.addAttribute("keyword", keyword);
+        }
+
 
         return "sessionList";
     }
