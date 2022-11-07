@@ -156,5 +156,35 @@
 
 - 7H
 
+# Day 7. (07/11/2022)
 
------------ Analyse before start working. New tickets need to be evaluated in terms of story points
+## As a Scrum Master
+
+- **Sprint Status**
+
+      - ![Burndown Chart](https://bitbucket.org/FAPVieira/projectstudytime/raw/813384ef21ce17b37c6852a150da1f9729cccc5a/documentation/resources/burndown_chart_051122.png)
+
+      - **Situation:**
+          - Still behind schedule. 
+          - Story points were attributed to the new tickets in the backlog. A total of **extra 8.5 hours** of work were added.
+      - **Measures:**
+          - We'll focus on the items **contractualized** for delivery by the end of the second sprint.
+          - Also, we'll avoid spending time on code refactoring or non-visible changes. 
+      - **Constraints:**
+          - As on the previous sprint, the risk *technical complexity* was materialized once again and we continue facing **time constraints**. 
+              - Either we'll need to work more time - increasing the cost, or deliver less functionality - lowering the quality.   
+
+## Technical
+
+- Search bar functionality
+      - ![Search Bar](https://bitbucket.org/FAPVieira/projectstudytime/raw/59581f79ef43b9969a21725d2907b5ffb9765875/documentation/resources/searchbar_07112022.png)
+
+## Analysis
+
+- Add some issues to apply the yellow highlighting
+- Started working on the feature "markdown visualization" of saved sessions
+      - Hopefully will be done by tomorrow
+
+## Hours of Work
+
+- 8H30M
