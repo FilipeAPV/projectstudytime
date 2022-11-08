@@ -188,3 +188,22 @@
 ## Hours of Work
 
 - 8H30M
+
+# Day 8. (08/11/2022)
+
+## Technical
+
+- Editing existing sessions (preliminary version)
+      - ![Edit Session](https://bitbucket.org/FAPVieira/projectstudytime/raw/a73518dcc54aeb475774ddc076d1d6e3b2ebacd2/documentation/resources/edit_session_08112022.png)
+
+## Analysis
+
+- Extra complexity added by using @RestControllers (fetching data from the front-end)
+      - It's the first time I've used it.
+
+- Reverse the indentation also took more time than predicted.
+- Overall, the component is done, now it'll need a couple of improvements.
+
+## Hours of Work
+
+- 7H40M
