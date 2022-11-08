@@ -279,8 +279,8 @@ function showModalPreview() {
 }
 
 // Check if there are lines to validate
-function isTheTextAreaEmpty(arrayWithLines) {
-    return arrayWithLines.length === 1 && arrayWithLines[0] === "";
+function isTheArrayEmpty(arrayWithLines) {
+    return arrayWithLines.length === 0;
 }
 
 // Get text inside the <label></label> using field id
@@ -298,7 +298,7 @@ function validateLines(arrayWithLines, textAreaId) {
 
     let validLines = [];
 
-    if (isTheTextAreaEmpty(arrayWithLines)) {
+    if (isTheArrayEmpty(arrayWithLines)) {
         showModalIndentation(modalTitle, "Please fill the content field");
         return false;
     }
@@ -413,7 +413,7 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
 
     let lines = getLines(currentTextArea);
 
-    if (isTheTextAreaEmpty(lines) && !isMandatory) {
+    if (isTheArrayEmpty(lines) && !isMandatory) {
        return true;
     }
 
@@ -439,7 +439,32 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
 function revertIndentation(textAreaId) {
     const currentTextArea = document.getElementById(textAreaId);
     let lines = getLines(currentTextArea);
+    let linesIndentationReversed = [];
 
-    console.log("revert indentation");
-    console.log(lines);
+    for (let line of lines) {
+
+        let emptySpaces = countNumberOfEmptySpaces(line);
+
+        if (emptySpaces === 6) {
+            console.log("Empty Spaces: " + emptySpaces)
+            linesIndentationReversed.push(line.substring(6));
+            continue;
+        }
+
+        /* Ex:
+            10 / 6 = 1
+            1 * 6 = 6
+            10 - 6 = 4 (value that needs to be removed)
+            */
+        let emptySpacesToRemove = emptySpaces - (Math.floor(emptySpaces / 6) * 6);
+        linesIndentationReversed.push(line.substring(emptySpacesToRemove));
+
+        console.log("Empty Spaces: " + emptySpaces)
+        console.log("Empty Spaces to Remove: " + emptySpacesToRemove)
+    }
+
+    //console.log(linesIndentationReversed);
+
+    return convertArrayToString(linesIndentationReversed);
 }
+

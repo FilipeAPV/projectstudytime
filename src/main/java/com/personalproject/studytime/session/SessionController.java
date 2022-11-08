@@ -50,6 +50,8 @@ public class SessionController {
     public String saveSession(@ModelAttribute(name = "sessionObj") SessionModel sessionModel,
                               HttpSession httpSession) {
 
+        System.out.println(sessionModel);
+
         boolean isEditing = (sessionModel.getId() != null && sessionModel.getId() > 0);
 
         sessionService.saveSession(sessionModel);

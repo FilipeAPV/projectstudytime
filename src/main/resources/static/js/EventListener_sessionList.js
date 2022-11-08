@@ -4,45 +4,35 @@ window.onload = function () {
     const formEdit = document.getElementById("formEdit");
     const formInputContent = document.getElementById("formInputContent");
     const formInputFeelings = document.getElementById("formInputFeelings");
+    const saveBtn = document.getElementById("saveBtn");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
     displayDayMonthYear();
-
-    //Textarea validation
-
     /* */
 
     allowTabInsideTextArea(formInputContent);
     allowTabInsideTextArea(formInputFeelings)
 
 
-    // Save Session from Modal for Editing
+    // Validate Session from Modal for Editing
     saveBtnForEditModal.addEventListener("click", function (){
 
         const markdownDiv = document.getElementById("markdownPreview");
         markdownDiv.innerHTML = "";
         document.getElementById("textarea-hidden").value = "";
 
-        /* revert value of textarea */
-        revertIndentation("formInputContent");
-
         let isValidated = validateAndIdentTextArea("formInputContent", true);
         if (isValidated) { isValidated = validateAndIdentTextArea("formInputFeelings", false); }
         if (isValidated) {
+
             showModalPreview();
-            console.log("Form would have been saved");
         }
-
-        //formEdit.submit();
-
     });
 
-
-
-
-
-
-
+    // Save Session from Modal for Editing
+    saveBtn.addEventListener("click", function (){
+       formEdit.submit();
+    });
 }
 

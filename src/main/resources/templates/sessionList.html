@@ -204,6 +204,8 @@
             const divPauseTime = document.getElementById("formEdit_pauseTime");
             const divResumeTime = document.getElementById("formEdit_resumeTime");
             const modalEditFormsH2 = document.getElementById("modalEditFormsH2");
+            const formInputContent = document.getElementById("formInputContent");
+            const formInputFeelings = document.getElementById("formInputFeelings");
 
             fetch("/getSessionToEdit/" + id)
                 .then(response => response.json())
@@ -223,6 +225,9 @@
                         }
                     });
 
+                    /* revert value of textarea */
+                    formInputContent.value = revertIndentation("formInputContent");
+                    formInputFeelings.value = revertIndentation("formInputFeelings");
 
                 })
 
