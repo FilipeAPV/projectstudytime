@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/fragments/head :: head('Study Time :: Session List')">
+
 </head>
 <body class="bg-light">
     <div class="container-md  rounded shadow
@@ -118,14 +119,15 @@
 
     <!-- Modal Preview -->
     <div th:replace="/fragments/modal_preview :: modal_preview"></div>
+    <div th:replace="/fragments/modal_preview :: modal_edit"></div>
 
-    <script src="/js/EventListeners.js"></script>
+    <script src="/js/EventListener_sessionList.js"></script>
 
+    <!--Necessary for jQuery-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
     <!--TO DO refactor this code into a JS file-->
     <script th:inline="javascript">
-        // Calling random id to have modal with data the first time is called
-        /*returnMarkdownFromOneSession(1);*/
 
         // Get back to SessionForm.html from SessionList.html
         document.getElementById("returnToSessionFormBtn").addEventListener("click", function (){
@@ -157,11 +159,15 @@
                 + keyword
                 + "</span>";
 
-            return rowValue.replaceAll(keyword, replacement);
+            /*return rowValue.replaceAll(keyword, replacement);*/
+
+            let regex = new RegExp(keyword, 'gi');
+            return rowValue.replaceAll(regex, replacement);
         }
 
         // Preview in Modal
         function returnMarkdownFromOneSession(id) {
+            idFecthedByGetSessionMarkdown = id;
             let hiddenTextAreaSessionList = document.getElementById("textarea-hidden-sessionList");
 
             fetch("/getSessionMarkdown/" + id)
@@ -185,6 +191,40 @@
 
 
         }
+
+        function returnSessionToEdit() {
+            const id = idFecthedByGetSessionMarkdown;
+            const form = document.getElementById("formEdit");
+            const divPauseTime = document.getElementById("formEdit_pauseTime");
+            const divResumeTime = document.getElementById("formEdit_resumeTime");
+            const modalEditFormsH2 = document.getElementById("modalEditFormsH2");
+
+            fetch("/getSessionToEdit/" + id)
+                .then(response => response.json())
+                .then(data => {
+                    const jsonFile = data;
+
+                    if (jsonFile.pauseTime === null) {
+                        divPauseTime.hidden = true;
+                        divResumeTime.hidden = true;
+                    }
+
+                    modalEditFormsH2.innerText = jsonFile.date;
+
+                    $.each(jsonFile, function(key, value) {
+                        if (form.elements[key] != null) {
+                            form.elements[key].value = value;
+                        }
+                    });
+
+
+                })
+
+
+
+
+        }
+
 
     </script>
 

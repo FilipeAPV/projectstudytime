@@ -30,25 +30,18 @@ public class SessionService {
     public boolean saveSession(SessionModel sessionModel) {
         boolean isSaved = false;
 
-        /**
-         * REMOVE
-         */
-/*        sessionModel.setStartTime(LocalTime.of(0,0));
-        sessionModel.setPauseTime(LocalTime.of(0,0));
-        sessionModel.setResumeTime(LocalTime.of(0,0));
-        sessionModel.setStopTime(LocalTime.of(0,0));*/
-        /**
-         *
-         */
+        if (sessionModel.getSessionNumber() == null) {
+            int sessionNumber = 1 + sessionRepository.countAllByDate(sessionModel.getDate());
+            sessionModel.setSessionNumber(sessionNumber);
+        }
 
-        int sessionNumber = 1 + sessionRepository.countAllByDate(sessionModel.getDate());
-        sessionModel.setSessionNumber(sessionNumber);
         SessionModel savedSession = sessionRepository.save(sessionModel);
 
         if (savedSession.getId() != null && savedSession.getId() != 0) {
             logger.info("The following session has been saved: " + savedSession);
             isSaved = true;
         }
+
         return isSaved;
     }
 

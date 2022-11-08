@@ -47,8 +47,24 @@ public class SessionController {
     }
 
     @PostMapping("/saveSessionForm")
-    public String saveSession(@ModelAttribute(name = "sessionObj") SessionModel sessionModel) {
+    public String saveSession(@ModelAttribute(name = "sessionObj") SessionModel sessionModel,
+                              HttpSession httpSession) {
+
+        boolean isEditing = (sessionModel.getId() != null && sessionModel.getId() > 0);
+
         sessionService.saveSession(sessionModel);
+
+        if  (isEditing) {
+            return "redirect:/sessionList/1?sortField=date&sortDir=dsc&keyword=" + sessionModel.getDate();
+        }
+
+        try {
+            httpSession.invalidate();
+            logger.info("Session Invalidation: SUCCESS");
+        } catch (IllegalStateException e) {
+            logger.info("Session Invalidation: FAILED");
+        }
+
         return "redirect:/";
     }
 

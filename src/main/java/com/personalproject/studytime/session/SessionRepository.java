@@ -14,7 +14,7 @@ public interface SessionRepository extends JpaRepository<SessionModel, Integer> 
    @Query("SELECT count (s) FROM SessionModel s WHERE s.date = ?1")
    int countAllByDate(LocalDate date);
 
-   @Query("SELECT s FROM SessionModel s WHERE CONCAT(s.content, ' ', s.feelings) LIKE %?1%")
+   @Query("SELECT s FROM SessionModel s WHERE CONCAT(s.date, ' ', s.content, ' ', s.feelings) LIKE %?1%")
    Page<SessionModel> findByWord(String keyword, Pageable pageable);
 
 }

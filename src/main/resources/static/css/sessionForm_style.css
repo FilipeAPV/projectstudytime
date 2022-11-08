@@ -41,13 +41,15 @@
   /*TODO: set width of the columns for Date and Number smaller*/
 
 .session-table td{
-  min-width: fit-content;
+  /*min-width: fit-content;*/
+ /*  width: 100%; */
   color: #2d2d34;
   cursor: pointer;
-  overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  /*max-width: 300px;*/
+  overflow: hidden;
+
+  white-space: pre;
+
 }
 
 .session-table-duration {

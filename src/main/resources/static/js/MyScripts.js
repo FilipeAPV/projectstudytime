@@ -4,8 +4,25 @@
 
 let currentSessionState = "NOTSTARTED";
 let isOnGoing = false;
+let idFecthedByGetSessionMarkdown = 0;
 
 console.log("MyScript.js - Set currentSessionState to: " + currentSessionState);
+
+/*Allow Tab inside textAreas*/
+function allowTabInsideTextArea(textAreaField) {
+
+    textAreaField.addEventListener('keydown', (key) => {
+        if (key.code === "Tab") {
+            key.preventDefault();
+            textAreaField.setRangeText(
+                '      ', // 6 empty spaces
+                textAreaField.selectionStart,
+                textAreaField.selectionStart,
+                'end'
+            )
+        }
+    });
+}
 
 /**
  * Display Date as: Mon Oct 24 2022

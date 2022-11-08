@@ -69,21 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="container
-                    d-flex justify-content-center flex-column align-items-center
-                    background-warning
-                    pb-4">
-                        <div>
-                            <label id="sessionContentLabel" for="sessionContent">Content</label>
-                            <textarea class="form-control" id="sessionContent" rows="12" cols="100" th:field="*{content}"></textarea>
-                        </div>
-                        <div>
-                            <label id="sessionFeelingsLabel" for="sessionFeelings">Feelings</label>
-                            <textarea class="form-control" id="sessionFeelings" rows="12" cols="100" th:field="*{feelings}"></textarea>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="/fragments/sessionForm_textAreas :: sessionForm_textAreas"></div>
             </div>
 
         </form>
@@ -110,16 +96,19 @@
 
     <!-- Modal Preview -->
     <div th:replace="/fragments/modal_preview :: modal_preview"></div>
+    <div th:replace="/fragments/modal_preview :: modal_edit"></div>
 
     <!--Hidden Fields and Data Storage-->
     <textarea class="form-control" id="textarea-hidden" rows="12" cols="100" hidden></textarea>
+
 
     <currentSession
             id="currentSessionState"
             th:data-state ="${session.sessionState != null ? session.sessionState : null}">
     </currentSession>
 
-<script src="/js/EventListeners.js"></script>
+<script src="/js/EventListener_sessionForm.js"></script>
+<script src="/js/EventListener_shared.js"></script>
 
 <script type="text/javascript">
 

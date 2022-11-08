@@ -1,40 +1,20 @@
-/*Allow Tab inside textAreas*/
-function allowTabInsideTextArea(textAreaField) {
-
-    textAreaField.addEventListener('keydown', (key) => {
-        if (key.code === "Tab") {
-            key.preventDefault();
-            textAreaField.setRangeText(
-                '      ', // 6 empty spaces
-                textAreaField.selectionStart,
-                textAreaField.selectionStart,
-                'end'
-            )
-        }
-    });
-}
-
 window.onload = function () {
-    const saveBtn = document.getElementById("saveBtn");
-    const sessionForm = document.getElementById("sessionForm");
-    const sessionContent = document.getElementById("sessionContent");
-    const sessionFeelings = document.getElementById("sessionFeelings");
     const previewAndSaveBtn = document.getElementById("previewAndSaveBtn");
+    const sessionForm = document.getElementById("sessionForm");
     const goToSessionListBtn = document.getElementById("goToSessionListBtn");
-    const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
     const currentSessionStateHidden = document.getElementById("currentSessionStateHidden");
     const createNewSessionBtn = document.getElementById("createNewSessionBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
+    const sessionContent = document.getElementById("sessionContent");
+    const sessionFeelings = document.getElementById("sessionFeelings");
 
+    /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
     displayDayMonthYear();
+
     allowTabInsideTextArea(sessionContent);
     allowTabInsideTextArea(sessionFeelings);
-
-    // Save Session from Modal for Preview
-    saveBtn.addEventListener("click", function (){
-        setDateToHiddenValue();
-        sessionForm.submit();
-    });
 
     //Textarea validation
     previewAndSaveBtn.addEventListener("click", function (){
@@ -47,17 +27,8 @@ window.onload = function () {
         if (isValidated) {showModalPreview();}
     });
 
-    //Close Indentation Modal and set textarea.value to original values
-    previewModalCloseBtn.addEventListener("click", function (){
-       if (originalTextAreaValues !== null) {
-           originalTextAreaValues.forEach((value, key) => {
-                document.getElementById(key).value = value;
-           });
-       }
-    });
-
     //Open Session List page
-    //Submit form with parameters
+    //Submit form with parameters to be saved in the Session
     goToSessionListBtn.addEventListener("click", function (){
         currentSessionStateHidden.setAttribute("value", currentSessionState);
         sessionForm.action = "/sessionList";
@@ -68,5 +39,19 @@ window.onload = function () {
     createNewSessionBtn.addEventListener("click", function (){
         returnNewSession();
     });
-}
 
+    // Save Session from Modal for Preview
+    saveBtn.addEventListener("click", function (){
+        setDateToHiddenValue();
+        sessionForm.submit();
+    });
+
+    //Close Indentation Modal and set textarea.value to original values
+    previewModalCloseBtn.addEventListener("click", function (){
+        if (originalTextAreaValues !== null) {
+            originalTextAreaValues.forEach((value, key) => {
+                document.getElementById(key).value = value;
+            });
+        }
+    });
+}
