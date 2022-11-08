@@ -33,14 +33,14 @@ public class SessionController {
 
             SessionModel sessionModel = (SessionModel) httpSession.getAttribute(Constants.OBJECT_SAVED_IN_SESSION);
             model.addAttribute("sessionObj", sessionModel);
-            logger.info("sessionModel from the Session: " + sessionModel);
+            logger.info("Object from the Session: " + sessionModel);
 
         } else {
 
             model.addAttribute("sessionObj", new SessionModel());
             httpSession.setAttribute("isSessionOngoing", null);
             httpSession.setAttribute("sessionState", null);
-            logger.info("sessionModel from the Session is NULL. Sending new Object");
+            logger.info("Object from the Session is NULL. Sending new Object");
         }
 
         return "sessionForm";
@@ -76,7 +76,7 @@ public class SessionController {
         httpSession.setAttribute(Constants.OBJECT_SAVED_IN_SESSION, sessionModel);
         httpSession.setAttribute("sessionState", sessionState);
 
-        logger.info("The following session information has been saved in the Session: " + sessionModel);
+        logger.info("The following information has been saved in the Session: " + sessionModel);
         logger.info("sessionState: " + sessionState + "\n");
 
         return "redirect:/sessionList/1?sortField=date&sortDir=dsc";

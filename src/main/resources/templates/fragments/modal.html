@@ -5,6 +5,27 @@
 
 </head>
 <body>
+
+<!-- Modal Indentation Warning -->
+<div th:fragment="modal_indentation_warning">
+  <div class="modal fade always-in-front" id="indentationModal" tabindex="-1" aria-labelledby="indentationModalLabelTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="indentationModalLabelTitle"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="indentationModalLabelText"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="indentationModalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div th:fragment="modal_preview">
   <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -13,7 +34,7 @@
           <h1 class="modal-title fs-5" id="previewModalLabel">Preview</h1>
           <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
         </div>
-        <div class="modal-body" id="markdownPreview"></div>
+        <div class="modal-body text-size-and-font" id="markdownPreview" ></div>
         <div class="modal-footer">
           <button id="previewModalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
@@ -35,7 +56,7 @@
         </div>
         <div class="modal-body">
 
-          <div th:replace="/fragments/modal_preview :: modalEditForms"></div>
+          <div th:replace="/fragments/modal :: modalEditForms"></div>
 
         </div>
         <div class="modal-footer">
@@ -78,11 +99,11 @@
       </div>
       <div>
         <div class="mb-3">
-          <label for="formInputContent" class="form-label">CONTENT</label>
+          <label id="formInputContentLabel" for="formInputContent" class="form-label">CONTENT</label>
           <textarea class="form-control" name="content" id="formInputContent" rows="12" cols="100"></textarea>
         </div>
         <div class="mb-3">
-          <label for="formInputFeelings" class="form-label">FEELINGS</label>
+          <label id="formInputFeelingsLabel" for="formInputFeelings" class="form-label">FEELINGS</label>
           <textarea class="form-control" name="feelings" id="formInputFeelings" rows="12" cols="100"></textarea>
         </div>
       </div>

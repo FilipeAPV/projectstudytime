@@ -10,6 +10,7 @@
   background-size: cover;
 }
 
+
 /* BUTTONS */
 
 .btn-with {
@@ -25,7 +26,6 @@
   cursor: default;
   background-color: transparent;
   width: 70px;
-
   color: #2d2d34;
 }
 
@@ -47,9 +47,13 @@
   cursor: pointer;
   text-overflow: ellipsis;
   overflow: hidden;
-
   white-space: pre;
 
+}
+
+.text-size-and-font {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
 }
 
 .session-table-duration {
@@ -78,4 +82,9 @@
 /* SEARCH BAR*/
 .search-bar {
   max-width: 30%;
+}
+
+/* MODAL INDENTATION WARNING */
+.always-in-front {
+  z-index: 1500;
 }

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/fragments/head :: head('Study Time :: Session List')">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container-md  rounded shadow
         my-3 background-img" >
 
-        <div th:replace="/fragments/container_rows :: row_header"></div>
+        <div th:replace="/fragments/container_header_and_footer :: row_header"></div>
         <form th:action="@{/sessionList/1}" method="get">
             <div class="input-group mb-3 search-bar">
                     <input type="hidden" name="sortField" th:value="${sortField}">
@@ -34,7 +36,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="studySession : ${sessionList}" class="session-table">
+                        <tr th:each="studySession : ${sessionList}" class="session-table text-size-and-font">
                             <td class="session-table-date" th:text="${studySession.date}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
                             <td id="table_row_content" th:text="${studySession.content}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
                             <td th:text="${studySession.feelings}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
@@ -45,7 +47,8 @@
                 </div>
 
                 <!--Hidden Fields and Data Storage-->
-                <textarea class="form-control" id="textarea-hidden-sessionList" rows="12" cols="100" hidden></textarea>
+                <div th:replace="/fragments/emptyTextArea :: emptyTextArea"></div>
+                <!--<textarea class="form-control" id="textarea-hidden-sessionList" rows="12" cols="100" hidden></textarea>-->
 
                     <div class="container text-center my-5" th:if="${totalPages == 0}">
                         <p class="pagination-text-size">No results found for: [[${keyword}]]</p>
@@ -114,12 +117,15 @@
             </div>
                 </div>
 
-        <div th:replace="/fragments/container_rows :: row_footer"></div>
+        <div th:replace="/fragments/container_header_and_footer :: row_footer"></div>
     </div>
 
+    <!-- Modal Indentation Warning -->
+    <div th:replace="/fragments/modal :: modal_indentation_warning"></div>
     <!-- Modal Preview -->
-    <div th:replace="/fragments/modal_preview :: modal_preview"></div>
-    <div th:replace="/fragments/modal_preview :: modal_edit"></div>
+    <div th:replace="/fragments/modal :: modal_preview"></div>
+    <!-- Modal Editing -->
+    <div th:replace="/fragments/modal :: modal_edit"></div>
 
     <script src="/js/EventListener_sessionList.js"></script>
 
@@ -168,7 +174,7 @@
         // Preview in Modal
         function returnMarkdownFromOneSession(id) {
             idFecthedByGetSessionMarkdown = id;
-            let hiddenTextAreaSessionList = document.getElementById("textarea-hidden-sessionList");
+            let hiddenTextAreaSessionList = document.getElementById("textarea-hidden");
 
             fetch("/getSessionMarkdown/" + id)
                 .then(response => response.text())

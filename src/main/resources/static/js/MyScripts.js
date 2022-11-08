@@ -122,6 +122,7 @@ function setBtnState(currentSessionState) {
         case "STOPPED" : {
             document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
             document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
         }
         break;
     }
@@ -220,10 +221,20 @@ function setDateToHiddenValue() {
  */
 
 
-
-// Return an Array of all the lines inside the text area
+// Return an Array of non-empty lines inside the text area
 function getLines(textArea) {
-    return textArea.value.split("\n");
+    return removeEmptyLines(textArea.value.split("\n"));
+}
+
+// Return Array without Empty Lines
+function removeEmptyLines(arrayWithLines) {
+    let arrayWithoutEmptyLines = []
+    for (let i of arrayWithLines) {
+        if (i.trim().length !== 0) {
+            arrayWithoutEmptyLines.push(i);
+        }
+    }
+    return arrayWithoutEmptyLines;
 }
 
 // Counts number of empty spaced between 0 and the index of the character '-'
@@ -272,7 +283,8 @@ function isTheTextAreaEmpty(arrayWithLines) {
     return arrayWithLines.length === 1 && arrayWithLines[0] === "";
 }
 
-// Get text inside the label from field id
+// Get text inside the <label></label> using field id
+// Ex: fieldId = formInputContent and label id = formInputContentLabel
 function getLabelFromFieldId(fieldId) {
     const labelId = fieldId + "Label";
     return document.getElementById(labelId).innerHTML;
@@ -421,4 +433,13 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
     }
 
     return false;
+}
+
+/* Revert Indentation */
+function revertIndentation(textAreaId) {
+    const currentTextArea = document.getElementById(textAreaId);
+    let lines = getLines(currentTextArea);
+
+    console.log("revert indentation");
+    console.log(lines);
 }
