@@ -29,6 +29,21 @@
   color: #2d2d34;
 }
 
+/* CARD */
+
+.personal-card {
+  cursor: pointer;
+}
+
+.personal-card-content {
+  text-overflow:ellipsis;
+  overflow:hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+}
+
 /* TABLE FROM SESSION LIST */
 
 .session-table th{
@@ -44,11 +59,15 @@
   /*min-width: fit-content;*/
  /*  width: 100%; */
   color: #2d2d34;
-  cursor: pointer;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: pre;
 
+}
+
+.session-table tr:hover{
+  font-size: 1.3rem;
+  white-space: pre-wrap;
 }
 
 .text-size-and-font {

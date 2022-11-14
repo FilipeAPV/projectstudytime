@@ -207,3 +207,23 @@
 ## Hours of Work
 
 - 7H40M
+
+# END OF THE SECOND SPRINT
+
+### Total Sprint Time: 29 H
+### Total Project Time: 51 H
+### Initially Contractualized Time: 46 H  
+##
+## Situation
+- Failed to deliver the **Export study sessions as markdown** functionality 
+- The most challenging feature of **Edit selected study session** is done but requires some refactoring
+###
+- The developers lack of experience and knowledge contributed for the situation where we are now: **hugely constrained by time.**
+
+## As a Product Owner
+- **Constrained by Time**, none of the functional requirements projected for this sprint will be delivered.
+- Focus will be on delivering the **export** functionality, bug correction and UI improvement.
+###
+- ![Backlog](https://bitbucket.org/FAPVieira/projectstudytime/raw/21976a24672751fac1834f945897932a507fd21e/documentation/resources/backlog_14112022.png)
+
+# Day 9. (14/11/2022)
