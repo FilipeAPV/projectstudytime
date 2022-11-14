@@ -227,3 +227,35 @@
 - ![Backlog](https://bitbucket.org/FAPVieira/projectstudytime/raw/21976a24672751fac1834f945897932a507fd21e/documentation/resources/backlog_14112022.png)
 
 # Day 9. (14/11/2022)
+
+
+Incorrect: 21..
+
+- Content: 
+
+      - line 1
+          - line 2
+              - line 3
+                  - line 4
+                     - line 5
+                         - line 6
+                             - line 7
+                                 - line 8
+                                     - line 9
+                                         - line 10
+
+
+Corrected: 22.. 
+
+- Content: 
+
+      - line 1
+          - line 2
+              - line 3
+                  - line 4
+                      - line 5
+                          - line 6
+                              - line 7
+                                  - line 8
+                                      - line 9
+                                          - line 10
