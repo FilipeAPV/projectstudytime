@@ -372,7 +372,7 @@ function indentAllTabs(arrayWithValidLines) {
 
         emptySpacesToAdd = numberOfEmptySpacesToAddOrRemove(numberOfEmptySpaces);
 
-        console.log("Line: " + lineNumberForUser);
+        console.log("\nLine: " + lineNumberForUser);
         console.log("Number of empty spaces: " + numberOfEmptySpaces);
         console.log("Number of spaces to add: " + emptySpacesToAdd);
 
@@ -384,8 +384,10 @@ function indentAllTabs(arrayWithValidLines) {
             }
         } else {
             // Remove the number of empty spaces by creating a shorter String
-            line = line.substring(Math.abs(emptySpacesToAdd) + 1);
+            line = line.substring(Math.abs(emptySpacesToAdd));
         }
+
+        console.log("Final number of Empty Spaces: " + countNumberOfEmptySpaces(line));
 
         indentedArray.push(line);
         emptySpacesToAdd = 0;
@@ -440,31 +442,58 @@ function revertIndentation(textAreaId) {
     const currentTextArea = document.getElementById(textAreaId);
     let lines = getLines(currentTextArea);
     let linesIndentationReversed = [];
+    let currentLine;
+    let lineNumber = 0;
+    let numberToAdd = 0;
 
     for (let line of lines) {
-
+        console.log("\n");
+        lineNumber++;
         let emptySpaces = countNumberOfEmptySpaces(line);
 
         if (emptySpaces === 6) {
-            console.log("Empty Spaces: " + emptySpaces)
-            linesIndentationReversed.push(line.substring(6));
+            console.log("Line " + lineNumber + " has " + emptySpaces + " empty spaces")
+            currentLine = line.substring(6);
+            linesIndentationReversed.push(currentLine);
+            console.log("Final empty spaces number: " + countNumberOfEmptySpaces(currentLine));
             continue;
         }
 
-        /* Ex:
-            10 / 6 = 1
-            1 * 6 = 6
-            10 - 6 = 4 (value that needs to be removed)
-            */
-        let emptySpacesToRemove = emptySpaces - (Math.floor(emptySpaces / 6) * 6);
-        linesIndentationReversed.push(line.substring(emptySpacesToRemove));
+        // Starts at 10 because is the first number of empty spaces after 6
+        for (let i = 10, k = -4; i <= emptySpaces; i+=4, k+=2) {
+            numberToAdd = k;
+        }
 
-        console.log("Empty Spaces: " + emptySpaces)
-        console.log("Empty Spaces to Remove: " + emptySpacesToRemove)
+        console.log("Line " + lineNumber + " has " + emptySpaces + " empty spaces")
+        // 18 is the last number where we remove empty spaces. In fact we remove 0 empty spaces.
+        if (numberToAdd <= 0) {
+            // Remove empty spaces
+            currentLine = line.substring(Math.abs(numberToAdd));
+            console.log("Empty Spaces to Remove: " + numberToAdd);
+        } else {
+            // Add empty spaces
+            currentLine = addEmptySpacesToLine(numberToAdd, line);
+            console.log("Empty Spaces to Add: " + numberToAdd);
+        }
+        console.log("Final empty spaces number: " + countNumberOfEmptySpaces(currentLine));
+        linesIndentationReversed.push(currentLine);
     }
-
     //console.log(linesIndentationReversed);
-
     return convertArrayToString(linesIndentationReversed);
 }
 
+/**
+ *
+ * @param emptySpaces
+ * @param line
+ * @returns {string}
+ */
+function addEmptySpacesToLine(emptySpaces, line) {
+    let emptySpace = "";
+
+    for (let i = 0; i < emptySpaces; i++) {
+        emptySpace += " ";
+    }
+
+    return emptySpace + line;
+}

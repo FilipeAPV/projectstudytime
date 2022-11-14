@@ -37,7 +37,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="studySession : ${sessionList}" class="session-table text-size-and-font">
-                                        <td class="session-table-date" th:text="${studySession.date}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
+                                        <td class="session-table-date" th:text="${studySession.date}" ></td>
                                         <td id="table_row_content" th:text="${studySession.content}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
                                         <td th:text="${studySession.feelings}" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"></td>
                                         <td class="session-table-duration" th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|">duration</td>
@@ -48,11 +48,12 @@
 
             <div class="container d-inline-flex flex-wrap justify-content-center">
                 <div class="personal-card card col-md-3 text-white bg-dark mb-3 mx-2"
+                     th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"
                      th:each="studySession : ${sessionList}">
                     <div class="card-header">[[${studySession.date}]]</div>
                     <div class="card-body d-flex flex-column align-items-start">
                         <h5 class="card-title ">Content</h5>
-                        <p class="card-text personal-card-content ">[[${studySession.content}]]</p>
+                        <p id="cardContentParagraph" class="card-text personal-card-content ">[[${studySession.content}]]</p>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">duration</small>
@@ -165,15 +166,15 @@
         window.location.href = "/sessionList/1?sortField=date&sortDir=dsc";
     });
 
-    let rowValue = document.getElementById("table_row_content").innerText;
+    let cardContentParagraph = document.getElementById("cardContentParagraph").innerText;
     const keyword = [[${keyword}]];
-    if (rowValue != null && keyword != null) {
-        window.addEventListener("load", iterateOverAllTd);
+    if (cardContentParagraph != null && keyword != null) {
+        window.addEventListener("load", iterateOverAllP);
     }
 
-    // Iterate over all <td>
-    function iterateOverAllTd() {
-        const cells = document.querySelectorAll('td');
+    // Iterate over all <p>
+    function iterateOverAllP() {
+        const cells = document.querySelectorAll('p');
         cells.forEach(function (cell) {
             cell.innerHTML = highLightKeyWord(cell.innerText, keyword);
         })
@@ -181,7 +182,7 @@
 
     // Highlight text in the <td> if equal to the keyword
     function highLightKeyWord(rowValue, keyword) {
-        let replacement = "<span style=\"background-color:yellow;\">"
+        let replacement = "<span style=\"background-color:#f0ad4e\n;font-weight: bold;\">"
             + keyword
             + "</span>";
 
