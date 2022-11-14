@@ -228,34 +228,11 @@
 
 # Day 9. (14/11/2022)
 
+## Technical
+- Indentation algorithm bug fix
+- Refactored / redesigned the sessionList.html
+      - Stopped using tables and started using cards
+- Set the ground to implement the calendar component
 
-Incorrect: 21..
-
-- Content: 
-
-      - line 1
-          - line 2
-              - line 3
-                  - line 4
-                     - line 5
-                         - line 6
-                             - line 7
-                                 - line 8
-                                     - line 9
-                                         - line 10
-
-
-Corrected: 22.. 
-
-- Content: 
-
-      - line 1
-          - line 2
-              - line 3
-                  - line 4
-                      - line 5
-                          - line 6
-                              - line 7
-                                  - line 8
-                                      - line 9
-                                          - line 10
+# Analysis
+- Good day of work without any major blockers.
