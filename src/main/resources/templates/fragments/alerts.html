@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/head :: head('Study Time :: Session')"></head>
+<body>
+  <div th:fragment="alert">
+    <div class="d-flex justify-content-center">
+      <div th:if="${message != null}" class="w-50 alert alert-success alert-dismissible fade show">
+        <strong>[[${message}]]</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

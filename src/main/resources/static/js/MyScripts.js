@@ -406,6 +406,14 @@ function convertArrayToString(indentedArray) {
 // Temporarily Store non-formatted textarea's values so we can close modal and still have non-formatted values
 const originalTextAreaValues = new Map();
 
+function restoreOriginalTextAreaValues()  {
+    if (originalTextAreaValues !== null) {
+        originalTextAreaValues.forEach((value, key) => {
+            document.getElementById(key).value = value;
+        });
+    }
+}
+
 function validateAndIdentTextArea(textAreaId, isMandatory) {
     const currentTextArea = document.getElementById(textAreaId);
     const hiddenTextArea = document.getElementById("textarea-hidden");
@@ -484,7 +492,7 @@ function revertIndentation(textAreaId) {
 
 /**
  *
- * @param emptySpaces
+ * @param emptySpaces - number of empty spaces to add
  * @param line
  * @returns {string}
  */

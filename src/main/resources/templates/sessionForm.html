@@ -9,8 +9,9 @@
 
         <form id="sessionForm" th:object="${sessionObj}" th:action="@{/saveSessionForm}" method="post">
             <input type="hidden" th:field="*{date}" id="sessionDate">
-
             <input type="hidden" name="currentSessionStateHidden" id="currentSessionStateHidden">
+
+            <div th:replace="/fragments/alerts :: alert"></div>
 
             <div class="row">
                 <div class="col-md-4

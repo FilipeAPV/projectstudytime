@@ -38,7 +38,7 @@ public class SessionService {
         SessionModel savedSession = sessionRepository.save(sessionModel);
 
         if (savedSession.getId() != null && savedSession.getId() != 0) {
-            logger.info("The following session has been saved: " + savedSession);
+            logger.info("The following session has been saved: " + savedSession.getId());
             isSaved = true;
         }
 

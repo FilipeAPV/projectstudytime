@@ -42,6 +42,7 @@
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
   white-space: pre-wrap;
+  max-width: 100%; /*Prevent some overflowing*/
 }
 
 /* TABLE FROM SESSION LIST */
@@ -103,7 +104,51 @@
   max-width: 30%;
 }
 
+.search-bar-text {
+  box-shadow: none !important;
+}
+
+.search-bar-text:focus {
+  box-shadow: none !important;
+  border: 1px solid #2d2d34;
+}
+
 /* MODAL INDENTATION WARNING */
 .always-in-front {
   z-index: 1500;
+}
+
+/* TEXT AREA SESSION FORM*/
+
+.text-area-personalized {
+  padding: 12px 20px;
+  box-sizing: border-box;
+
+  border-radius: 4px;
+
+  font-size: 16px;
+  background-color: #f8f8f8 !important;
+  border: 2px solid #2d2d34 !important;
+  box-shadow: none !important;
+}
+
+.text-area-label {
+  font-family: 'Roboto', sans-serif;
+  color: #2d2d34;
+  font-weight: bold;
+}
+
+/* EDIT FORM */
+.title-background {
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  color: #2d2d34;
+}
+
+/* Shared all Modals */
+.title-modal {
+
 }

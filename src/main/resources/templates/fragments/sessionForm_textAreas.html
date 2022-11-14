@@ -9,12 +9,12 @@
                     background-warning
                     pb-4">
         <div>
-            <label id="sessionContentLabel" for="sessionContent">Content</label>
-            <textarea class="form-control" id="sessionContent" rows="12" cols="100" th:field="*{content}"></textarea>
+            <label class="text-area-label" id="sessionContentLabel" for="sessionContent">Content</label>
+            <textarea class="form-control text-area-personalized" id="sessionContent" rows="12" cols="100" th:field="*{content}"></textarea>
         </div>
-        <div>
-            <label id="sessionFeelingsLabel" for="sessionFeelings">Feelings</label>
-            <textarea class="form-control" id="sessionFeelings" rows="12" cols="100" th:field="*{feelings}"></textarea>
+        <div class="mt-2">
+            <label class="text-area-label" id="sessionFeelingsLabel" for="sessionFeelings">Feelings</label>
+            <textarea class="form-control text-area-personalized" id="sessionFeelings" rows="12" cols="100" th:field="*{feelings}"></textarea>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ window.onload = function () {
     const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
     const sessionContent = document.getElementById("sessionContent");
     const sessionFeelings = document.getElementById("sessionFeelings");
+    const previewModalEditBtn = document.getElementById("previewModalEditBtn");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -19,8 +20,12 @@ window.onload = function () {
     //Textarea validation
     previewAndSaveBtn.addEventListener("click", function (){
         const markdownDiv = document.getElementById("markdownPreview");
+        const previewModalEditBtn = document.getElementById("previewModalEditBtn");
+        const saveBtn = document.getElementById("previewModalEditBtn");
+
         markdownDiv.innerHTML = "";
         document.getElementById("textarea-hidden").value = "";
+        previewModalEditBtn.setAttribute("hidden","");
 
         let isValidated = validateAndIdentTextArea("sessionContent", true);
         if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
@@ -48,10 +53,6 @@ window.onload = function () {
 
     //Close Indentation Modal and set textarea.value to original values
     previewModalCloseBtn.addEventListener("click", function (){
-        if (originalTextAreaValues !== null) {
-            originalTextAreaValues.forEach((value, key) => {
-                document.getElementById(key).value = value;
-            });
-        }
+        restoreOriginalTextAreaValues();
     });
 }

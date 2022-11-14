@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -48,13 +49,16 @@ public class SessionController {
 
     @PostMapping("/saveSessionForm")
     public String saveSession(@ModelAttribute(name = "sessionObj") SessionModel sessionModel,
-                              HttpSession httpSession) {
+                              HttpSession httpSession,
+                              RedirectAttributes redirectAttributes) {
 
+        boolean isSaved = false;
         boolean isEditing = (sessionModel.getId() != null && sessionModel.getId() > 0);
 
         sessionService.saveSession(sessionModel);
 
         if  (isEditing) {
+            redirectAttributes.addFlashAttribute("message", "The session has been successfully edited!");
             return "redirect:/sessionList/1?sortField=date&sortDir=dsc&keyword=" + sessionModel.getDate();
         }
 
@@ -65,6 +69,7 @@ public class SessionController {
             logger.info("Session Invalidation: FAILED");
         }
 
+        redirectAttributes.addFlashAttribute("message", "The session has been successfully saved!");
         return "redirect:/";
     }
 

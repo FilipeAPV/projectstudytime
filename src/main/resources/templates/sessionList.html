@@ -10,12 +10,15 @@
         my-3 background-img">
 
     <div th:replace="/fragments/container_header_and_footer :: row_header"></div>
+
+    <div th:replace="/fragments/alerts :: alert"></div>
+
     <form method="get" th:action="@{/sessionList/1}">
         <div class="input-group mb-3 search-bar">
             <input name="sortField" th:value="${sortField}" type="hidden">
             <input name="sortDir" th:value="${sortDir}" type="hidden">
 
-            <input aria-describedby="button-addon2" aria-label="Search word" class="form-control"
+            <input aria-describedby="button-addon2" aria-label="Search word" class="form-control search-bar-text"
                    name="keyword"
                    th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
             <button class="btn btn-outline-secondary" id="button-addon2" type="submit">Search</button>
@@ -46,8 +49,9 @@
                                 </table>
                             </div>-->
 
-            <div class="container d-inline-flex flex-wrap justify-content-center">
+            <div class="container d-inline-flex flex-wrap justify-content-center p-0">
                 <div class="personal-card card col-md-3 text-white bg-dark mb-3 mx-2"
+
                      th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|"
                      th:each="studySession : ${sessionList}">
                     <div class="card-header">[[${studySession.date}]]</div>
@@ -196,6 +200,7 @@
     function returnMarkdownFromOneSession(id) {
         idFecthedByGetSessionMarkdown = id;
         let hiddenTextAreaSessionList = document.getElementById("textarea-hidden");
+        const previewModalSaveBtn = document.getElementById("saveBtn");
 
         fetch("/getSessionMarkdown/" + id)
             .then(response => response.text())
@@ -212,6 +217,9 @@
                 const markdownDiv = document.getElementById("markdownPreview");
 
                 markdownDiv.insertAdjacentHTML("beforeend", valueToAdd);
+
+                previewModalSaveBtn.setAttribute("hidden","");
+
                 previewModal.show();
 
             });
@@ -238,7 +246,7 @@
                     divResumeTime.hidden = true;
                 }
 
-                modalEditFormsH2.innerText = jsonFile.date;
+                modalEditFormsH2.innerText = jsonFile.date + ' # ' + jsonFile.sessionNumber;
 
                 $.each(jsonFile, function (key, value) {
                     if (form.elements[key] != null) {
@@ -249,10 +257,7 @@
                 /* revert value of textarea */
                 formInputContent.value = revertIndentation("formInputContent");
                 formInputFeelings.value = revertIndentation("formInputFeelings");
-
-            })
-
-
+            });
     }
 
 
