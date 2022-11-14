@@ -13,19 +13,33 @@
 
     <div th:replace="/fragments/alerts :: alert"></div>
 
-    <form method="get" th:action="@{/sessionList/1}">
-        <div class="input-group mb-3 search-bar">
-            <input name="sortField" th:value="${sortField}" type="hidden">
-            <input name="sortDir" th:value="${sortDir}" type="hidden">
+    <div class="row pt-2 pb-4">
+        <div class="col-md">
+            <form method="get" th:action="@{/sessionList/1}">
+            <div class="container d-inline-flex">
+                <input name="sortField" th:value="${sortField}" type="hidden">
+                <input name="sortDir" th:value="${sortDir}" type="hidden">
 
-            <input aria-describedby="button-addon2" aria-label="Search word" class="form-control search-bar-text"
-                   name="keyword"
-                   th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
-            <button class="btn btn-outline-secondary" id="button-addon2" type="submit">Search</button>
-            <button class="btn btn-outline-secondary" id="clearKeyword" type="button">Clear</button>
+                <div class="container d-flex flex-row align-items-end justify-content-center">
+                    <div class="input-group search-bar">
+                        <input aria-describedby="button-addon2" aria-label="Search word" class="form-control search-bar-text"
+                               name="keyword"
+                               th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
+                   <!-- </div>
+                    <div>-->
+                        <button class="btn btn-danger" id="button-addon2" type="submit">Search</button>
+             <!--       </div>
+                    <div >-->
+                        <button class="btn btn-danger" id="clearKeyword" type="button">Clear</button>
+                    </div>
+
+                </div>
+
+                <div th:replace="/fragments/calendar :: calendar"></div>
+            </div>
+            </form>
         </div>
-    </form>
-
+    </div>
     <div class="row">
         <div class="col-md">
             <!--                <div class="container">

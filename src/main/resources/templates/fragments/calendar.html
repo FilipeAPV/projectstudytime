@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/head :: head('Study Time :: Session')"></head>
+<body>
+
+<div class="container d-inline-flex justify-content-center" th:fragment="calendar">
+    <div class=" input-group search-bar">
+      <input id="startDate" class="form-control" type="date" />
+
+      <input id="endDate" class="form-control" type="date" />
+      <input type="button" value="Filter" class="btn btn-danger" id="">
+      <input type="button" value="Export" class="btn btn-danger" id="btnExport">
+    </div>
+</div>
+
+</body>
+</html>
