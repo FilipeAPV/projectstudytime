@@ -57,7 +57,7 @@ public class SessionRestController {
 
         if (session.isPresent()) {
             logger.info("Session ID " + session.get().getId() + " sent as markdown");
-            return Export.objectToMarkdown(session.get());
+            return Export.objectToMarkdown(session.get(), true);
         } else {
             throw new Exception("Session not found");
         }

@@ -24,7 +24,7 @@ class ExportTest {
         String markdown = "";
 
         if (session.isPresent()) {
-            markdown = Export.objectToMarkdown(session.get());
+            markdown = Export.objectToMarkdown(session.get(), false);
         }
 
         System.out.println(markdown);

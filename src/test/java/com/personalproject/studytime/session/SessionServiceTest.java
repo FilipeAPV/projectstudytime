@@ -1,5 +1,6 @@
 package com.personalproject.studytime.session;
 
+import com.personalproject.studytime.util.TempFile;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ class SessionServiceTest {
 
     @Test
     void getSessionListFiltered() {
-        sessionService.getSessionListFiltered("2022-09-05","2022-09-06");
+        //sessionService.getSessionListFiltered("2022-09-05","2022-09-06");
+        TempFile.getLocalDateTime();
     }
 }
