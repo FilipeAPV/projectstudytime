@@ -234,15 +234,28 @@
       - Stopped using tables and started using cards
 - Set the ground to implement the calendar component
 
-# Analysis
+## Analysis
 - Good day of work without any major blockers.
+
+## Hours of Work
+
+- 7H
 
 # Day 10. (15/11/2022)
 
 ## Technical
 - Temporary file with n number of sessions formatted as markdown
 - Download file from browser
+- Filter sessions by date period
 
-# Analysis
+## Analysis
 - Spent much more time than expected working on the export functionality.
       - No special blocker, just trial and error on some features which takes time.
+- The rest of the working day went by very well
+
+## Hours of Work
+
+- 7H
+
+![sessionForm](https://bitbucket.org/FAPVieira/projectstudytime/raw/931fafe360e96bc20964c737dde737c15cf5de91/documentation/resources/ui_sessionform_15112022.png)
+![sessionList](https://bitbucket.org/FAPVieira/projectstudytime/raw/931fafe360e96bc20964c737dde737c15cf5de91/documentation/resources/ui_sessionlist_15112022.png)
