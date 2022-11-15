@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface SessionRepository extends JpaRepository<SessionModel, Integer> {
@@ -17,4 +18,6 @@ public interface SessionRepository extends JpaRepository<SessionModel, Integer> 
    @Query("SELECT s FROM SessionModel s WHERE CONCAT(s.date, ' ', s.content, ' ', s.feelings) LIKE %?1%")
    Page<SessionModel> findByWord(String keyword, Pageable pageable);
 
+   @Query("SELECT s FROM SessionModel s WHERE s.date >= ?1 and s.date <= ?2")
+   List<SessionModel> getSessionListFilteredByDate(LocalDate dateOfStart, LocalDate dateOfEnd);
 }

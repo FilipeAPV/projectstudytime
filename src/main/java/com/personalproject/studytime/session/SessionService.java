@@ -1,18 +1,22 @@
 package com.personalproject.studytime.session;
 
 import com.personalproject.studytime.util.Constants;
+import com.personalproject.studytime.util.TempFile;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -56,5 +60,23 @@ public class SessionService {
         }
 
         return sessionRepository.findAll(pageable);
+    }
+
+    public ResponseEntity getSessionListFiltered(String startDate, String endDate) {
+        LocalDate dateOfStart = LocalDate.parse(startDate);
+        LocalDate dateOfEnd = LocalDate.parse(endDate);
+
+        List<SessionModel> sessionList = sessionRepository.getSessionListFilteredByDate(dateOfStart, dateOfEnd);
+
+        File tempFile = TempFile.createFile(sessionList);
+
+        try {
+            return TempFile.downloadFile(tempFile);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
+
     }
 }

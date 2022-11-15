@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,6 +50,28 @@ class SessionRepositoryTest {
         Assertions.assertTrue(returnPageExistentKeyword.getContent().size() > 0);
         assertEquals(0, returnPageNonExistentKeyword.getContent().size());
 
+
+    }
+
+    @Test
+    void getSessionListFilteredByDate() {
+
+        List<SessionModel> sessionModel;
+
+        LocalDate start = LocalDate.of(2023,05,02);
+        LocalDate end = LocalDate.of(2023,05,02);
+
+        sessionModel = sessionRepository.getSessionListFilteredByDate(start, end);
+
+        Assertions.assertEquals(0, sessionModel.size());
+
+        sessionModel = new ArrayList<>();
+        start = LocalDate.of(2022,9,05);
+        end = LocalDate.of(2022,9,06);
+
+        sessionModel = sessionRepository.getSessionListFilteredByDate(start, end);
+
+        Assertions.assertEquals(6, sessionModel.size());
 
     }
 }

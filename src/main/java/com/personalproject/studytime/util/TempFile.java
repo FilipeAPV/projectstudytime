@@ -1,15 +1,15 @@
 package com.personalproject.studytime.util;
 
 import com.personalproject.studytime.session.SessionModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
-public class CreateTempFile {
+public class TempFile {
 
         public static File createFile(List<SessionModel> list) {
         String fileContent = "";
@@ -32,4 +32,26 @@ public class CreateTempFile {
 
         return markdownFile;
     }
+
+
+    public static ResponseEntity downloadFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        System.out.println(reader.readLine());
+        reader.close();
+        System.out.println(file.getAbsolutePath());
+
+        File downloadFile = new File(file.getAbsolutePath());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(downloadFile));
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFile.getName());
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(downloadFile.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+    }
+
 }
