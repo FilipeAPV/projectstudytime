@@ -16,6 +16,8 @@ window.onload = function () {
     const inputCalendarStartDate = document.getElementById("startDate");
     const inputCalendarEndDate = document.getElementById("endDate");
 
+
+
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
     displayDayMonthYear();
@@ -66,6 +68,11 @@ window.onload = function () {
         restoreOriginalTextAreaValues();
     });
 
+    //
+    inputCalendarStartDate.addEventListener("click", function (){
+
+    });
+
     // Export session in data range as markdown
     btnCalendarExport.addEventListener("click", function (){
         const startDate = inputCalendarStartDate.value;
@@ -77,7 +84,7 @@ window.onload = function () {
         }
     });
 
-    // Export session in data range as markdown
+    // Filter displayed sessions by date
     btnCalendarFilter.addEventListener("click", function (){
         const startDate = inputCalendarStartDate.value;
         const endDate = inputCalendarEndDate.value;

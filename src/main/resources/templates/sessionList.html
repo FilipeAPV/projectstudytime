@@ -20,17 +20,13 @@
                     <input name="sortField" th:value="${sortField}" type="hidden">
                     <input name="sortDir" th:value="${sortDir}" type="hidden">
 
-                    <div class="container d-flex flex-row align-items-end justify-content-center">
+                    <div class="container d-flex flex-row justify-content-end">
                         <div class="input-group search-bar">
                             <input aria-describedby="button-addon2" aria-label="Search word"
-                                   class="form-control search-bar-text"
+                                   class="form-control session-list-input-border"
                                    name="keyword"
                                    th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
-                            <!-- </div>
-                             <div>-->
                             <button class="btn btn-danger" id="button-addon2" type="submit">Search</button>
-                            <!--       </div>
-                                   <div >-->
                             <button class="btn btn-danger" id="clearKeyword" type="button">Clear</button>
                         </div>
 
@@ -153,8 +149,6 @@
                 previewModal.show();
 
             });
-
-
     }
 
     function returnSessionToEdit() {

@@ -41,34 +41,8 @@
   display: -webkit-box !important;
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
-  white-space: pre-wrap;
+  white-space: pre-line;
   max-width: 100%; /*Prevent some overflowing*/
-}
-
-/* TABLE FROM SESSION LIST */
-
-.session-table th{
-  /*min-width: auto;*/
-  text-align: center;
-  font-size: 18px;
-  color: #2d2d34;
-}
-
-  /*TODO: set width of the columns for Date and Number smaller*/
-
-.session-table td{
-  /*min-width: fit-content;*/
- /*  width: 100%; */
-  color: #2d2d34;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: pre;
-
-}
-
-.session-table tr:hover{
-  font-size: 1.3rem;
-  white-space: pre-wrap;
 }
 
 .text-size-and-font {
@@ -99,18 +73,31 @@
   font-weight: bold;
 }
 
+.pagination-module {
+  color: #d9534f !important;
+}
+
+.pagination-module-active {
+
+}
+
+.pagination-module-active a {
+  color: #fff !important;
+  background-color: #d9534f !important;
+}
+
 /* SEARCH BAR*/
 .search-bar {
-  max-width: 60%;
+  max-width: 80%;
 }
 
 .search-bar-text {
-  box-shadow: none !important;
+
 }
 
-.search-bar-text:focus {
+.session-list-input-border:focus {
   box-shadow: none !important;
-  border: 1px solid #2d2d34;
+  border: 1px solid #d9534f;
 }
 
 /* MODAL INDENTATION WARNING */

@@ -11,9 +11,9 @@
     </div>
     <div class="container mt-2" th:if="${totalPages > 1}">
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center ">
                 <li class="page-item"><a
-                        class="page-link"
+                        class="page-link pagination-module"
                         th:classappend="${currentPage == 1 ? 'disabled' : ''}"
                         th:href="@{'/sessionList/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                         + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
@@ -22,7 +22,7 @@
                 <li class="page-item">
                     <a
                             aria-label="Previous"
-                            class="page-link"
+                            class="page-link pagination-module"
                             th:classappend="${currentPage == 1 ? 'disabled' : ''}"
                             th:href="@{'/sessionList/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                             + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
@@ -34,27 +34,27 @@
 
                 <!--TODO: refactor-->
                 <li class="page-item"
-                    th:classappend="${currentPage == i ? 'active' : ''}"
+                    th:classappend="${currentPage == i ? 'pagination-module-active' : ''}"
                     th:each="i : ${#numbers.sequence(currentPage - 2, currentPage + 2)}"
                     th:if="${currentPage > 5 && currentPage <= totalPages - 2}">
-                    <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                    <a class="page-link pagination-module" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                     + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
                                     + ${!#strings.isEmpty(startDate) ? '&startDate=' + startDate + '&endDate=' + endDate : '' }
                                     }">[[${i}]]</a>
                 </li>
 
                 <li class="page-item"
-                    th:classappend="${currentPage == i ? 'active' : ''}"
+                    th:classappend="${currentPage == i ? 'pagination-module-active' : ''}"
                     th:each="i : ${#numbers.sequence(1, (totalPages < 5 ? totalPages : 5))}"
                     th:if="${currentPage <= 5}">
-                    <a class="page-link" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
+                    <a class="page-link pagination-module" th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                     + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
                                     + ${!#strings.isEmpty(startDate) ? '&startDate=' + startDate + '&endDate=' + endDate : '' }
                                     }">[[${i}]]</a>
                 </li>
 
-                <li class="page-item"
-                    th:classappend="${currentPage == i ? 'active' : ''}"
+                <li class="page-item pagination-module"
+                    th:classappend="${currentPage == i ? 'pagination-module-active' : ''}"
                     th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}"
                     th:if="${(currentPage > totalPages - 2) && currentPage > 5}">
                     <a class="page-link"
@@ -64,7 +64,7 @@
                 <li class="page-item">
                     <a
                             aria-label="Next"
-                            class="page-link" th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+                            class="page-link pagination-module" th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
                             th:href="@{'/sessionList/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                             + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
                                             + ${!#strings.isEmpty(startDate) ? '&startDate=' + startDate + '&endDate=' + endDate : '' }
@@ -73,7 +73,7 @@
                     </a>
                 </li>
                 <li class="page-item"><a
-                        class="page-link"
+                        class="page-link pagination-module"
                         th:classappend="${currentPage == totalPages ? 'disabled' : ''}" th:href="@{'/sessionList/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
                                          + ${!#strings.isEmpty(keyword) ? '&keyword=' + keyword : '' }
                                          + ${!#strings.isEmpty(startDate) ? '&startDate=' + startDate + '&endDate=' + endDate : '' }

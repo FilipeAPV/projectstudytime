@@ -3,11 +3,13 @@
 <head th:replace="/head :: head('Study Time :: Session')"></head>
 <body>
 
-<div class="container d-inline-flex justify-content-center" th:fragment="calendar">
+<div class="container d-inline-flex justify-content-start" th:fragment="calendar">
     <div class=" input-group search-bar">
-        <input class="form-control" id="startDate" type="date"/>
+        <input class="form-control session-list-input-border" id="startDate" type="date"
+        th:value="${!#strings.isEmpty(startDate) ? startDate : ''}"/>
 
-        <input class="form-control" id="endDate" type="date"/>
+        <input class="form-control session-list-input-border" id="endDate" type="date"
+        th:value="${!#strings.isEmpty(endDate) ? endDate : ''}"/>
 
         <a class="btn btn-danger" href="#" id="btnCalendarFilter" role="button">Filter</a>
         <a class="btn btn-danger" href="#" id="btnCalendarExport" role="button">Export</a>
