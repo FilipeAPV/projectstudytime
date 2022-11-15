@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -49,24 +48,38 @@ public class SessionService {
         return isSaved;
     }
 
-    public Page<SessionModel> getSessionList(int pageNum, String sortField, String sortDir, String keyword) {
+    public Page<SessionModel> getSessionList(int pageNum, String startDate, String endDate, String sortField, String sortDir, String keyword) {
+
+        StringBuilder info = new StringBuilder();
+        info.append("Information received: ").append(pageNum).append(" ").append(startDate).append(" ").append(endDate);
+
+        logger.info(info.toString());
+
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
 
         Pageable pageable = PageRequest.of(pageNum - 1, Constants.USERS_PER_PAGE, sort);
 
+        if (!StringUtils.isAllBlank(startDate) && !StringUtils.isAllBlank(endDate)) {
+            LocalDate dateOfStart = LocalDate.parse(startDate);
+            LocalDate dateOfEnd = LocalDate.parse(endDate);
+            logger.info("Results filtered by date");
+            return sessionRepository.getSessionListFilteredByDate(dateOfStart, dateOfEnd, pageable);
+        }
+
         if (!StringUtils.isAllBlank(keyword)) {
+            logger.info("Results filtered by keyword");
             return sessionRepository.findByWord(keyword, pageable);
         }
 
         return sessionRepository.findAll(pageable);
     }
 
-    public ResponseEntity getSessionListFiltered(String startDate, String endDate) {
+    public ResponseEntity getFile(String startDate, String endDate) {
         LocalDate dateOfStart = LocalDate.parse(startDate);
         LocalDate dateOfEnd = LocalDate.parse(endDate);
 
-        List<SessionModel> sessionList = sessionRepository.getSessionListFilteredByDate(dateOfStart, dateOfEnd);
+        List<SessionModel> sessionList = sessionRepository.getSessionListFilteredByDate(dateOfStart,dateOfEnd);
 
         File tempFile = TempFile.createFile(sessionList);
 

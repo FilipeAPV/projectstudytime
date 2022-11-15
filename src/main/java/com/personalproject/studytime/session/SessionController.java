@@ -92,11 +92,13 @@ public class SessionController {
                                   @PathVariable(name = "pageNum") int pageNum,
                                   @RequestParam(name = "sortField") String sortField,
                                   @RequestParam(name = "sortDir") String sortDir,
-                                  @RequestParam(name = "keyword", required = false) String keyword) {
+                                  @RequestParam(name = "keyword", required = false) String keyword,
+                                  @RequestParam(name = "startDate", required = false) String startDate ,
+                                  @RequestParam(name = "endDate", required = false) String endDate) {
 
         String reverseSortDir = (sortDir.equals("asc")) ? "dsc" : "asc";
 
-        Page<SessionModel> page = sessionService.getSessionList(pageNum, sortField, sortDir, keyword);
+        Page<SessionModel> page = sessionService.getSessionList(pageNum, startDate, endDate, sortField, sortDir, keyword);
         List<SessionModel> sessionList = page.getContent();
 
         model.addAttribute("sessionList", sessionList);
@@ -110,8 +112,11 @@ public class SessionController {
             model.addAttribute("keyword", keyword);
         }
 
+        if (StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)) {
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+        }
 
         return "sessionList";
     }
-
 }

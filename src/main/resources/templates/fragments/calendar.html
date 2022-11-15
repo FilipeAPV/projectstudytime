@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/head :: head('Study Time :: Session')"></head>
 <body>
 
 <div class="container d-inline-flex justify-content-center" th:fragment="calendar">
     <div class=" input-group search-bar">
-      <input id="startDate" class="form-control" type="date" />
+        <input class="form-control" id="startDate" type="date"/>
 
-      <input id="endDate" class="form-control" type="date" />
-      <input type="button" value="Filter" class="btn btn-danger" id="">
-      <!--<input type="button" value="Export" class="btn btn-danger" id="btnCalendarExport">-->
-        <a id="btnCalendarExport" class="btn btn-danger" href="#" role="button">Export</a>
+        <input class="form-control" id="endDate" type="date"/>
+
+        <a class="btn btn-danger" href="#" id="btnCalendarFilter" role="button">Filter</a>
+        <a class="btn btn-danger" href="#" id="btnCalendarExport" role="button">Export</a>
     </div>
 </div>
 

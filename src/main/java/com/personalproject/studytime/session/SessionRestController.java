@@ -1,10 +1,8 @@
 package com.personalproject.studytime.session;
 
-import com.personalproject.studytime.util.Constants;
 import com.personalproject.studytime.util.Export;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -81,7 +78,7 @@ public class SessionRestController {
     public ResponseEntity downloadFile(@PathVariable(name = "startDate") String startDate,
                                                  @PathVariable(name = "endDate") String endDate) throws Exception {
 
-        return sessionService.getSessionListFiltered(startDate, endDate);
+        return sessionService.getFile(startDate, endDate);
     }
 
 }

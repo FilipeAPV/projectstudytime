@@ -12,6 +12,7 @@ window.onload = function () {
     const divResumeTime = document.getElementById("formEdit_resumeTime");
     const editModal = document.getElementById("editModal");
     const btnCalendarExport = document.getElementById("btnCalendarExport");
+    const btnCalendarFilter = document.getElementById("btnCalendarFilter");
     const inputCalendarStartDate = document.getElementById("startDate");
     const inputCalendarEndDate = document.getElementById("endDate");
 
@@ -68,11 +69,22 @@ window.onload = function () {
     // Export session in data range as markdown
     btnCalendarExport.addEventListener("click", function (){
         const startDate = inputCalendarStartDate.value;
-        const endDate = inputCalendarStartDate.value;
+        const endDate = inputCalendarEndDate.value;
 
         if (startDate && endDate) {
             const link = "/export/" + startDate + "/" + endDate;
             btnCalendarExport.href = link;
+        }
+    });
+
+    // Export session in data range as markdown
+    btnCalendarFilter.addEventListener("click", function (){
+        const startDate = inputCalendarStartDate.value;
+        const endDate = inputCalendarEndDate.value;
+
+        if (startDate && endDate) {
+            const link = "/sessionList/" + 1 + "?sortField=date&sortDir=dsc" + "&startDate=" + startDate + "&endDate=" + endDate;
+            btnCalendarFilter.href = link;
         }
     });
 }

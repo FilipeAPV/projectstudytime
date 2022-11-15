@@ -20,4 +20,7 @@ public interface SessionRepository extends JpaRepository<SessionModel, Integer> 
 
    @Query("SELECT s FROM SessionModel s WHERE s.date >= ?1 and s.date <= ?2")
    List<SessionModel> getSessionListFilteredByDate(LocalDate dateOfStart, LocalDate dateOfEnd);
+
+   @Query("SELECT s FROM SessionModel s WHERE s.date >= ?1 and s.date <= ?2")
+   Page<SessionModel> getSessionListFilteredByDate(LocalDate dateOfStart, LocalDate dateOfEnd, Pageable pageable);
 }
