@@ -11,6 +11,9 @@ window.onload = function () {
     const divPauseTime = document.getElementById("formEdit_pauseTime");
     const divResumeTime = document.getElementById("formEdit_resumeTime");
     const editModal = document.getElementById("editModal");
+    const btnCalendarExport = document.getElementById("btnCalendarExport");
+    const inputCalendarStartDate = document.getElementById("startDate");
+    const inputCalendarEndDate = document.getElementById("endDate");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -57,10 +60,20 @@ window.onload = function () {
         divResumeTime.hidden = false;
     })
 
-
     //Close Indentation Modal and set textarea.value to original values
     previewModalCloseBtn.addEventListener("click", function (){
         restoreOriginalTextAreaValues();
+    });
+
+    // Export session in data range as markdown
+    btnCalendarExport.addEventListener("click", function (){
+        const startDate = inputCalendarStartDate.value;
+        const endDate = inputCalendarStartDate.value;
+
+        if (startDate && endDate) {
+            const link = "/export/" + startDate + "/" + endDate;
+            btnCalendarExport.href = link;
+        }
     });
 }
 

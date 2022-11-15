@@ -78,7 +78,7 @@ public class SessionRestController {
     }
 
     @GetMapping("/export/{startDate}/{endDate}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable(name = "startDate") String startDate,
+    public ResponseEntity downloadFile(@PathVariable(name = "startDate") String startDate,
                                                  @PathVariable(name = "endDate") String endDate) throws Exception {
 
         return sessionService.getSessionListFiltered(startDate, endDate);

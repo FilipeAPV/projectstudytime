@@ -236,3 +236,13 @@
 
 # Analysis
 - Good day of work without any major blockers.
+
+# Day 10. (15/11/2022)
+
+## Technical
+- Temporary file with n number of sessions formatted as markdown
+- Download file from browser
+
+# Analysis
+- Spent much more time than expected working on the export functionality.
+      - No special blocker, just trial and error on some features which takes time.
