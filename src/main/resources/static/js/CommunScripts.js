@@ -6,9 +6,14 @@ let currentSessionState = "NOTSTARTED";
 let isOnGoing = false;
 let idFecthedByGetSessionMarkdown = 0;
 
-console.log("MyScript.js - Set currentSessionState to: " + currentSessionState);
+let sessionStudyCounter = zeroDateValues(new Date());
+const sessionPauseCounter = zeroDateValues(new Date());
 
-/*Allow Tab inside textAreas*/
+console.log("CommunScripts.js - Set currentSessionState to: " + currentSessionState);
+
+/**
+ * Allow Tab inside textAreas
+ */
 function allowTabInsideTextArea(textAreaField) {
 
     textAreaField.addEventListener('keydown', (key) => {
@@ -27,7 +32,6 @@ function allowTabInsideTextArea(textAreaField) {
 /**
  * Display Date as: Mon Oct 24 2022
  */
-
 function displayDayMonthYear() {
     const currentDate = new Date();
     const dateToShow = currentDate.toDateString();
@@ -81,10 +85,14 @@ function continuousExecution(){
 // Updates the front-end element
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
-    isOnGoing = (currentSessionState === "STARTED" || currentSessionState === "RESUMED");
+    isOnGoing = (currentSessionState === "STARTED");
+    isPause = (currentSessionState === "PAUSED");
     if (isOnGoing) {
-        calcStudySessionTimer();
+        document.getElementById("textCurrentStudySessionTimer").textContent = calcStudySessionTimer(sessionStudyCounter);
         document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
+    }
+    if (isPause) {
+        document.getElementById("labelPauseTime").value = calcStudySessionTimer(sessionPauseCounter);
     }
 
     continuousExecution();
@@ -102,21 +110,15 @@ function setBtnState(currentSessionState) {
             document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
             document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionPauseTime").textContent = "PAUSE";
         }
         break;
         case "PAUSED" : {
-            document.getElementById("btnSetSessionResumeTime").removeAttribute("disabled");
 
             document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
             document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
-        }
-        break;
-        case "RESUMED" : {
-            document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
 
-            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionResumeTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionPauseTime").textContent = "RESUME";
         }
         break;
         case "STOPPED" : {
@@ -137,19 +139,17 @@ function setStartTimeOfStudySession() {
 }
 
 function setPauseTimeOfStudySession() {
-    currentSessionState = "PAUSED";
 
-    document.getElementById("labelPauseTime").value = currentTime();
+    if (currentSessionState === "STARTED") {
+        currentSessionState = "PAUSED";
 
-    setBtnState(currentSessionState);
-}
+        setBtnState(currentSessionState);
 
-function setResumeTimeOfStudySession() {
-    currentSessionState = "RESUMED";
+    } else {
+        currentSessionState = "STARTED";
 
-    document.getElementById("labelResumeTime").value = currentTime();
-
-    setBtnState(currentSessionState);
+        setBtnState(currentSessionState);
+    }
 }
 
 function setStopTimeOfStudySession() {
@@ -166,36 +166,30 @@ async function returnNewSession() {
     window.location="/";
 }
 
+/**
+ * Set Date Time to 0H, 0M, 0S
+ */
+function zeroDateValues(date) {
+    date.setHours(0,0,0);
+    return date;
+    //sessionStudyCounter.setHours(sessionStudyCounter.getHours() + (sessionStudyCounter.getTimezoneOffset()/60));
+}
 
 /**
  * Study Session Timer
  * Time elapsed since the start of the study session
  */
 
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
+function calcStudySessionTimer(counter) {
+    let currentTime = new Date(counter.getTime());
+    currentTime.setTime(currentTime.getTime() + 1000);
 
-function calcStudySessionTimer() {
-    if (!isOnGoing) {
-        return;
-    }
+    counter.setTime(currentTime.getTime());
 
-    seconds++;
+    let timeElapsed = formatTime(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds());
 
-    if (seconds === 60) {
-        minutes++;
-        seconds = 0;
-    }
-
-    if (minutes === 60) {
-        hours++;
-        minutes = 0;
-    }
-
-    let timeElapsed = formatTime(hours, minutes, seconds);
-
-    document.getElementById("textCurrentStudySessionTimer").textContent = timeElapsed;
+    console.log(timeElapsed);
+    return timeElapsed;
 }
 
 /**

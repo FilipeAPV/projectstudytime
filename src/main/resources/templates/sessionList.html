@@ -52,7 +52,8 @@
                             [[${studySession.content}]]</p>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">duration</small>
+                        <small class="text-muted">[[${studySession.totalStudyTime}]]</small>
+
                     </div>
                 </div>
             </div>
@@ -155,7 +156,6 @@
         const id = idFecthedByGetSessionMarkdown;
         const form = document.getElementById("formEdit");
         const divPauseTime = document.getElementById("formEdit_pauseTime");
-        const divResumeTime = document.getElementById("formEdit_resumeTime");
         const modalEditFormsH2 = document.getElementById("modalEditFormsH2");
         const formInputContent = document.getElementById("formInputContent");
         const formInputFeelings = document.getElementById("formInputFeelings");
@@ -164,11 +164,6 @@
             .then(response => response.json())
             .then(data => {
                 const jsonFile = data;
-
-                if (jsonFile.pauseTime === null) {
-                    divPauseTime.hidden = true;
-                    divResumeTime.hidden = true;
-                }
 
                 modalEditFormsH2.innerText = jsonFile.date + ' # ' + jsonFile.sessionNumber;
 
@@ -183,7 +178,6 @@
                 formInputFeelings.value = revertIndentation("formInputFeelings");
             });
     }
-
 
 </script>
 

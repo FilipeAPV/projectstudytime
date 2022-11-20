@@ -58,10 +58,10 @@ window.onload = function () {
     })
 
     // Revert hidden attribute from input text when Edit Modal is closed
-    editModal.addEventListener('hidden.bs.modal', function () {
+/*    editModal.addEventListener('hidden.bs.modal', function () {
         divPauseTime.hidden = false;
         divResumeTime.hidden = false;
-    })
+    })*/
 
     //Close Indentation Modal and set textarea.value to original values
     previewModalCloseBtn.addEventListener("click", function (){

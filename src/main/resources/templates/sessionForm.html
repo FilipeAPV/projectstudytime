@@ -36,14 +36,7 @@
                                     id="btnSetSessionPauseTime" onclick="setPauseTimeOfStudySession()" type="button">PAUSE
                             </button>
                             <input class="input-as-label" id="labelPauseTime" placeholder="00:00:00" readonly
-                                   th:field="*{pauseTime}" type="text"/>
-                        </div>
-                        <div class="my-2">
-                            <button class="btn btn-dark btn-sm btn-with" disabled id="btnSetSessionResumeTime"
-                                    onclick="setResumeTimeOfStudySession()" type="button">RESUME
-                            </button>
-                            <input class="input-as-label" id="labelResumeTime" placeholder="00:00:00" readonly
-                                   th:field="*{resumeTime}" type="text"/>
+                                   th:field="*{totalPausedTime}" type="text"/>
                         </div>
                         <div class="my-2">
                             <button class="btn btn-dark btn-sm btn-with" disabled id="btnSetSessionStopTime"

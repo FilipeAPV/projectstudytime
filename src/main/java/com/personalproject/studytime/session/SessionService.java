@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -38,6 +39,7 @@ public class SessionService {
             sessionModel.setSessionNumber(sessionNumber);
         }
 
+        sessionModel.setTotalStudyTime(getTotalStudyTime(sessionModel));
         SessionModel savedSession = sessionRepository.save(sessionModel);
 
         if (savedSession.getId() != null && savedSession.getId() != 0) {
@@ -51,7 +53,7 @@ public class SessionService {
     public Page<SessionModel> getSessionList(int pageNum, String startDate, String endDate, String sortField, String sortDir, String keyword) {
 
         StringBuilder info = new StringBuilder();
-        info.append("Information received: ").append(pageNum).append(" ").append(startDate).append(" ").append(endDate);
+        /*info.append("Information received: ").append(pageNum).append(" ").append(startDate).append(" ").append(endDate);*/
 
         logger.info(info.toString());
 
@@ -68,7 +70,7 @@ public class SessionService {
         }
 
         if (!StringUtils.isAllBlank(keyword)) {
-            logger.info("Results filtered by keyword");
+            logger.info("Results filtered by keyword: " + keyword);
             return sessionRepository.findByWord(keyword, pageable);
         }
 
@@ -90,6 +92,14 @@ public class SessionService {
         }
 
         return null;
+    }
+    private LocalTime getTotalStudyTime(SessionModel sessionModel) {
+        Long startTimeToNano = sessionModel.getStartTime().toNanoOfDay();
+        Long pauseTimeToNano = sessionModel.getTotalPausedTime().toNanoOfDay();
 
+        LocalTime diffEndStart = sessionModel.getStopTime().minusNanos(startTimeToNano);
+        LocalTime totalStudyTime = diffEndStart.minusNanos(pauseTimeToNano);
+
+        return totalStudyTime;
     }
 }

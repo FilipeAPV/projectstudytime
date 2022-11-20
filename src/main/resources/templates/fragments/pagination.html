@@ -53,11 +53,11 @@
                                     }">[[${i}]]</a>
                 </li>
 
-                <li class="page-item pagination-module"
+                <li class="page-item"
                     th:classappend="${currentPage == i ? 'pagination-module-active' : ''}"
                     th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}"
                     th:if="${(currentPage > totalPages - 2) && currentPage > 5}">
-                    <a class="page-link"
+                    <a class="page-link pagination-module"
                        th:href="@{'/sessionList/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                 </li>
 

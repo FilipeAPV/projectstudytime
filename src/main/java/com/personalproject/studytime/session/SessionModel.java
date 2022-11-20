@@ -24,13 +24,13 @@ public class SessionModel {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime startTime;
 
-    @Column(name = "pause_time")
+    @Column(nullable = false, name = "paused_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime pauseTime;
+    private LocalTime totalPausedTime = LocalTime.of(0,0,0);
 
-    @Column(name = "resume_time")
+    @Column(nullable = false, name = "total_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime resumeTime;
+    private LocalTime totalStudyTime;
 
     @Column(nullable = false, name = "stop_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
@@ -74,20 +74,20 @@ public class SessionModel {
         this.startTime = startTime;
     }
 
-    public LocalTime getPauseTime() {
-        return pauseTime;
+    public LocalTime getTotalPausedTime() {
+        return totalPausedTime;
     }
 
-    public void setPauseTime(LocalTime pauseTime) {
-        this.pauseTime = pauseTime;
+    public void setTotalPausedTime(LocalTime pauseTime) {
+        this.totalPausedTime = pauseTime;
     }
 
-    public LocalTime getResumeTime() {
-        return resumeTime;
+    public LocalTime getTotalStudyTime() {
+        return totalStudyTime;
     }
 
-    public void setResumeTime(LocalTime resumeTime) {
-        this.resumeTime = resumeTime;
+    public void setTotalStudyTime(LocalTime resumeTime) {
+        this.totalStudyTime = resumeTime;
     }
 
     public LocalTime getStopTime() {
@@ -121,8 +121,8 @@ public class SessionModel {
                 ", sessionNumber=" + sessionNumber +
                 ", date=" + date +
                 ", startTime=" + startTime +
-                ", pauseTime=" + pauseTime +
-                ", resumeTime=" + resumeTime +
+                ", pauseTime=" + totalPausedTime +
+                ", resumeTime=" + totalStudyTime +
                 ", stopTime=" + stopTime +
                 ", content='" + content + '\'' +
                 ", feelings='" + feelings + '\'' +

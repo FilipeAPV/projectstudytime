@@ -34,14 +34,14 @@ public class SessionController {
 
             SessionModel sessionModel = (SessionModel) httpSession.getAttribute(Constants.OBJECT_SAVED_IN_SESSION);
             model.addAttribute("sessionObj", sessionModel);
-            logger.info("Object from the Session: " + sessionModel);
+            logger.info("Object retrieved from the Session and being loaded: " + sessionModel);
 
         } else {
 
             model.addAttribute("sessionObj", new SessionModel());
             httpSession.setAttribute("isSessionOngoing", null);
             httpSession.setAttribute("sessionState", null);
-            logger.info("Object from the Session is NULL. Sending new Object");
+            logger.info("There is no object to retrieve from the Session. Sending new Object");
         }
 
         return "sessionForm";

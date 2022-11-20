@@ -86,10 +86,10 @@ class DbTest {
         Assertions.assertEquals(numberOfRecordsInDbAfterDeleting, repositoryDbTest.count());
     }
 
-    @DisplayName("Delete test table")
+/*    @DisplayName("Delete test table")
     @Sql(scripts = "/sql_scripts/drop-table.sql")
     @Test
     @Order(5)
     void deleteTable() {
-    }
+    }*/
 }

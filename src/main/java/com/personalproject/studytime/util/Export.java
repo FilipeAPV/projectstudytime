@@ -32,12 +32,12 @@ public class Export {
         markdown.append(emptySpaces).append("### **Session** ").append(sessionModel.getSessionNumber()).append("\n")
                 .append(emptySpaces).append("- Start: ").append(sessionModel.getStartTime()).append("\n");
 
-        if (sessionModel.getPauseTime() != null && sessionModel.getPauseTime() != invalidTime) {
-            markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getPauseTime()).append("\n");
-            markdown.append(emptySpaces).append("- Resume: ").append(sessionModel.getResumeTime()).append("\n");
+        if (sessionModel.getTotalPausedTime() != null && sessionModel.getTotalPausedTime() != invalidTime) {
+            markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getTotalPausedTime()).append("\n");
         }
 
-        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n\n")
+        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n")
+                .append(emptySpaces).append("- Total: ").append(sessionModel.getTotalStudyTime()).append("\n\n")
                 .append(emptySpaces).append(markdownHeader).append("**Content:** \n").append(sessionModel.getContent()).append("\n\n");
 
         if (StringUtils.isNotBlank(sessionModel.getFeelings())) {
@@ -66,12 +66,12 @@ public class Export {
                 .append(markdownHeader).append("**Time:** \n")
                 .append(emptySpaces).append("- Start: ").append(sessionModel.getStartTime()).append("\n");
 
-        if (sessionModel.getPauseTime() != null && sessionModel.getPauseTime() != invalidTime) {
-            markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getPauseTime()).append("\n");
-            markdown.append(emptySpaces).append("- Resume: ").append(sessionModel.getResumeTime()).append("\n");
+        if (sessionModel.getTotalPausedTime() != null && sessionModel.getTotalPausedTime() != invalidTime) {
+            markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getTotalPausedTime()).append("\n");
         }
 
-        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n\n")
+        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n")
+                .append(emptySpaces).append("- Resume: ").append(sessionModel.getTotalStudyTime()).append("\n\n")
                 .append(markdownHeader).append("**Content:** \n").append(sessionModel.getContent()).append("\n\n");
 
         if (StringUtils.isNotBlank(sessionModel.getFeelings())) {
