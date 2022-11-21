@@ -119,4 +119,18 @@ public class SessionController {
 
         return "sessionList";
     }
+
+    @GetMapping("/deleteSessionById/{id}")
+    public String deleteSessionById(@PathVariable(name = "id") Integer id,
+                                    RedirectAttributes redirectAttributes) {
+        boolean isDeleted = sessionService.deleteSessionById(id);
+
+        if (isDeleted) {
+            redirectAttributes.addFlashAttribute("message", "The session has been successfully deleted!");
+            return "redirect:/sessionList/1?sortField=date&sortDir=dsc";
+        }
+
+        logger.info("Session was NOT successfully deleted");
+        return "redirect:/sessionList/1?sortField=date&sortDir=dsc";
+    }
 }

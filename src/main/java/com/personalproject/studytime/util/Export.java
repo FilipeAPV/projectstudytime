@@ -36,7 +36,7 @@ public class Export {
             markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getTotalPausedTime()).append("\n");
         }
 
-        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n")
+        markdown.append(emptySpaces).append("- End:   ").append(sessionModel.getStopTime()).append("\n")
                 .append(emptySpaces).append("- Total: ").append(sessionModel.getTotalStudyTime()).append("\n\n")
                 .append(emptySpaces).append(markdownHeader).append("**Content:** \n").append(sessionModel.getContent()).append("\n\n");
 
@@ -70,8 +70,8 @@ public class Export {
             markdown.append(emptySpaces).append("- Pause: ").append(sessionModel.getTotalPausedTime()).append("\n");
         }
 
-        markdown.append(emptySpaces).append("- End: ").append(sessionModel.getStopTime()).append("\n")
-                .append(emptySpaces).append("- Resume: ").append(sessionModel.getTotalStudyTime()).append("\n\n")
+        markdown.append(emptySpaces).append("- End:   ").append(sessionModel.getStopTime()).append("\n")
+                .append(emptySpaces).append("- Total: ").append(sessionModel.getTotalStudyTime()).append("\n\n")
                 .append(markdownHeader).append("**Content:** \n").append(sessionModel.getContent()).append("\n\n");
 
         if (StringUtils.isNotBlank(sessionModel.getFeelings())) {

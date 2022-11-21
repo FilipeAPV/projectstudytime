@@ -8,13 +8,13 @@ window.onload = function () {
     const previewModalEditBtn = document.getElementById("previewModalEditBtn");
     const previewModal = document.getElementById("previewModal");
     const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
-    const divPauseTime = document.getElementById("formEdit_pauseTime");
-    const divResumeTime = document.getElementById("formEdit_resumeTime");
-    const editModal = document.getElementById("editModal");
+    /*const editModal = document.getElementById("editModal");*/
     const btnCalendarExport = document.getElementById("btnCalendarExport");
     const btnCalendarFilter = document.getElementById("btnCalendarFilter");
     const inputCalendarStartDate = document.getElementById("startDate");
     const inputCalendarEndDate = document.getElementById("endDate");
+    const previewModalDeleteBtn = document.getElementById("previewModalDeleteBtn");
+    const deleteConfirmationModalDeleteBtn = document.getElementById("deleteConfirmationModalDeleteBtn");
 
 
 
@@ -40,6 +40,7 @@ window.onload = function () {
         if (isValidated) {
 
             previewModalEditBtn.setAttribute("hidden","");
+            previewModalDeleteBtn.setAttribute("hidden", "");
             saveBtn.removeAttribute("hidden");
 
             showModalPreview();
@@ -55,23 +56,22 @@ window.onload = function () {
     previewModal.addEventListener('hidden.bs.modal', function () {
         saveBtn.setAttribute("hidden","");
         previewModalEditBtn.removeAttribute("hidden");
+        previewModalDeleteBtn.removeAttribute("hidden");
     })
-
-    // Revert hidden attribute from input text when Edit Modal is closed
-/*    editModal.addEventListener('hidden.bs.modal', function () {
-        divPauseTime.hidden = false;
-        divResumeTime.hidden = false;
-    })*/
 
     //Close Indentation Modal and set textarea.value to original values
     previewModalCloseBtn.addEventListener("click", function (){
         restoreOriginalTextAreaValues();
     });
 
-    //
-    inputCalendarStartDate.addEventListener("click", function (){
-
+    // Set ID to delete session link
+    deleteConfirmationModalDeleteBtn.addEventListener("click", function (){
+        if (idFecthedByGetSessionMarkdown !== 0) {
+            const link = "/deleteSessionById/" + idFecthedByGetSessionMarkdown;
+            deleteConfirmationModalDeleteBtn.href = link;
+        }
     });
+
 
     // Export session in data range as markdown
     btnCalendarExport.addEventListener("click", function (){

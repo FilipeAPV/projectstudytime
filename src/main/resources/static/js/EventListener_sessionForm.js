@@ -9,6 +9,9 @@ window.onload = function () {
     const sessionContent = document.getElementById("sessionContent");
     const sessionFeelings = document.getElementById("sessionFeelings");
     const previewModalEditBtn = document.getElementById("previewModalEditBtn");
+    const previewModalDeleteBtn = document.getElementById("previewModalDeleteBtn");
+    const labelStartTime = document.getElementById("labelStartTime");
+    const labelStopTime = document.getElementById("labelStopTime");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -26,6 +29,7 @@ window.onload = function () {
         markdownDiv.innerHTML = "";
         document.getElementById("textarea-hidden").value = "";
         previewModalEditBtn.setAttribute("hidden","");
+        previewModalDeleteBtn.setAttribute("hidden", "");
 
         let isValidated = validateAndIdentTextArea("sessionContent", true);
         if (isValidated) { isValidated = validateAndIdentTextArea("sessionFeelings", false); }
@@ -47,8 +51,17 @@ window.onload = function () {
 
     // Save Session from Modal for Preview
     saveBtn.addEventListener("click", function (){
-        setDateToHiddenValue();
-        sessionForm.submit();
+
+        const hasStartTime = labelStartTime.value;
+        const hasStopTime = labelStopTime.value;
+
+        if (hasStartTime && hasStopTime) {
+            setDateToHiddenValue();
+            sessionForm.submit();
+        } else {
+            console.log("Invalid Session Time.")
+        }
+
     });
 
     //Close Indentation Modal and set textarea.value to original values

@@ -85,8 +85,12 @@ function continuousExecution(){
 // Updates the front-end element
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
+
+    console.log(currentTime());
+
     isOnGoing = (currentSessionState === "STARTED");
-    isPause = (currentSessionState === "PAUSED");
+    const isPause = (currentSessionState === "PAUSED");
+
     if (isOnGoing) {
         document.getElementById("textCurrentStudySessionTimer").textContent = calcStudySessionTimer(sessionStudyCounter);
         document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");

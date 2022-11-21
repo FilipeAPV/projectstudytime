@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SessionService {
@@ -53,9 +54,9 @@ public class SessionService {
     public Page<SessionModel> getSessionList(int pageNum, String startDate, String endDate, String sortField, String sortDir, String keyword) {
 
         StringBuilder info = new StringBuilder();
-        /*info.append("Information received: ").append(pageNum).append(" ").append(startDate).append(" ").append(endDate);*/
 
-        logger.info(info.toString());
+        /*info.append("Information received: ").append(pageNum).append(" ").append(startDate).append(" ").append(endDate);*/
+        /*logger.info(info.toString());*/
 
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
@@ -101,5 +102,17 @@ public class SessionService {
         LocalTime totalStudyTime = diffEndStart.minusNanos(pauseTimeToNano);
 
         return totalStudyTime;
+    }
+
+    public boolean deleteSessionById(Integer id) {
+        boolean isDeleted = false;
+        sessionRepository.deleteById(id);
+
+        Optional<SessionModel> session = sessionRepository.findById(id);
+        if (session.isEmpty()) {
+            isDeleted = true;
+        }
+
+        return isDeleted;
     }
 }

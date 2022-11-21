@@ -38,6 +38,7 @@
           <button id="previewModalCloseBtn" type="button" class="btn btn-secondary btn-with" data-bs-dismiss="modal">Close</button>
           <button id="saveBtn" type="button" class="btn btn-primary btn-with">Save changes</button>
           <button id="previewModalEditBtn" class="btn btn-primary btn-with" data-bs-target="#editModal" data-bs-toggle="modal" onclick="returnSessionToEdit()">Edit</button>
+          <button id="previewModalDeleteBtn" class="btn btn-danger btn-with" data-bs-target="#deleteConfirmationModal" data-bs-toggle="modal">Delete</button>
         </div>
       </div>
     </div>
@@ -108,6 +109,27 @@
       </div>
     </div>
   </form>
+</div>
+
+<!-- Modal Delete Confirmation -->
+<div th:fragment="modal_delete_confirmation">
+  <div class="modal fade always-in-front" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabelTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header background-dark">
+          <h1 class="modal-title fs-5 text-light" id="deleteConfirmationModalLabelTitle">Delete Session</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="deleteConfirmationModalLabelText">Please confirm that you wish to delete the selected Session.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="deleteConfirmationModalCloseBtn" type="button" class="btn btn-secondary btn-with" data-bs-target="#previewModal" data-bs-toggle="modal">Close</button>
+          <a id="deleteConfirmationModalDeleteBtn" class="btn btn-danger btn-with" href="#" role="button">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>

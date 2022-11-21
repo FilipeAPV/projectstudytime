@@ -45,7 +45,9 @@
 
                      th:each="studySession : ${sessionList}"
                      th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|">
-                    <div class="card-header">[[${studySession.date}]]</div>
+                    <div class="card-header">
+                        [[${studySession.date}]]
+                    </div>
                     <div class="card-body d-flex flex-column align-items-start">
                         <h5 class="card-title ">Content</h5>
                         <p class="card-text personal-card-content " id="cardContentParagraph">
@@ -76,6 +78,8 @@
 <div th:replace="/fragments/modal :: modal_preview"></div>
 <!-- Modal Editing -->
 <div th:replace="/fragments/modal :: modal_edit"></div>
+<!-- Modal Delete Warning -->
+<div th:replace="/fragments/modal :: modal_delete_confirmation"></div>
 
 <script src="/js/EventListener_sessionList.js"></script>
 

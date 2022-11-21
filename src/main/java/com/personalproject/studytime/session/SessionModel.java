@@ -121,11 +121,7 @@ public class SessionModel {
                 ", sessionNumber=" + sessionNumber +
                 ", date=" + date +
                 ", startTime=" + startTime +
-                ", pauseTime=" + totalPausedTime +
-                ", resumeTime=" + totalStudyTime +
                 ", stopTime=" + stopTime +
-                ", content='" + content + '\'' +
-                ", feelings='" + feelings + '\'' +
                 '}';
     }
 }
