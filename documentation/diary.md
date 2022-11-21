@@ -259,3 +259,43 @@
 
 ![sessionForm](https://bitbucket.org/FAPVieira/projectstudytime/raw/931fafe360e96bc20964c737dde737c15cf5de91/documentation/resources/ui_sessionform_15112022.png)
 ![sessionList](https://bitbucket.org/FAPVieira/projectstudytime/raw/931fafe360e96bc20964c737dde737c15cf5de91/documentation/resources/ui_sessionlist_15112022.png)
+
+# Day 11. (20/11/2022)
+
+## Technical
+- Changed the pause per session logic
+      - Previously the user was able to make only a pause per session. 
+      - After this modification, the user can pause the session 'n' times
+      
+
+## Analysis
+- The modifications happened without major blockers, nevertheless it was time consuming due to the amount of refactoring needed.
+
+## Hours of Work
+
+- 4H
+
+# Day 12. (21/11/2022)
+
+## Technical
+- Made minor bug corrections
+- Majority of the time was dedicated to find a solution for the new pause system, once that the solution found yesterday does not properly work.
+
+## Analysis
+- Several hours passed on trying to find the best solution for the pause system.
+
+## Hours of Work
+
+- 6H
+
+# END OF THE THIRD SPRINT
+
+### Total Sprint Time: 24 H
+### Total Project Time: 75 H
+### Initially Contractualized Time: 46 H  
+##
+## Situation
+- The project is not ready for delivery and an extension of one week was required.
+- It happens because of the update of the pause system.
+      - Although costly, it can immensely benefit the user.
+![burndownchart](https://bitbucket.org/FAPVieira/projectstudytime/raw/99358f5e643f16d75eb6cee96bfe8f51285671aa/documentation/resources/burndown_chart_211122.png)
