@@ -103,6 +103,7 @@ function displayTime() {
 
         sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
         document.getElementById("labelPauseTime").value = msToTime(totalSessionPauseTime + sessionPauseTempCounter);
+        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
 
     }
 

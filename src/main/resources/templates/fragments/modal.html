@@ -34,11 +34,16 @@
           <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
         </div>
         <div class="modal-body text-size-and-font limit-img-size" id="markdownPreview" ></div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-end" id="previewModalFooter">
+          <div class="invalidStartStopTime d-flex align-items-center" id="previewModalFooterInvalidMessage">
+            <p class="text-size-and-font m-0">Invalid Start or Stop time</p>
+          </div>
+          <div>
           <button id="previewModalCloseBtn" type="button" class="btn btn-secondary btn-with" data-bs-dismiss="modal">Close</button>
           <button id="saveBtn" type="button" class="btn btn-primary btn-with">Save changes</button>
           <button id="previewModalEditBtn" class="btn btn-primary btn-with" data-bs-target="#editModal" data-bs-toggle="modal" onclick="returnSessionToEdit()">Edit</button>
           <button id="previewModalDeleteBtn" class="btn btn-danger btn-with" data-bs-target="#deleteConfirmationModal" data-bs-toggle="modal">Delete</button>
+          </div>
         </div>
       </div>
     </div>

@@ -111,6 +111,14 @@
   overflow:auto;
 }
 
+.invalidStartStopTime {
+  visibility: hidden;
+}
+
+.invalidStartStopTime p {
+  color: #d9534f;
+}
+
 /* TEXT AREA SESSION FORM*/
 
 .text-area-personalized {

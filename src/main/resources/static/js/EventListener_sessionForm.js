@@ -14,6 +14,8 @@ window.onload = function () {
     const labelStopTime = document.getElementById("labelStopTime");
     const currentPauseStartTimeHidden = document.getElementById("currentPauseStartTimeHidden");
     const currentStartTimeHidden = document.getElementById("currentStartTimeHidden");
+    const previewModalFooter = document.getElementById("previewModalFooter");
+    const previewModalFooterInvalidMessage = document.getElementById("previewModalFooterInvalidMessage");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -65,6 +67,7 @@ window.onload = function () {
             sessionForm.submit();
         } else {
             console.log("Invalid Session Time.")
+            previewModalFooterInvalidMessageAction("showMsg");
         }
 
     });
@@ -72,5 +75,28 @@ window.onload = function () {
     //Close Indentation Modal and set textarea.value to original values
     previewModalCloseBtn.addEventListener("click", function (){
         restoreOriginalTextAreaValues();
+        previewModalFooterInvalidMessageAction("removeMsg");
     });
+
+    function previewModalFooterInvalidMessageAction(action) {
+
+        let flexJustifyToAdd = "", flexJustifyToRemove= "", visibilityStatus= "";
+
+        if (action === "showMsg") {
+            flexJustifyToAdd = "justify-content-between";
+            flexJustifyToRemove = "justify-content-end";
+            visibilityStatus = "visible"
+        } else if (action === "removeMsg") {
+            flexJustifyToRemove = "justify-content-between";
+            flexJustifyToAdd = "justify-content-end";
+            visibilityStatus = "hidden";
+        }
+
+        previewModalFooter.classList.add(flexJustifyToAdd);
+        previewModalFooter.classList.remove(flexJustifyToRemove);
+        previewModalFooterInvalidMessage.style.visibility = visibilityStatus;
+    }
+
+
+
 }
