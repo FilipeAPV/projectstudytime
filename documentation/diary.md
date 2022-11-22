@@ -299,3 +299,16 @@
 - It happens because of the update of the pause system.
       - Although costly, it can immensely benefit the user.
 ![burndownchart](https://bitbucket.org/FAPVieira/projectstudytime/raw/99358f5e643f16d75eb6cee96bfe8f51285671aa/documentation/resources/burndown_chart_211122.png)
+
+# Day 13. (22/11/2022)
+## Technical
+- Major bug corrections
+      - Image inside modals is now correctly displayed
+      - Pause functionality seems to be now working properly
+
+## Analysis
+- With blockers and learning the day finished on a positive note
+
+## Hours of Work
+
+- 8H
