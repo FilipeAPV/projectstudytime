@@ -6,15 +6,12 @@ let currentSessionState = "NOTSTARTED";
 let isOnGoing = false;
 let idFecthedByGetSessionMarkdown = 0;
 
-let sessionStudyCounter = zeroDateValues(new Date());
-
 let sessionPauseStartTime = 0;
 let sessionPauseTempCounter = 0;
 let totalSessionPauseTime = 0;
 
 let sessionStartTime = 0;
 let sessionTimeTempCounter = 0;
-let totalSessionTime = 0;
 
 console.log("CommunScripts.js - Session state by default is: " + currentSessionState);
 
@@ -70,7 +67,7 @@ function formatTime(hourOfTheDay, minuteOfTheDay, secondOfTheDay) {
     return currentTime;
 }
 
-// Get current time
+// Get current time formatted as String
 function currentTime() {
     const currentDate = new Date();
 
@@ -89,7 +86,7 @@ function continuousExecution(){
     setTimeout('displayTime()',refresh);
 }
 
-// Updates the front-end element
+// Updates the front-end elements (pause time and study session time)
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
 
@@ -97,9 +94,9 @@ function displayTime() {
     const isPause = (currentSessionState === "PAUSED");
 
     if (isOnGoing) {
-/*      sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
-        document.getElementById("textCurrentStudySessionTimer").textContent = calcStudySessionTimer(sessionStudyCounter);
-        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");*/
+        sessionTimeTempCounter = Math.abs(new Date() - sessionStartTime);
+        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(sessionTimeTempCounter - totalSessionPauseTime);
+        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
     }
 
     if (isPause) {
@@ -151,6 +148,8 @@ function setStartTimeOfStudySession() {
     document.getElementById("labelStartTime").value = currentTime();
 
     sessionStartTime = new Date().getTime();
+
+    console.log("CommunScripts.js - sessionStartTime: " + sessionStartTime);
 
     setBtnState(currentSessionState);
 }
@@ -218,41 +217,9 @@ async function returnNewSession() {
 }
 
 /**
- * Set Date Time to 0H, 0M, 0S
- */
-function zeroDateValues(date) {
-    date.setHours(0,0,0);
-    return date;
-    //sessionStudyCounter.setHours(sessionStudyCounter.getHours() + (sessionStudyCounter.getTimezoneOffset()/60));
-}
-
-/**
  * Study Session Timer
  * Time elapsed since the start of the study session
  */
-
-/*function calcStudySessionTimer(counter) {
-    let currentTime = new Date(counter.getTime());
-    currentTime.setSeconds(currentTime.getSeconds() + 1);
-
-    counter.setTime(currentTime.getTime());
-
-    let timeElapsed = formatTime(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds());
-
-    console.log(timeElapsed);
-    return timeElapsed;
-}*/
-
-/*function calcStudySessionTimer(counter) {
-    const now = new Date();
-    const then = sessionStartTime;
-
-    const hours = Math.abs(now.getHours() - then.getHours());
-    const minutes = Math.abs(now.getMinutes() - then.getMinutes());
-    const seconds = now.getSeconds();
-
-    return hours + " H " + minutes + " m ";
-}*/
 
 
 /**

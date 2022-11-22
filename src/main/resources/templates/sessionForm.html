@@ -11,6 +11,7 @@
         <input id="sessionDate" th:field="*{date}" type="hidden">
         <input id="currentSessionStateHidden" name="currentSessionStateHidden" type="hidden">
         <input id="currentPauseStartTimeHidden" name="currentPauseStartTimeHidden" type="hidden">
+        <input id="currentStartTimeHidden" name="currentStartTimeHidden" type="hidden">
 
 
         <div th:replace="/fragments/alerts :: alert"></div>
@@ -109,6 +110,7 @@
         th:data-currentSessionState="${session.sessionState != null ? session.sessionState : null}"
         th:data-totalPausedTime="${session.savedSessionObj?.totalPausedTime}"
         th:data-currentPauseStartTime="${session.pauseStartTime}"
+        th:data-currentSessionStartTime="${session.sessionStartTimeInMs}";
         >
 </currentSession>
 
@@ -124,6 +126,7 @@
     const currentState = tempStorageOfData.currentsessionstate;
     const currentTotalPausedTime = tempStorageOfData.totalpausedtime;
     const currentPauseStartTime = tempStorageOfData.currentpausestarttime;
+    const currentSessionStartTime = tempStorageOfData.currentsessionstarttime;
 
     // If currentState is valid (not null, NaN, etc) update the variable that holds the current state
     if (currentState) {
@@ -134,10 +137,14 @@
     if (currentPauseStartTime && currentTotalPausedTime) {
         totalSessionPauseTime = timeToMs(currentTotalPausedTime);
         sessionPauseStartTime = currentPauseStartTime;
-        /*sessionPauseStartTime = Date.parse(currentPauseStartTime);*/
 
         console.log("sessionForm.html - totalSessionPauseTime: " + totalSessionPauseTime);
         console.log("sessionForm.html - sessionPauseStartTime: " + sessionPauseStartTime);
+    }
+
+    if (currentSessionStartTime) {
+        sessionStartTime = currentSessionStartTime;
+        console.log("sessionForm.html - currentSessionStartTime: " + sessionStartTime);
     }
 
     setBtnState(currentSessionState);

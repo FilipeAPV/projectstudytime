@@ -13,6 +13,7 @@ window.onload = function () {
     const labelStartTime = document.getElementById("labelStartTime");
     const labelStopTime = document.getElementById("labelStopTime");
     const currentPauseStartTimeHidden = document.getElementById("currentPauseStartTimeHidden");
+    const currentStartTimeHidden = document.getElementById("currentStartTimeHidden");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -42,6 +43,7 @@ window.onload = function () {
     goToSessionListBtn.addEventListener("click", function (){
         currentSessionStateHidden.setAttribute("value", currentSessionState);
         currentPauseStartTimeHidden.setAttribute("value", sessionPauseStartTime);
+        currentStartTimeHidden.setAttribute("value", sessionStartTime);
 
         sessionForm.action = "/sessionList";
         sessionForm.submit();
