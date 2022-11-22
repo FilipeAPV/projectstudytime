@@ -12,6 +12,7 @@ window.onload = function () {
     const previewModalDeleteBtn = document.getElementById("previewModalDeleteBtn");
     const labelStartTime = document.getElementById("labelStartTime");
     const labelStopTime = document.getElementById("labelStopTime");
+    const currentPauseStartTimeHidden = document.getElementById("currentPauseStartTimeHidden");
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
     displayTime();
@@ -40,6 +41,8 @@ window.onload = function () {
     //Submit form with parameters to be saved in the Session
     goToSessionListBtn.addEventListener("click", function (){
         currentSessionStateHidden.setAttribute("value", currentSessionState);
+        currentPauseStartTimeHidden.setAttribute("value", sessionPauseStartTime);
+
         sessionForm.action = "/sessionList";
         sessionForm.submit();
     });

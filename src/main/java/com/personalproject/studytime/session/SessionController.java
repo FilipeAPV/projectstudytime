@@ -76,13 +76,16 @@ public class SessionController {
     @PostMapping("/sessionList")
     public String redirectToPageableSessionList(@ModelAttribute(name = "sessionObj") SessionModel sessionModel,
                                                 @RequestParam(name = "currentSessionStateHidden") String sessionState,
+                                                @RequestParam(name = "currentPauseStartTimeHidden", required = false) String pauseStartTime,
                                                 HttpSession httpSession) {
 
         httpSession.setAttribute(Constants.OBJECT_SAVED_IN_SESSION, sessionModel);
         httpSession.setAttribute("sessionState", sessionState);
+        httpSession.setAttribute("pauseStartTime", pauseStartTime);
 
         logger.info("The following information has been saved in the Session: " + sessionModel);
-        logger.info("sessionState: " + sessionState + "\n");
+        logger.info("Current sessionState: " + sessionState);
+        logger.info("Pause start time: " + pauseStartTime);
 
         return "redirect:/sessionList/1?sortField=date&sortDir=dsc";
     }

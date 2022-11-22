@@ -10,6 +10,8 @@
     <form id="sessionForm" method="post" th:action="@{/saveSessionForm}" th:object="${sessionObj}">
         <input id="sessionDate" th:field="*{date}" type="hidden">
         <input id="currentSessionStateHidden" name="currentSessionStateHidden" type="hidden">
+        <input id="currentPauseStartTimeHidden" name="currentPauseStartTimeHidden" type="hidden">
+
 
         <div th:replace="/fragments/alerts :: alert"></div>
 
@@ -103,20 +105,39 @@
 
 
 <currentSession
-        id="currentSessionState"
-        th:data-state="${session.sessionState != null ? session.sessionState : null}">
+        id="tempStorageOfData"
+        th:data-currentSessionState="${session.sessionState != null ? session.sessionState : null}"
+        th:data-totalPausedTime="${session.savedSessionObj?.totalPausedTime}"
+        th:data-currentPauseStartTime="${session.pauseStartTime}"
+        >
 </currentSession>
 
 <script src="/js/EventListener_sessionForm.js"></script>
 
 <script type="text/javascript">
 
-    const currentSessionStateFromSession = document.getElementById("currentSessionState");
-    const currentState = currentSessionStateFromSession.dataset.state;
+    const tempStorageOfData = document.getElementById("tempStorageOfData").dataset;
+    /**
+     * Cannot use camelCase below for the attribute name
+     * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
+     */
+    const currentState = tempStorageOfData.currentsessionstate;
+    const currentTotalPausedTime = tempStorageOfData.totalpausedtime;
+    const currentPauseStartTime = tempStorageOfData.currentpausestarttime;
 
-    if (currentState !== undefined && currentState !== null) {
+    // If currentState is valid (not null, NaN, etc) update the variable that holds the current state
+    if (currentState) {
         currentSessionState = currentState;
         console.log("sessionForm.html - Set currentSessionState to: " + currentSessionState);
+    }
+
+    if (currentPauseStartTime && currentTotalPausedTime) {
+        totalSessionPauseTime = timeToMs(currentTotalPausedTime);
+        sessionPauseStartTime = currentPauseStartTime;
+        /*sessionPauseStartTime = Date.parse(currentPauseStartTime);*/
+
+        console.log("sessionForm.html - totalSessionPauseTime: " + totalSessionPauseTime);
+        console.log("sessionForm.html - sessionPauseStartTime: " + sessionPauseStartTime);
     }
 
     setBtnState(currentSessionState);

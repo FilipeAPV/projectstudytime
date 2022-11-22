@@ -105,6 +105,12 @@
   z-index: 1500;
 }
 
+/* MODAL PREVIEW */
+.limit-img-size {
+  max-height: 75vh;
+  overflow:auto;
+}
+
 /* TEXT AREA SESSION FORM*/
 
 .text-area-personalized {

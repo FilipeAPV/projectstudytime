@@ -121,6 +121,7 @@ public class SessionModel {
                 ", sessionNumber=" + sessionNumber +
                 ", date=" + date +
                 ", startTime=" + startTime +
+                ", totalPausedTime=" + totalPausedTime +
                 ", stopTime=" + stopTime +
                 '}';
     }

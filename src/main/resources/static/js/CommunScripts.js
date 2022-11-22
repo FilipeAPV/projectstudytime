@@ -7,9 +7,16 @@ let isOnGoing = false;
 let idFecthedByGetSessionMarkdown = 0;
 
 let sessionStudyCounter = zeroDateValues(new Date());
-const sessionPauseCounter = zeroDateValues(new Date());
 
-console.log("CommunScripts.js - Set currentSessionState to: " + currentSessionState);
+let sessionPauseStartTime = 0;
+let sessionPauseTempCounter = 0;
+let totalSessionPauseTime = 0;
+
+let sessionStartTime = 0;
+let sessionTimeTempCounter = 0;
+let totalSessionTime = 0;
+
+console.log("CommunScripts.js - Session state by default is: " + currentSessionState);
 
 /**
  * Allow Tab inside textAreas
@@ -86,17 +93,20 @@ function continuousExecution(){
 function displayTime() {
     document.getElementById("top_timeDisplay").innerHTML = currentTime();
 
-    console.log(currentTime());
-
     isOnGoing = (currentSessionState === "STARTED");
     const isPause = (currentSessionState === "PAUSED");
 
     if (isOnGoing) {
+/*      sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
         document.getElementById("textCurrentStudySessionTimer").textContent = calcStudySessionTimer(sessionStudyCounter);
-        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
+        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");*/
     }
+
     if (isPause) {
-        document.getElementById("labelPauseTime").value = calcStudySessionTimer(sessionPauseCounter);
+
+        sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
+        document.getElementById("labelPauseTime").value = msToTime(totalSessionPauseTime + sessionPauseTempCounter);
+
     }
 
     continuousExecution();
@@ -121,6 +131,7 @@ function setBtnState(currentSessionState) {
 
             document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
             document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
+            document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
 
             document.getElementById("btnSetSessionPauseTime").textContent = "RESUME";
         }
@@ -139,21 +150,57 @@ function setStartTimeOfStudySession() {
 
     document.getElementById("labelStartTime").value = currentTime();
 
+    sessionStartTime = new Date().getTime();
+
     setBtnState(currentSessionState);
 }
 
 function setPauseTimeOfStudySession() {
 
     if (currentSessionState === "STARTED") {
+
         currentSessionState = "PAUSED";
 
+        sessionPauseStartTime = new Date().getTime();
+
         setBtnState(currentSessionState);
+
+
+        console.log("totalSessionPauseTime: " + totalSessionPauseTime)
+        console.log("sessionPauseTempCounter: " + sessionPauseTempCounter)
+        console.log("sessionPauseStartTime: " + sessionPauseStartTime)
+
 
     } else {
-        currentSessionState = "STARTED";
 
+        totalSessionPauseTime += sessionPauseTempCounter;
+        sessionPauseTempCounter = 0;
+
+        currentSessionState = "STARTED";
         setBtnState(currentSessionState);
+
+        console.log("totalSessionPauseTime: " + totalSessionPauseTime)
+        console.log("sessionPauseTempCounter: " + sessionPauseTempCounter)
+        console.log("sessionPauseStartTime: " + sessionPauseStartTime)
+
+
     }
+}
+
+function msToTime(milliseconds) {
+    const hours = Math.floor(milliseconds / 3600000);
+    const minutes = Math.floor((milliseconds % 3600000) / 60000);
+    const seconds = Math.floor(((milliseconds % 3600000) % 60000) / 1000);
+    return formatTime(hours, minutes, seconds);
+}
+
+function timeToMs(time) {
+    const hours = Number(time.substring(0,2)) * 3600000;
+    const minutes = Number(time.substring(3,5)) * 60000;
+    const seconds = Number(time.substring(6) * 1000);
+
+    const totalMs = hours + minutes + seconds;
+    return totalMs;
 }
 
 function setStopTimeOfStudySession() {
@@ -184,9 +231,9 @@ function zeroDateValues(date) {
  * Time elapsed since the start of the study session
  */
 
-function calcStudySessionTimer(counter) {
+/*function calcStudySessionTimer(counter) {
     let currentTime = new Date(counter.getTime());
-    currentTime.setTime(currentTime.getTime() + 1000);
+    currentTime.setSeconds(currentTime.getSeconds() + 1);
 
     counter.setTime(currentTime.getTime());
 
@@ -194,7 +241,19 @@ function calcStudySessionTimer(counter) {
 
     console.log(timeElapsed);
     return timeElapsed;
-}
+}*/
+
+/*function calcStudySessionTimer(counter) {
+    const now = new Date();
+    const then = sessionStartTime;
+
+    const hours = Math.abs(now.getHours() - then.getHours());
+    const minutes = Math.abs(now.getMinutes() - then.getMinutes());
+    const seconds = now.getSeconds();
+
+    return hours + " H " + minutes + " m ";
+}*/
+
 
 /**
  * Session Form
