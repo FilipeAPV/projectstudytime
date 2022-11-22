@@ -197,7 +197,6 @@ function timeToMs(time) {
     const hours = Number(time.substring(0,2)) * 3600000;
     const minutes = Number(time.substring(3,5)) * 60000;
     const seconds = Number(time.substring(6) * 1000);
-
     const totalMs = hours + minutes + seconds;
     return totalMs;
 }
