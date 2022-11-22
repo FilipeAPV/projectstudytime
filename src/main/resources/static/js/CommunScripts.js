@@ -96,14 +96,14 @@ function displayTime() {
     if (isOnGoing) {
         sessionTimeTempCounter = Math.abs(new Date() - sessionStartTime);
         document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(sessionTimeTempCounter - totalSessionPauseTime);
-        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
+        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
     }
 
     if (isPause) {
 
         sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
         document.getElementById("labelPauseTime").value = msToTime(totalSessionPauseTime + sessionPauseTempCounter);
-        document.getElementById("divCurrentStudySessionTimer").removeAttribute("hidden");
+        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
 
     }
 

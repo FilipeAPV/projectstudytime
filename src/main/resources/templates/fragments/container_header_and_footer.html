@@ -19,14 +19,15 @@
 
 
 <div th:fragment="row_footer" class="row">
-    <div class="col-md">
+    <div class="col-md ">
         <div class="container my-3 py-2
-                container background-dark rounded shadow-sm
+                background-dark rounded shadow-sm
                 d-flex justify-content-between"
         >
-            <button id="returnToSessionFormBtn" class="btn btn-light btn-sm" type="submit">Button</button>
-
-            <div hidden id="divCurrentStudySessionTimer" class="">
+            <div class="min-height">
+            <button id="returnToSessionFormBtn" class="btn btn-light btn-sm" type="submit" >Button</button>
+            </div>
+            <div id="divCurrentStudySessionTimer" class="invisible d-flex align-items-center">
                 <p class="text-light my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="text-light"></span></p>
             </div>
         </div>

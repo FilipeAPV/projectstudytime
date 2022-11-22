@@ -149,7 +149,12 @@
   color: #2d2d34;
 }
 
-/* Shared all Modals */
-.title-modal {
+/* FOOTER */
+.min-height {
+  min-height: 35px;
+  max-width: 1px;
+}
 
+.invisible p{
+  visibility: hidden;
 }
