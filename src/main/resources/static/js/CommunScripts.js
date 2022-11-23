@@ -529,3 +529,4 @@ function addEmptySpacesToLine(emptySpaces, line) {
 
     return emptySpace + line;
 }
+

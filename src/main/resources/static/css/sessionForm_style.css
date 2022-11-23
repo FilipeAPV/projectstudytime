@@ -4,6 +4,10 @@
   background-color: #2d2d34;
 }
 
+.background-red {
+  background-color: #d9534f;
+}
+
 .background-img {
   background-image: url("/img/test_background.jpg");
   background-repeat: no-repeat;
@@ -103,6 +107,10 @@
 /* MODAL INDENTATION WARNING */
 .always-in-front {
   z-index: 1500;
+}
+
+.lower-modal-from-top {
+  margin-top: 300px !important;
 }
 
 /* MODAL PREVIEW */

@@ -7,12 +7,12 @@
 
 <!-- Modal Indentation Warning -->
 <div th:fragment="modal_indentation_warning">
-  <div class="modal fade always-in-front" id="indentationModal" tabindex="-1" aria-labelledby="indentationModalLabelTitle" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade always-in-front" data-bs-backdrop="static" data-bs-keyboard="false" id="indentationModal" tabindex="-1" aria-labelledby="indentationModalLabelTitle" aria-hidden="true">
+    <div class="modal-dialog lower-modal-from-top">
       <div class="modal-content">
-        <div class="modal-header background-dark">
+        <div class="modal-header background-red">
           <h1 class="modal-title fs-5 text-light" id="indentationModalLabelTitle"></h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
         </div>
         <div class="modal-body">
           <p id="indentationModalLabelText"></p>
@@ -26,7 +26,7 @@
 </div>
 
 <div th:fragment="modal_preview">
-  <div class="modal fade always-in-front" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal fade always-in-front" data-bs-backdrop="static" data-bs-keyboard="false" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header background-dark">
@@ -52,7 +52,7 @@
 
 
 <div th:fragment="modal_edit">
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header background-dark">
@@ -118,12 +118,12 @@
 
 <!-- Modal Delete Confirmation -->
 <div th:fragment="modal_delete_confirmation">
-  <div class="modal fade always-in-front" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabelTitle" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade always-in-front" data-bs-backdrop="static" data-bs-keyboard="false" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabelTitle" aria-hidden="true">
+    <div class="modal-dialog lower-modal-from-top">
       <div class="modal-content">
         <div class="modal-header background-dark">
           <h1 class="modal-title fs-5 text-light" id="deleteConfirmationModalLabelTitle">Delete Session</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
         </div>
         <div class="modal-body">
           <p id="deleteConfirmationModalLabelText">Please confirm that you wish to delete the selected Session.</p>
