@@ -26,7 +26,7 @@
 }
 
 .remove-a-css:hover {
-  color: #f8f8f8;
+  color: #CA278C;
 }
 
 
@@ -174,4 +174,25 @@
 
 .invisible p{
   visibility: hidden;
+}
+
+/* STATS */
+.all-card-div {
+  margin-right: 15px;
+}
+
+.stats-title {
+  font-family: 'Roboto', sans-serif;
+  color: #FFE9E8;
+  font-weight: bold;
+}
+
+.stats-text {
+  font-family: 'Roboto', sans-serif;
+  color: #CA278C;
+  font-weight: bold;
+}
+
+.mr-10 {
+  margin-right: 10px;
 }

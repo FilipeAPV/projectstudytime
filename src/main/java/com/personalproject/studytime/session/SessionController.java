@@ -1,7 +1,9 @@
 package com.personalproject.studytime.session;
 
 import com.personalproject.studytime.util.Constants;
+import com.personalproject.studytime.util.Statistics;
 import org.apache.commons.lang3.StringUtils;
+
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,16 +21,21 @@ import java.util.List;
 public class SessionController {
 
     private final SessionService sessionService;
+    private final SessionRepository sessionRepository;
     Logger logger = LoggerFactory.getLogger(SessionController.class);
 
     @Autowired
-    public SessionController(SessionService sessionService) {
+    public SessionController(SessionService sessionService,
+                             SessionRepository sessionRepository) {
         this.sessionService = sessionService;
+        this.sessionRepository = sessionRepository;
     }
 
     @GetMapping("/")
     public String showSessionForm(Model model,
                                   HttpSession httpSession) {
+
+        List<SessionModel> sessionsList = sessionRepository.findAll();
 
         if (httpSession.getAttribute(Constants.OBJECT_SAVED_IN_SESSION) != null) {
 
@@ -43,6 +50,10 @@ public class SessionController {
             httpSession.setAttribute("sessionState", null);
             logger.info("There is no object to retrieve from the Session. Sending new Object");
         }
+
+        model.addAttribute("totalTimeOfStudy", Statistics.calcTotalTimeOfStudy(sessionsList));
+        model.addAttribute("avgTimePerDay", Statistics.calcAverageTimePerStudyDay(sessionsList));
+        model.addAttribute("avgTimePerSession", Statistics.calcAverageTimePerStudySession(sessionsList));
 
         return "sessionForm";
     }

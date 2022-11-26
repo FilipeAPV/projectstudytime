@@ -24,12 +24,30 @@
                 background-dark rounded shadow-sm
                 d-flex justify-content-between"
         >
-            <div class="min-height">
+            <div id="divReturnToSessionFormBtn" class="min-height" hidden>
                 <!--<button  class=" btn btn-dark fa-solid fa-arrow-circle-left fa-2x icon-red" type="submit" hidden></button>-->
-                <a href="#"  id="returnToSessionFormBtn" class="fa-solid fa-arrow-circle-left fa-2x icon-red remove-a-css" hidden></a>
+                <a href="#"  id="returnToSessionFormBtn" class="fa-solid fa-arrow-circle-left fa-2x icon-white remove-a-css" ></a>
             </div>
+            <div id="divStats">
+            <div class="d-flex">
+                <div class="fa-solid fa-chart-line fa-2x align-self-center all-card-div icon-white"></div>
+                <div class="all-card-div card-background d-flex align-items-center">
+                            <div class="mr-10"><p class="stats-title m-0">Total Time Of Study:</p></div>
+                            <div><p class="stats-text m-0" id="totalTimeOfStudy">[[${totalTimeOfStudy}]]</p></div>
+                </div>
+                <div class="all-card-div card-background d-flex align-items-center">
+                    <div class="mr-10"><p class="stats-title m-0">Avg Time Per Day:</p></div>
+                    <div><p class="stats-text m-0" id="avgTimePerDay">[[${avgTimePerDay}]]</p></div>
+                </div>
+                <div class="all-card-div card-background d-flex align-items-center">
+                    <div class="mr-10"><p class="stats-title m-0">Avg Time Per Session:</p></div>
+                    <div><p class="stats-text m-0" id="avgTimePerSession">[[${avgTimePerSession}]]</p></div>
+                </div>
+            </div>
+            </div>
+
             <div id="divCurrentStudySessionTimer" class="invisible d-flex align-items-center">
-                <p class="text-light my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="text-light"></span></p>
+                <p class="stats-title my-0">Current Study Session:&nbsp;&nbsp;<span id="textCurrentStudySessionTimer" class="stats-text"></span></p>
             </div>
         </div>
     </div>
