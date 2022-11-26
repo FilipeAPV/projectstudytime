@@ -11,6 +11,6 @@ RUN ./mvnw dependency:go-offline
 COPY src ./src
 
 # Run tests on docker image creation
-RUN ./mvnw test
+# RUN ./mvnw test
 
 CMD ["./mvnw", "spring-boot:run"]

@@ -21,6 +21,15 @@
   width: 125px;
 }
 
+.remove-a-css {
+  text-decoration: none;
+}
+
+.remove-a-css:hover {
+  color: #f8f8f8;
+}
+
+
 /*INPUT TEXT RELATED TO TIME*/
 
 .input-as-label {

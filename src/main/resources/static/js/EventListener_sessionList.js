@@ -15,7 +15,7 @@ window.onload = function () {
     const inputCalendarEndDate = document.getElementById("endDate");
     const previewModalDeleteBtn = document.getElementById("previewModalDeleteBtn");
     const deleteConfirmationModalDeleteBtn = document.getElementById("deleteConfirmationModalDeleteBtn");
-
+    const returnToSessionFormBtn = document.getElementById("returnToSessionFormBtn");
 
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
@@ -26,6 +26,8 @@ window.onload = function () {
     allowTabInsideTextArea(formInputContent);
     allowTabInsideTextArea(formInputFeelings)
 
+    // Show btn to return to form
+    returnToSessionFormBtn.removeAttribute("hidden");
 
     // Validate Session from Modal for Editing
     saveBtnForEditModal.addEventListener("click", function (){
