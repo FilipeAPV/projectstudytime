@@ -12,6 +12,7 @@ let totalSessionPauseTime = 0;
 
 let sessionStartTime = 0;
 let sessionTimeTempCounter = 0;
+let totalSessionStudyTime = 0;
 
 console.log("TimeAndDate.js - Session state by default is: " + currentSessionState);
 
@@ -77,7 +78,9 @@ function displayTime() {
 
     if (isOnGoing) {
         sessionTimeTempCounter = Math.abs(new Date() - sessionStartTime);
-        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(sessionTimeTempCounter - totalSessionPauseTime);
+        totalSessionStudyTime = sessionTimeTempCounter - totalSessionPauseTime;
+
+        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(totalSessionStudyTime);
         document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
     }
 
@@ -85,9 +88,11 @@ function displayTime() {
         sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
         document.getElementById("labelPauseTime").value = msToTime(totalSessionPauseTime + sessionPauseTempCounter);
 
-        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(sessionTimeTempCounter - totalSessionPauseTime);
 
-        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
+        console.log("\nif (isPause) {")
+        console.log("sessionPauseStartTime - " + sessionPauseStartTime + " " + typeof sessionPauseStartTime);
+        console.log("sessionPauseTempCounter - " + sessionPauseTempCounter + " " + typeof sessionPauseTempCounter);
+        console.log("totalSessionPauseTime - " + totalSessionPauseTime + " " + typeof totalSessionPauseTime);
     }
 
     continuousExecution();
@@ -133,7 +138,8 @@ function setStartTimeOfStudySession() {
 
     sessionStartTime = new Date().getTime();
 
-    console.log("TimeAndDate.js - sessionStartTime: " + sessionStartTime);
+    console.log("TimeAndDate.js - sessionStartTime: " + sessionStartTime + " " + typeof sessionStartTime);
+    console.log("TimeAndDate.js - totalSessionPauseTime: " +  msToTime(totalSessionPauseTime) + " " + typeof totalSessionPauseTime);
 
     setBtnState(currentSessionState);
 }
@@ -148,16 +154,17 @@ function setPauseTimeOfStudySession() {
 
         setBtnState(currentSessionState);
 
-
-        console.log("totalSessionPauseTime: " + msToTime(totalSessionPauseTime))
-        console.log("sessionPauseTempCounter: " + msToTime(sessionPauseTempCounter))
-        console.log("sessionPauseStartTime: " + sessionPauseStartTime)
+        console.log("TimeAndDate.js - sessionPauseTempCounter: " + msToTime(sessionPauseTempCounter));
+        console.log("TimeAndDate.js - totalSessionPauseTime: " +  msToTime(totalSessionPauseTime));
+        console.log("TimeAndDate.js - sessionTimeTempCounter: " + msToTime(sessionTimeTempCounter) + "\n");
 
 
     } else {
 
         totalSessionPauseTime += sessionPauseTempCounter;
         sessionPauseTempCounter = 0;
+
+        document.getElementById("labelPauseTime").value = msToTime( totalSessionPauseTime);
 
         currentSessionState = "STARTED";
         setBtnState(currentSessionState);

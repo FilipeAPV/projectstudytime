@@ -14,6 +14,8 @@ window.onload = function () {
     const labelStopTime = document.getElementById("labelStopTime");
     const currentPauseStartTimeHidden = document.getElementById("currentPauseStartTimeHidden");
     const currentStartTimeHidden = document.getElementById("currentStartTimeHidden");
+    const totalSessionPauseTimeHidden = document.getElementById("totalSessionPauseTimeHidden");
+    const totalSessionStudyTimeHidden = document.getElementById("totalSessionStudyTimeHidden");
     const previewModalFooter = document.getElementById("previewModalFooter");
     const previewModalFooterInvalidMessage = document.getElementById("previewModalFooterInvalidMessage");
 
@@ -46,6 +48,8 @@ window.onload = function () {
         currentSessionStateHidden.setAttribute("value", currentSessionState);
         currentPauseStartTimeHidden.setAttribute("value", sessionPauseStartTime);
         currentStartTimeHidden.setAttribute("value", sessionStartTime);
+        totalSessionPauseTimeHidden.setAttribute("value", totalSessionPauseTime);
+        totalSessionStudyTimeHidden.setAttribute("value", totalSessionStudyTime);
 
         sessionForm.action = "/sessionList";
         sessionForm.submit();

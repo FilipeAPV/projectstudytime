@@ -14,6 +14,8 @@
         <input id="currentSessionStateHidden" name="currentSessionStateHidden" type="hidden">
         <input id="currentPauseStartTimeHidden" name="currentPauseStartTimeHidden" type="hidden">
         <input id="currentStartTimeHidden" name="currentStartTimeHidden" type="hidden">
+        <input id="totalSessionPauseTimeHidden" name="totalSessionPauseTimeHidden" type="hidden">
+        <input id="totalSessionStudyTimeHidden" name="totalSessionStudyTimeHidden" type="hidden">
 
 
         <div th:replace="/fragments/alerts :: alert"></div>
@@ -110,9 +112,11 @@
 <currentSession
         id="tempStorageOfData"
         th:data-currentSessionState="${session.sessionState != null ? session.sessionState : null}"
-        th:data-totalPausedTime="${session.savedSessionObj?.totalPausedTime}"
+        th:data-totalPausedTime="${session.totalSessionPauseTime}"
         th:data-currentPauseStartTime="${session.pauseStartTime}"
-        th:data-currentSessionStartTime="${session.sessionStartTimeInMs}";
+        th:data-currentSessionStartTime="${session.sessionStartTimeInMs}"
+        th:data-totalSessionStudyTime="${session.totalSessionStudyTime}"
+        ;
         >
 </currentSession>
 
@@ -127,9 +131,10 @@
      * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
      */
     const currentState = tempStorageOfData.currentsessionstate;
-    let currentTotalPausedTime = tempStorageOfData.totalpausedtime;
+    const currentTotalPausedTime = tempStorageOfData.totalpausedtime;
     const currentPauseStartTime = tempStorageOfData.currentpausestarttime;
     const currentSessionStartTime = tempStorageOfData.currentsessionstarttime;
+    const currentTotalSessionStudyTime = tempStorageOfData.totalsessionstudytime;
 
     // If currentState is valid (not null, NaN, etc) update the variable that holds the current state
     if (currentState) {
@@ -139,23 +144,22 @@
 
     if (currentPauseStartTime && currentTotalPausedTime) {
 
-        if (currentSessionState === "PAUSED") {
-            // If the session is Paused, it means that the currentTotalPausedTime is already reflected in the calculation, because everytime that the counter starts,
-            // it takes into consideration the currentTotalPausedTime. We don't want to add it twice.
-            totalSessionPauseTime = 0;
-        } else {
-            totalSessionPauseTime = timeToMs(currentTotalPausedTime);
-        }
+        totalSessionPauseTime = Number(currentTotalPausedTime);
+        sessionPauseStartTime = Number(currentPauseStartTime);
 
-        sessionPauseStartTime = currentPauseStartTime;
+        console.log("sessionForm.html - totalSessionPauseTime: " + msToTime(totalSessionPauseTime) + " " + typeof totalSessionPauseTime);
+        console.log("sessionForm.html - sessionPauseStartTime: " + sessionPauseStartTime + " " + typeof sessionPauseStartTime);
+    }
 
-        console.log("sessionForm.html - totalSessionPauseTime: " + msToTime(totalSessionPauseTime));
-        console.log("sessionForm.html - sessionPauseStartTime: " + sessionPauseStartTime);
+    if (currentTotalSessionStudyTime) {
+        totalSessionStudyTime = Number(currentTotalSessionStudyTime);
+        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(totalSessionStudyTime);
+        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
     }
 
     if (currentSessionStartTime) {
-        sessionStartTime = currentSessionStartTime;
-        console.log("sessionForm.html - currentSessionStartTime: " + sessionStartTime);
+        sessionStartTime = Number(currentSessionStartTime);
+        console.log("sessionForm.html - currentSessionStartTime: " + sessionStartTime + " " + typeof sessionStartTime);
     }
 
     setBtnState(currentSessionState);

@@ -40,6 +40,10 @@ public class SessionService {
             sessionModel.setSessionNumber(sessionNumber);
         }
 
+        if (sessionModel.getTotalPausedTime() == null) {
+            sessionModel.setTotalPausedTime(LocalTime.of(0,0,0,0));
+        }
+
         sessionModel.setTotalStudyTime(getTotalStudyTime(sessionModel));
         SessionModel savedSession = sessionRepository.save(sessionModel);
 

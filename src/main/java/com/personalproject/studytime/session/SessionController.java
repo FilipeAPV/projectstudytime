@@ -89,17 +89,22 @@ public class SessionController {
                                                 @RequestParam(name = "currentSessionStateHidden") String sessionState,
                                                 @RequestParam(name = "currentPauseStartTimeHidden", required = false) String pauseStartTime,
                                                 @RequestParam(name = "currentStartTimeHidden", required = false) String sessionStartTimeInMs,
+                                                @RequestParam(name = "totalSessionPauseTimeHidden", required = false) String totalSessionPauseTime,
+                                                @RequestParam(name = "totalSessionStudyTimeHidden", required = false) String totalSessionStudyTime,
                                                 HttpSession httpSession) {
 
         httpSession.setAttribute(Constants.OBJECT_SAVED_IN_SESSION, sessionModel);
         httpSession.setAttribute("sessionState", sessionState);
         httpSession.setAttribute("pauseStartTime", pauseStartTime);
         httpSession.setAttribute("sessionStartTimeInMs", sessionStartTimeInMs);
+        httpSession.setAttribute("totalSessionPauseTime", totalSessionPauseTime);
+        httpSession.setAttribute("totalSessionStudyTime", totalSessionStudyTime);
 
         logger.info("The following information has been saved in the Session: " + sessionModel);
         logger.info("Current sessionState: " + sessionState);
         logger.info("Pause start time in ms: " + pauseStartTime);
         logger.info("Session start time in ms: " + sessionStartTimeInMs);
+        logger.info("Total session pause time: " + totalSessionPauseTime);
 
         return "redirect:/sessionList/1?sortField=date&sortDir=dsc";
     }
