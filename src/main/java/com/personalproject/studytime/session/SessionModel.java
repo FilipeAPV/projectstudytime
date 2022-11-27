@@ -26,7 +26,8 @@ public class SessionModel {
 
     @Column(nullable = false, name = "paused_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime totalPausedTime = LocalTime.of(0,0,0);
+    /*private LocalTime totalPausedTime = LocalTime.of(0,0,0);*/
+    private LocalTime totalPausedTime;
 
     @Column(nullable = false, name = "total_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/head :: head('Study Time :: Session')"></head>
+<body>
+<div class="container d-flex flex-row justify-content-end" th:fragment="searchComponent">
+    <div class="input-group search-bar">
+        <input aria-describedby="button-addon2" aria-label="Search word"
+               class="form-control session-list-input-border"
+               name="keyword"
+               th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
+        <button class="btn btn-danger" id="button-addon2" type="submit">Search</button>
+        <button class="btn btn-danger" id="clearKeyword" type="button">Clear</button>
+    </div>
+
+</div>
+</body>
+</html>

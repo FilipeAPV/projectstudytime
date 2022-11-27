@@ -8,7 +8,6 @@ window.onload = function () {
     const previewModalEditBtn = document.getElementById("previewModalEditBtn");
     const previewModal = document.getElementById("previewModal");
     const previewModalCloseBtn = document.getElementById("previewModalCloseBtn");
-    /*const editModal = document.getElementById("editModal");*/
     const btnCalendarExport = document.getElementById("btnCalendarExport");
     const btnCalendarFilter = document.getElementById("btnCalendarFilter");
     const inputCalendarStartDate = document.getElementById("startDate");
@@ -17,6 +16,8 @@ window.onload = function () {
     const deleteConfirmationModalDeleteBtn = document.getElementById("deleteConfirmationModalDeleteBtn");
     const divReturnToSessionFormBtn = document.getElementById("divReturnToSessionFormBtn");
     const divStats = document.getElementById("divStats");
+    const returnToSessionFormBtn = document.getElementById("returnToSessionFormBtn");
+    const clearKeyword = document.getElementById("clearKeyword");
 
 
     /* DUPLICATED CODE ON BOTH EVENT LISTENERS */
@@ -99,6 +100,16 @@ window.onload = function () {
             const link = "/sessionList/" + 1 + "?sortField=date&sortDir=dsc" + "&startDate=" + startDate + "&endDate=" + endDate;
             btnCalendarFilter.href = link;
         }
+    });
+
+    // Get back to SessionForm.html from SessionList.html
+    returnToSessionFormBtn.addEventListener("click", function () {
+        window.location.href = "/";
+    });
+
+    // Clear search form by making a new call to /sessionList
+    clearKeyword.addEventListener("click", function () {
+        window.location.href = "/sessionList/1?sortField=date&sortDir=dsc";
     });
 }
 

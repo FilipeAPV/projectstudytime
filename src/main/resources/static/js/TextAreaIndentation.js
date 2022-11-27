@@ -1,19 +1,6 @@
-/**
- * Global Variables
- */
-
-let currentSessionState = "NOTSTARTED";
-let isOnGoing = false;
-let idFecthedByGetSessionMarkdown = 0;
-
-let sessionPauseStartTime = 0;
-let sessionPauseTempCounter = 0;
-let totalSessionPauseTime = 0;
-
-let sessionStartTime = 0;
-let sessionTimeTempCounter = 0;
-
-console.log("CommunScripts.js - Session state by default is: " + currentSessionState);
+/************************
+ ****** TextArea
+ ************************/
 
 /**
  * Allow Tab inside textAreas
@@ -34,223 +21,17 @@ function allowTabInsideTextArea(textAreaField) {
 }
 
 /**
- * Display Date as: Mon Oct 24 2022
+ * @param textArea
+ * @returns {*[]} Return an Array of non-empty lines inside the text area
  */
-function displayDayMonthYear() {
-    const currentDate = new Date();
-    const dateToShow = currentDate.toDateString();
-    document.getElementById('top_dateMonthYearDisplay').innerHTML = dateToShow;
-}
-
-/**
- * Display Time
- *  Display Time as: 10:23:44
- *  Updates every second
- */
-
-// "0" are added in order for the backend to correctly parse Date from String
-function formatTime(hourOfTheDay, minuteOfTheDay, secondOfTheDay) {
-    if (hourOfTheDay >= 0 && hourOfTheDay <= 9) {
-        hourOfTheDay = "0" + hourOfTheDay;
-    }
-
-    if (minuteOfTheDay >= 0 && minuteOfTheDay <=9) {
-        minuteOfTheDay = "0" + minuteOfTheDay;
-    }
-
-    if (secondOfTheDay >= 0 && secondOfTheDay <= 9) {
-        secondOfTheDay = "0" + secondOfTheDay;
-    }
-
-    const currentTime = hourOfTheDay + ":" + minuteOfTheDay + ":" + secondOfTheDay;
-
-    return currentTime;
-}
-
-// Get current time formatted as String
-function currentTime() {
-    const currentDate = new Date();
-
-    let hourOfTheDay = currentDate.getHours();
-    let minuteOfTheDay = currentDate.getMinutes();
-    let secondOfTheDay = currentDate.getSeconds();
-
-    const currentTime = formatTime(hourOfTheDay, minuteOfTheDay, secondOfTheDay);
-
-    return currentTime;
-}
-
-// Executes the function displayTime() every second
-function continuousExecution(){
-    var refresh=1000; // Refresh rate in milli seconds
-    setTimeout('displayTime()',refresh);
-}
-
-// Updates the front-end elements (pause time and study session time)
-function displayTime() {
-    document.getElementById("top_timeDisplay").innerHTML = currentTime();
-
-    isOnGoing = (currentSessionState === "STARTED");
-    const isPause = (currentSessionState === "PAUSED");
-
-    if (isOnGoing) {
-        sessionTimeTempCounter = Math.abs(new Date() - sessionStartTime);
-        document.getElementById("textCurrentStudySessionTimer").textContent = msToTime(sessionTimeTempCounter - totalSessionPauseTime);
-        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
-    }
-
-    if (isPause) {
-
-        sessionPauseTempCounter = Math.abs(new Date() - sessionPauseStartTime);
-        document.getElementById("labelPauseTime").value = msToTime(totalSessionPauseTime + sessionPauseTempCounter);
-        document.getElementById("divCurrentStudySessionTimer").classList.remove("invisible");
-
-    }
-
-    continuousExecution();
-}
-
-/**
- * START, PAUSE, RESUME, STOP functionality
- */
-
-// Define BTN disabled and enabled state
-function setBtnState(currentSessionState) {
-    switch (currentSessionState) {
-        case "STARTED" : {
-            document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
-            document.getElementById("btnSetSessionStopTime").removeAttribute("disabled");
-
-            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionPauseTime").textContent = "PAUSE";
-        }
-        break;
-        case "PAUSED" : {
-
-            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionPauseTime").removeAttribute("disabled");
-
-            document.getElementById("btnSetSessionPauseTime").textContent = "RESUME";
-        }
-        break;
-        case "STOPPED" : {
-            document.getElementById("btnSetSessionStopTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionStartTime").setAttribute("disabled","");
-            document.getElementById("btnSetSessionPauseTime").setAttribute("disabled","");
-        }
-        break;
-    }
-}
-
-function setStartTimeOfStudySession() {
-    currentSessionState = "STARTED";
-
-    document.getElementById("labelStartTime").value = currentTime();
-
-    sessionStartTime = new Date().getTime();
-
-    console.log("CommunScripts.js - sessionStartTime: " + sessionStartTime);
-
-    setBtnState(currentSessionState);
-}
-
-function setPauseTimeOfStudySession() {
-
-    if (currentSessionState === "STARTED") {
-
-        currentSessionState = "PAUSED";
-
-        sessionPauseStartTime = new Date().getTime();
-
-        setBtnState(currentSessionState);
-
-
-        console.log("totalSessionPauseTime: " + totalSessionPauseTime)
-        console.log("sessionPauseTempCounter: " + sessionPauseTempCounter)
-        console.log("sessionPauseStartTime: " + sessionPauseStartTime)
-
-
-    } else {
-
-        totalSessionPauseTime += sessionPauseTempCounter;
-        sessionPauseTempCounter = 0;
-
-        currentSessionState = "STARTED";
-        setBtnState(currentSessionState);
-
-        console.log("totalSessionPauseTime: " + totalSessionPauseTime)
-        console.log("sessionPauseTempCounter: " + sessionPauseTempCounter)
-        console.log("sessionPauseStartTime: " + sessionPauseStartTime)
-
-
-    }
-}
-
-function msToTime(milliseconds) {
-    const hours = Math.floor(milliseconds / 3600000);
-    const minutes = Math.floor((milliseconds % 3600000) / 60000);
-    const seconds = Math.floor(((milliseconds % 3600000) % 60000) / 1000);
-    return formatTime(hours, minutes, seconds);
-}
-
-function timeToMs(time) {
-    const hours = Number(time.substring(0,2)) * 3600000;
-    const minutes = Number(time.substring(3,5)) * 60000;
-    const seconds = Number(time.substring(6) * 1000);
-    const totalMs = hours + minutes + seconds;
-    return totalMs;
-}
-
-function setStopTimeOfStudySession() {
-    currentSessionState = "STOPPED";
-
-    document.getElementById("labelStopTime").value = currentTime();
-
-    setBtnState(currentSessionState);
-}
-
-async function returnNewSession() {
-    const response = await fetch("/deleteCurrentSessionAttribute");
-    console.log(response);
-    window.location="/";
-}
-
-/**
- * Study Session Timer
- * Time elapsed since the start of the study session
- */
-
-
-/**
- * Session Form
- */
-
-// Set value (date) of the hidden form field
-function setDateToHiddenValue() {
-    const date = new Date();
-
-    let month = date.getMonth() + 1;
-    if (month < 10) {month = '0' + month;}
-
-    let day = date.getDate();
-    if (day < 10) {day = '0' + day;}
-
-    const formattedDate = date.getFullYear() + '-' + month + '-' + day;
-    document.getElementById("sessionDate").setAttribute("value", formattedDate);
-}
-
-/**
- * TextArea
- */
-
-
-// Return an Array of non-empty lines inside the text area
 function getLines(textArea) {
     return removeEmptyLines(textArea.value.split("\n"));
 }
 
-// Return Array without Empty Lines
+/**
+ * @param arrayWithLines
+ * @returns {*[]} Return Array without Empty Lines
+ */
 function removeEmptyLines(arrayWithLines) {
     let arrayWithoutEmptyLines = []
     for (let i of arrayWithLines) {
@@ -261,14 +42,21 @@ function removeEmptyLines(arrayWithLines) {
     return arrayWithoutEmptyLines;
 }
 
-// Counts number of empty spaced between 0 and the index of the character '-'
+/**
+ * @param line
+ * @returns {number} Number of empty spaces between 0 and the index of the character '-'
+ */
 function countNumberOfEmptySpaces(line) {
     const index = line.indexOf('-');
     return line.substring(0, index).length;
 }
 
-// Algorithm to add or remove number of empty spaces
-// Created based on the observation of the number of spaced needed to have a correct indentation
+/**
+ * Algorithm to add or remove number of empty spaces
+ * Created based on the observation of the number of spaces needed to have a correct indentation in Bitbucket
+ * @param numberOfEmptySpacesPresentPerLine
+ * @returns {number} Number of Empty spaces to add or remove
+ */
 function numberOfEmptySpacesToAddOrRemove(numberOfEmptySpacesPresentPerLine) {
     const numberOfEmptySpacesByDefault = 6;
     let numberOfEmptySpaces = 0;
@@ -278,7 +66,11 @@ function numberOfEmptySpacesToAddOrRemove(numberOfEmptySpacesPresentPerLine) {
     return numberOfEmptySpaces;
 }
 
-// Show Modal for Indentation Alerts
+/**
+ * Show Modal for Indentation Alerts
+ * @param title
+ * @param message
+ */
 function showModalIndentation(title, message) {
 
     const indentationModal = new bootstrap.Modal(document.getElementById("indentationModal"), {});
@@ -288,7 +80,11 @@ function showModalIndentation(title, message) {
 
 }
 
-// Show Modal for Preview
+/**
+ * Show Modal for Preview as Markdown
+ * @param title
+ * @param message
+ */
 function showModalPreview() {
     const previewModal = new bootstrap.Modal(document.getElementById("previewModal"), {});
 
@@ -302,19 +98,30 @@ function showModalPreview() {
     previewModal.show();
 }
 
-// Check if there are lines to validate
+/**
+ * Check if there are lines to validate
+ * @param arrayWithLines
+ * @returns {boolean} True if the array is empty
+ */
 function isTheArrayEmpty(arrayWithLines) {
     return arrayWithLines.length === 0;
 }
 
-// Get text inside the <label></label> using field id
-// Ex: fieldId = formInputContent and label id = formInputContentLabel
+/**
+ * Ex: fieldId = formInputContent and label id = formInputContentLabel
+ * @param fieldId
+ * @returns {string} Text inside the <label></label> using field id
+ */
 function getLabelFromFieldId(fieldId) {
     const labelId = fieldId + "Label";
     return document.getElementById(labelId).innerHTML;
 }
 
-// Return an Array of valid lines or sends a Modal message and stops execution.
+/**
+ * @param arrayWithLines
+ * @param textAreaId
+ * @returns {boolean|*[]} Return an Array of valid lines OR Returns false (sends a Modal message and stops execution)
+ */
 function validateLines(arrayWithLines, textAreaId) {
 
     const nameToDisplay = getLabelFromFieldId(textAreaId);
@@ -374,7 +181,11 @@ function validateLines(arrayWithLines, textAreaId) {
     return validLines;
 }
 
-// Indent each line by adding empty spaces
+/**
+ * Indent each line by adding OR removing empty spaces
+ * @param arrayWithValidLines
+ * @returns {*[]} Array with indented lines
+ */
 function indentAllTabs(arrayWithValidLines) {
     const startingSpace = "      ";
     const oneEmptySpace = " ";
@@ -419,6 +230,10 @@ function indentAllTabs(arrayWithValidLines) {
     return indentedArray;
 }
 
+/**
+ * @param indentedArray
+ * @returns {string} String of the indentedArray content
+ */
 function convertArrayToString(indentedArray) {
     let output = "";
     for (let i = 0; i < indentedArray.length; i++) {
@@ -430,6 +245,12 @@ function convertArrayToString(indentedArray) {
 // Temporarily Store non-formatted textarea's values so we can close modal and still have non-formatted values
 const originalTextAreaValues = new Map();
 
+/**
+ * Restore un-indented text from the textareas
+ * Used if user decides not to save the session and close the modal
+ * Without it, the user would have the indented text inside the textareas
+ * and it would be impossible to re-save the session as the algorithm would try to indent it again.
+ */
 function restoreOriginalTextAreaValues()  {
     if (originalTextAreaValues !== null) {
         originalTextAreaValues.forEach((value, key) => {
@@ -438,6 +259,12 @@ function restoreOriginalTextAreaValues()  {
     }
 }
 
+/**
+ * Validate and Indent the TextAreas text
+ * @param textAreaId
+ * @param isMandatory
+ * @returns {boolean}
+ */
 function validateAndIdentTextArea(textAreaId, isMandatory) {
     const currentTextArea = document.getElementById(textAreaId);
     const hiddenTextArea = document.getElementById("textarea-hidden");
@@ -448,7 +275,7 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
     let lines = getLines(currentTextArea);
 
     if (isTheArrayEmpty(lines) && !isMandatory) {
-       return true;
+        return true;
     }
 
     let validLines = validateLines(lines, textAreaId);
@@ -469,7 +296,11 @@ function validateAndIdentTextArea(textAreaId, isMandatory) {
     return false;
 }
 
-/* Revert Indentation */
+/**
+ * Revert indentation from previously saved session
+ * @param textAreaId
+ * @returns {string}
+ */
 function revertIndentation(textAreaId) {
     const currentTextArea = document.getElementById(textAreaId);
     let lines = getLines(currentTextArea);
@@ -529,4 +360,3 @@ function addEmptySpacesToLine(emptySpaces, line) {
 
     return emptySpace + line;
 }
-

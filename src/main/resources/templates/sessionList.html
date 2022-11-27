@@ -20,19 +20,9 @@
                     <input name="sortField" th:value="${sortField}" type="hidden">
                     <input name="sortDir" th:value="${sortDir}" type="hidden">
 
-                    <div class="container d-flex flex-row justify-content-end">
-                        <div class="input-group search-bar">
-                            <input aria-describedby="button-addon2" aria-label="Search word"
-                                   class="form-control session-list-input-border"
-                                   name="keyword"
-                                   th:placeholder="${!#strings.isEmpty(keyword) ? keyword : ''}" type="text">
-                            <button class="btn btn-danger" id="button-addon2" type="submit">Search</button>
-                            <button class="btn btn-danger" id="clearKeyword" type="button">Clear</button>
-                        </div>
-
-                    </div>
-
+                    <div th:replace="/fragments/search :: searchComponent"></div>
                     <div th:replace="/fragments/calendar :: calendar"></div>
+
                 </div>
             </form>
         </div>
@@ -40,25 +30,8 @@
     <div class="row">
         <div class="col-md">
 
-            <div class="container d-inline-flex flex-wrap justify-content-center p-0">
-                <div class="personal-card card col-md-3 text-white bg-dark mb-3 mx-2"
-
-                     th:each="studySession : ${sessionList}"
-                     th:onclick="|returnMarkdownFromOneSession('${studySession.id}')|">
-                    <div class="card-header">
-                        [[${studySession.date}]]
-                    </div>
-                    <div class="card-body d-flex flex-column align-items-start">
-                        <h5 class="card-title ">Content</h5>
-                        <p class="card-text personal-card-content " id="cardContentParagraph">
-                            [[${studySession.content}]]</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">[[${studySession.totalStudyTime}]]</small>
-
-                    </div>
-                </div>
-            </div>
+            <!--Display sessions as cards-->
+            <div th:replace="/fragments/card :: cardComponent"></div>
 
             <!--Hidden Fields and Data Storage-->
             <div th:replace="/fragments/emptyTextArea :: emptyTextArea"></div>
@@ -81,133 +54,18 @@
 <!-- Modal Delete Warning -->
 <div th:replace="/fragments/modal :: modal_delete_confirmation"></div>
 
-<script src="/js/EventListener_sessionList.js"></script>
+<script src="/js/SessionList_EventListener.js"></script>
+<script src="/js/SessionList_HighlightKeyword.js"></script>
+<script src="/js/SessionList_PreviewModal.js"></script>
+<script src="/js/SessionList_EditSession.js"></script>
+<script src="/js/AdjustPreviewModalImg.js"></script>
 
-<!--Necessary for jQuery-->
-<script crossorigin="anonymous"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-
-<!--TO DO refactor this code into a JS file-->
 <script th:inline="javascript">
-
-    // Get back to SessionForm.html from SessionList.html
-    document.getElementById("returnToSessionFormBtn").addEventListener("click", function () {
-        window.location.href = "/";
-    });
-
-    // Clear search form by making a new call to /sessionList
-    document.getElementById("clearKeyword").addEventListener("click", function () {
-        window.location.href = "/sessionList/1?sortField=date&sortDir=dsc";
-    });
 
     let cardContentParagraph = document.getElementById("cardContentParagraph").innerText;
     const keyword = [[${keyword}]];
-    if (cardContentParagraph != null && keyword != null) {
+    if (cardContentParagraph && keyword) {
         window.addEventListener("load", iterateOverAllP);
-    }
-
-    // Iterate over all <p>
-    function iterateOverAllP() {
-        const cells = document.querySelectorAll('p');
-        cells.forEach(function (cell) {
-            cell.innerHTML = highLightKeyWord(cell.innerText, keyword);
-        })
-    }
-
-    // Highlight text in the <td> if equal to the keyword
-    function highLightKeyWord(rowValue, keyword) {
-        let replacement = "<span style=\"background-color:#f0ad4e\n;font-weight: bold;\">"
-            + keyword
-            + "</span>";
-
-        /*return rowValue.replaceAll(keyword, replacement);*/
-
-        let regex = new RegExp(keyword, 'gi');
-        return rowValue.replaceAll(regex, replacement);
-    }
-
-    // Preview in Modal
-    function returnMarkdownFromOneSession(id) {
-        idFecthedByGetSessionMarkdown = id;
-        let hiddenTextAreaSessionList = document.getElementById("textarea-hidden");
-        const previewModalSaveBtn = document.getElementById("saveBtn");
-
-        fetch("/getSessionMarkdown/" + id)
-            .then(response => response.text())
-            .then(data => {
-                hiddenTextAreaSessionList.value = data;
-
-                const markdownDivSessionList = document.getElementById("markdownPreview");
-                markdownDivSessionList.innerHTML = "";
-
-                const previewModal = new bootstrap.Modal(document.getElementById("previewModal"), {});
-
-                const valueToAdd = "<md-block>" + hiddenTextAreaSessionList.value + "</md-block>";
-
-                const markdownDiv = document.getElementById("markdownPreview");
-
-                markdownDiv.insertAdjacentHTML("beforeend", valueToAdd);
-
-                previewModalSaveBtn.setAttribute("hidden", "");
-
-                previewModal.show();
-
-            });
-    }
-
-    // Event is fired when the modal has been made visible to the user (will wait for CSS transitions to complete)
-    $('#previewModal').on('shown.bs.modal', function (e) {
-
-        // Test
-        $("#markdownPreview").find("h2").css({ "color": "green" });
-
-        if($("#markdownPreview:has(img)").length > 0){
-
-            $("img").each(function (index){
-
-                const image = $("#markdownPreview").find("img:eq(" + index + ")");
-
-                image.css({ "width": "100%" });
-                const imageSource = image.attr('src');
-
-                image.wrap($('<a>',{
-                    href: imageSource,
-                    target: "_blank"
-                }));
-            });
-
-            console.log("sessionList.html - has image");
-        }else{
-            console.log("sessionList.html - no image");
-        }
-    })
-
-    function returnSessionToEdit() {
-        const id = idFecthedByGetSessionMarkdown;
-        const form = document.getElementById("formEdit");
-        const divPauseTime = document.getElementById("formEdit_pauseTime");
-        const modalEditFormsH2 = document.getElementById("modalEditFormsH2");
-        const formInputContent = document.getElementById("formInputContent");
-        const formInputFeelings = document.getElementById("formInputFeelings");
-
-        fetch("/getSessionToEdit/" + id)
-            .then(response => response.json())
-            .then(data => {
-                const jsonFile = data;
-
-                modalEditFormsH2.innerText = jsonFile.date + ' # ' + jsonFile.sessionNumber;
-
-                $.each(jsonFile, function (key, value) {
-                    if (form.elements[key] != null) {
-                        form.elements[key].value = value;
-                    }
-                });
-
-                /* revert value of textarea */
-                formInputContent.value = revertIndentation("formInputContent");
-                formInputFeelings.value = revertIndentation("formInputFeelings");
-            });
     }
 
 </script>
