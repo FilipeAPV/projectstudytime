@@ -1,6 +1,7 @@
 # README
 
 - Access the application on-line [here](https://f-projectstudytime.tpy1e7yxhct.eu-gb.codeengine.appdomain.cloud/).
+- [Watch introductory video](https://www.youtube.com/watch?v=odY2V7wbBUA)
 
 # LINKS
 
